@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F6F08051C05071000ABDA89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F08041C05071000ABDA89 /* AppDelegate.swift */; };
-		3F6F08071C05071000ABDA89 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F08061C05071000ABDA89 /* ViewController.swift */; };
+		3F6F08071C05071000ABDA89 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F08061C05071000ABDA89 /* MenuViewController.swift */; };
 		3F6F080A1C05071000ABDA89 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F6F08081C05071000ABDA89 /* Main.storyboard */; };
 		3F6F080C1C05071000ABDA89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F6F080B1C05071000ABDA89 /* Assets.xcassets */; };
 		3F6F080F1C05071000ABDA89 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F6F080D1C05071000ABDA89 /* LaunchScreen.storyboard */; };
@@ -28,7 +28,7 @@
 /* Begin PBXFileReference section */
 		3F6F08011C05071000ABDA89 /* PokerGameApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokerGameApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F6F08041C05071000ABDA89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3F6F08061C05071000ABDA89 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3F6F08061C05071000ABDA89 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		3F6F08091C05071000ABDA89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3F6F080B1C05071000ABDA89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F6F080E1C05071000ABDA89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -78,7 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				3F6F08041C05071000ABDA89 /* AppDelegate.swift */,
-				3F6F08061C05071000ABDA89 /* ViewController.swift */,
+				3F6F08061C05071000ABDA89 /* MenuViewController.swift */,
 				3F6F08081C05071000ABDA89 /* Main.storyboard */,
 				3F6F080B1C05071000ABDA89 /* Assets.xcassets */,
 				3F6F080D1C05071000ABDA89 /* LaunchScreen.storyboard */,
@@ -199,7 +199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F6F08071C05071000ABDA89 /* ViewController.swift in Sources */,
+				3F6F08071C05071000ABDA89 /* MenuViewController.swift in Sources */,
 				3F6F08051C05071000ABDA89 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -330,8 +330,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = PokerGameApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Jingplusplus.PokerGameApp;
+				PRODUCT_BUNDLE_IDENTIFIER = JingplusplusPokerGameApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -341,8 +342,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = PokerGameApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Jingplusplus.PokerGameApp;
+				PRODUCT_BUNDLE_IDENTIFIER = JingplusplusPokerGameApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

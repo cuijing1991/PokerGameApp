@@ -42,5 +42,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+//    func supportedInterfaceOrientationsForWindow(window: UIWindow?) -> UIInterfaceOrientationMask {
+//            return UIInterfaceOrientationMask.Landscape
+//    }
+
+
 }
 
