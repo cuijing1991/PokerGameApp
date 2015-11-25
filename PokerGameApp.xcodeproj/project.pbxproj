@@ -13,6 +13,7 @@
 		3F6F080C1C05071000ABDA89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F6F080B1C05071000ABDA89 /* Assets.xcassets */; };
 		3F6F080F1C05071000ABDA89 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F6F080D1C05071000ABDA89 /* LaunchScreen.storyboard */; };
 		3F6F081A1C05071000ABDA89 /* PokerGameAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F08191C05071000ABDA89 /* PokerGameAppTests.swift */; };
+		3F6F082B1C05602200ABDA89 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F082A1C05602200ABDA89 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		3F6F08151C05071000ABDA89 /* PokerGameAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokerGameAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F6F08191C05071000ABDA89 /* PokerGameAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokerGameAppTests.swift; sourceTree = "<group>"; };
 		3F6F081B1C05071000ABDA89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F6F082A1C05602200ABDA89 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				3F6F08041C05071000ABDA89 /* AppDelegate.swift */,
+				3F6F082A1C05602200ABDA89 /* SettingsViewController.swift */,
 				3F6F08061C05071000ABDA89 /* MenuViewController.swift */,
 				3F6F08081C05071000ABDA89 /* Main.storyboard */,
 				3F6F080B1C05071000ABDA89 /* Assets.xcassets */,
@@ -201,6 +204,7 @@
 			files = (
 				3F6F08071C05071000ABDA89 /* MenuViewController.swift in Sources */,
 				3F6F08051C05071000ABDA89 /* AppDelegate.swift in Sources */,
+				3F6F082B1C05602200ABDA89 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,10 +12,6 @@ class MenuViewController: UIViewController {
 
     override func viewDidLoad() {
         
-        
-        //self.view.backgroundColor = UIColor.blackColor()
-
-        
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
