@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F11837D1C0E8FC8006781C3 /* AddFriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F11837C1C0E8FC8006781C3 /* AddFriendsTableViewCell.swift */; };
 		3F6F08051C05071000ABDA89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F08041C05071000ABDA89 /* AppDelegate.swift */; };
 		3F6F08071C05071000ABDA89 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F08061C05071000ABDA89 /* MenuViewController.swift */; };
 		3F6F080A1C05071000ABDA89 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F6F08081C05071000ABDA89 /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F11837C1C0E8FC8006781C3 /* AddFriendsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendsTableViewCell.swift; sourceTree = "<group>"; };
 		3F6F08011C05071000ABDA89 /* PokerGameApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokerGameApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F6F08041C05071000ABDA89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F6F08061C05071000ABDA89 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				3F6F08061C05071000ABDA89 /* MenuViewController.swift */,
 				3F6F08081C05071000ABDA89 /* Main.storyboard */,
 				3F6F082C1C06560B00ABDA89 /* AddFriendsViewController.swift */,
+				3F11837C1C0E8FC8006781C3 /* AddFriendsTableViewCell.swift */,
 				3F6F080B1C05071000ABDA89 /* Assets.xcassets */,
 				3F6F080D1C05071000ABDA89 /* LaunchScreen.storyboard */,
 				3F6F08101C05071000ABDA89 /* Info.plist */,
@@ -209,6 +212,7 @@
 				3F6F08071C05071000ABDA89 /* MenuViewController.swift in Sources */,
 				3F6F08051C05071000ABDA89 /* AppDelegate.swift in Sources */,
 				3F6F082B1C05602200ABDA89 /* SettingsViewController.swift in Sources */,
+				3F11837D1C0E8FC8006781C3 /* AddFriendsTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

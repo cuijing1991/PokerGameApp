@@ -209,13 +209,22 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Settings" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OS4-mj-8xg">
+                                        <rect key="frame" x="-3" y="19" width="240" height="35"/>
+                                        <color key="textColor" red="0.91254913810000005" green="0.72589981560000005" blue="0.49744266269999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="27"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="OS4-mj-8xg" secondAttribute="trailing" constant="-2" id="7Uh-rL-zsg"/>
                                     <constraint firstItem="SZz-6Z-17D" firstAttribute="top" secondItem="yBs-eT-tjU" secondAttribute="top" constant="75" id="J61-NY-57C"/>
                                     <constraint firstItem="SZz-6Z-17D" firstAttribute="centerX" secondItem="yBs-eT-tjU" secondAttribute="centerX" id="NGB-Gz-FhY"/>
                                     <constraint firstItem="NOy-3J-DIe" firstAttribute="centerX" secondItem="yBs-eT-tjU" secondAttribute="centerX" id="Nc9-tg-wK3"/>
+                                    <constraint firstItem="OS4-mj-8xg" firstAttribute="leading" secondItem="yBs-eT-tjU" secondAttribute="leading" constant="-3" id="OLa-PX-zft"/>
                                     <constraint firstItem="NOy-3J-DIe" firstAttribute="top" secondItem="SZz-6Z-17D" secondAttribute="bottom" id="hiF-U3-YyT"/>
+                                    <constraint firstItem="SZz-6Z-17D" firstAttribute="top" secondItem="OS4-mj-8xg" secondAttribute="bottom" constant="12" id="j7Q-RF-c4T"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h44-sK-pHN">
@@ -279,7 +288,7 @@
                                     </textField>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bhW-Xx-nKM">
                                         <rect key="frame" x="173" y="73" width="51" height="31"/>
-                                        <color key="onTintColor" red="0.13725490196078433" green="1" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="onTintColor" red="0.99170845750000003" green="0.58130258319999994" blue="0.033975746479999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="thumbTintColor" red="0.46639230847358704" green="0.21065489947795868" blue="0.11332836002111435" alpha="1" colorSpace="calibratedRGB"/>
                                     </switch>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bMj-lD-sXy">
@@ -412,34 +421,56 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZU5-eN-9cC">
-                                <rect key="frame" x="223" y="15" width="240" height="352"/>
+                                <rect key="frame" x="223" y="61" width="240" height="307"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="onefriend" id="qaY-3p-FM6">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="onefriend" id="qaY-3p-FM6" customClass="AddFriendsTableViewCell" customModule="PokerGameApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="240" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qaY-3p-FM6" id="Jmc-NG-ZeD">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s3Q-mn-DiL">
+                                                    <rect key="frame" x="8" y="0.0" width="43" height="43"/>
+                                                </imageView>
+                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pQp-jR-OO3">
+                                                    <rect key="frame" x="59" y="8" width="143" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="pokerImage" destination="s3Q-mn-DiL" id="YM4-HV-iKx"/>
+                                            <outlet property="username" destination="pQp-jR-OO3" id="xHw-Dr-HM0"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Invite Friends" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ysw-gl-vxH">
+                                <rect key="frame" x="223" y="20" width="240" height="30"/>
+                                <color key="textColor" red="0.91254913806915283" green="0.72589981555938721" blue="0.49744266271591187" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="27"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                         <constraints>
+                            <constraint firstItem="ZU5-eN-9cC" firstAttribute="width" secondItem="Ysw-gl-vxH" secondAttribute="width" id="1Tb-0r-73y"/>
+                            <constraint firstItem="ZU5-eN-9cC" firstAttribute="top" secondItem="Ysw-gl-vxH" secondAttribute="bottom" constant="20" id="ANM-5a-Nlh"/>
                             <constraint firstItem="mbp-9K-UeS" firstAttribute="top" secondItem="gBU-t0-9Km" secondAttribute="bottom" constant="-5" id="GlD-WL-BCI"/>
+                            <constraint firstItem="ZU5-eN-9cC" firstAttribute="trailing" secondItem="Ysw-gl-vxH" secondAttribute="trailing" id="IkC-Te-TD7"/>
                             <constraint firstAttribute="trailingMargin" secondItem="aeP-pp-uOW" secondAttribute="trailing" constant="-20" id="KcG-4N-ima"/>
                             <constraint firstItem="aeP-pp-uOW" firstAttribute="height" secondItem="mbp-9K-UeS" secondAttribute="height" id="YFL-ME-fWf"/>
                             <constraint firstItem="aeP-pp-uOW" firstAttribute="leading" secondItem="ZU5-eN-9cC" secondAttribute="trailing" id="YkO-3V-uUd"/>
                             <constraint firstItem="ZU5-eN-9cC" firstAttribute="width" secondItem="mbp-9K-UeS" secondAttribute="width" id="cJp-TZ-BTB"/>
-                            <constraint firstItem="Psn-df-K5q" firstAttribute="leading" secondItem="ZU5-eN-9cC" secondAttribute="trailing" constant="-7" id="dyK-uP-HNe"/>
                             <constraint firstItem="aeP-pp-uOW" firstAttribute="width" secondItem="mbp-9K-UeS" secondAttribute="width" id="fIV-XA-tZu"/>
                             <constraint firstItem="PhL-f4-wlt" firstAttribute="top" secondItem="mbp-9K-UeS" secondAttribute="bottom" constant="10" id="hP2-Kh-1Z7"/>
                             <constraint firstItem="mbp-9K-UeS" firstAttribute="leading" secondItem="3cg-UQ-FRw" secondAttribute="leadingMargin" constant="-20" id="hn3-3M-IUe"/>
                             <constraint firstItem="ZU5-eN-9cC" firstAttribute="leading" secondItem="mbp-9K-UeS" secondAttribute="trailing" constant="0.5" id="otL-Bk-Sn0"/>
                             <constraint firstItem="ZU5-eN-9cC" firstAttribute="bottom" secondItem="mbp-9K-UeS" secondAttribute="bottom" id="ox7-ow-DdW"/>
-                            <constraint firstItem="ZU5-eN-9cC" firstAttribute="height" secondItem="mbp-9K-UeS" secondAttribute="height" constant="-60" id="vlY-qU-kba"/>
+                            <constraint firstItem="ZU5-eN-9cC" firstAttribute="height" secondItem="mbp-9K-UeS" secondAttribute="height" constant="-80" id="vlY-qU-kba"/>
                             <constraint firstItem="aeP-pp-uOW" firstAttribute="top" secondItem="mbp-9K-UeS" secondAttribute="top" id="z74-S3-7bh"/>
                         </constraints>
                     </view>

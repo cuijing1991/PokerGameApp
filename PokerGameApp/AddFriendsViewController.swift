@@ -12,6 +12,8 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
 
     
     @IBOutlet weak var friendsTable: UITableView!
+    var connectedFriends = 0
+    var images = ["Spades", "Hearts", "Clubs", "Diamonds"]
     var data = ["1", "2", "3", "4"]
     
     override func viewDidLoad() {
@@ -42,15 +44,34 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60.0
+        return 50.0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell : UITableViewCell! = tableView.dequeueReusableCellWithIdentifier("onefriend")
-        //cell.textLabel?.text = data[indexPath.row]
-        
+        let cell = tableView.dequeueReusableCellWithIdentifier("onefriend") as! AddFriendsTableViewCell
+        cell.username?.text = data[indexPath.row]
+        cell.selectionStyle = .None
+        if cell.cellselected {
+            cell.accessoryType = .Checkmark
+        }
+        else {
+            cell.accessoryType = .None
+        }
         return cell
     }
 
-
-}
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = self.friendsTable.cellForRowAtIndexPath(indexPath) as! AddFriendsTableViewCell
+        cell.cellselected = !cell.cellselected
+        if cell.cellselected {
+            cell.pokerImage.image = UIImage(named: images[connectedFriends])!
+            self.connectedFriends += 1
+        }
+        else {
+            cell.pokerImage.image = nil
+            self.connectedFriends -= 1
+        }
+        friendsTable.reloadData()
+    }
+    
+ }
