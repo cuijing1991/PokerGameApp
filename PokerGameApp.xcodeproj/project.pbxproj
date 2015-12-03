@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		3F11837D1C0E8FC8006781C3 /* AddFriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F11837C1C0E8FC8006781C3 /* AddFriendsTableViewCell.swift */; };
+		3F1183821C0EAF6D006781C3 /* CircularCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F11837E1C0EAF6D006781C3 /* CircularCollectionViewCell.swift */; };
+		3F1183831C0EAF6D006781C3 /* CircularCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F11837F1C0EAF6D006781C3 /* CircularCollectionViewCell.xib */; };
+		3F1183841C0EAF6D006781C3 /* CircularCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1183801C0EAF6D006781C3 /* CircularCollectionViewLayout.swift */; };
+		3F1183851C0EAF6D006781C3 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1183811C0EAF6D006781C3 /* CollectionViewController.swift */; };
+		3F1183871C0F400A006781C3 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 3F1183861C0F400A006781C3 /* Images */; };
 		3F6F08051C05071000ABDA89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F08041C05071000ABDA89 /* AppDelegate.swift */; };
 		3F6F08071C05071000ABDA89 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F08061C05071000ABDA89 /* MenuViewController.swift */; };
 		3F6F080A1C05071000ABDA89 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F6F08081C05071000ABDA89 /* Main.storyboard */; };
@@ -16,6 +21,7 @@
 		3F6F081A1C05071000ABDA89 /* PokerGameAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F08191C05071000ABDA89 /* PokerGameAppTests.swift */; };
 		3F6F082B1C05602200ABDA89 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F082A1C05602200ABDA89 /* SettingsViewController.swift */; };
 		3F6F082D1C06560B00ABDA89 /* AddFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F082C1C06560B00ABDA89 /* AddFriendsViewController.swift */; };
+		3FFD58AE1C0FCB34004E6D78 /* bg-dark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3FFD58AD1C0FCB34004E6D78 /* bg-dark.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +36,11 @@
 
 /* Begin PBXFileReference section */
 		3F11837C1C0E8FC8006781C3 /* AddFriendsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendsTableViewCell.swift; sourceTree = "<group>"; };
+		3F11837E1C0EAF6D006781C3 /* CircularCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularCollectionViewCell.swift; sourceTree = "<group>"; };
+		3F11837F1C0EAF6D006781C3 /* CircularCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircularCollectionViewCell.xib; sourceTree = "<group>"; };
+		3F1183801C0EAF6D006781C3 /* CircularCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularCollectionViewLayout.swift; sourceTree = "<group>"; };
+		3F1183811C0EAF6D006781C3 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		3F1183861C0F400A006781C3 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		3F6F08011C05071000ABDA89 /* PokerGameApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokerGameApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F6F08041C05071000ABDA89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F6F08061C05071000ABDA89 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -42,6 +53,7 @@
 		3F6F081B1C05071000ABDA89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F6F082A1C05602200ABDA89 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3F6F082C1C06560B00ABDA89 /* AddFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendsViewController.swift; sourceTree = "<group>"; };
+		3FFD58AD1C0FCB34004E6D78 /* bg-dark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg-dark.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +99,12 @@
 				3F6F082A1C05602200ABDA89 /* SettingsViewController.swift */,
 				3F6F08061C05071000ABDA89 /* MenuViewController.swift */,
 				3F6F08081C05071000ABDA89 /* Main.storyboard */,
+				3F11837E1C0EAF6D006781C3 /* CircularCollectionViewCell.swift */,
+				3F11837F1C0EAF6D006781C3 /* CircularCollectionViewCell.xib */,
+				3F1183861C0F400A006781C3 /* Images */,
+				3F1183801C0EAF6D006781C3 /* CircularCollectionViewLayout.swift */,
+				3F1183811C0EAF6D006781C3 /* CollectionViewController.swift */,
+				3FFD58AD1C0FCB34004E6D78 /* bg-dark.jpg */,
 				3F6F082C1C06560B00ABDA89 /* AddFriendsViewController.swift */,
 				3F11837C1C0E8FC8006781C3 /* AddFriendsTableViewCell.swift */,
 				3F6F080B1C05071000ABDA89 /* Assets.xcassets */,
@@ -188,9 +206,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F1183871C0F400A006781C3 /* Images in Resources */,
 				3F6F080F1C05071000ABDA89 /* LaunchScreen.storyboard in Resources */,
 				3F6F080C1C05071000ABDA89 /* Assets.xcassets in Resources */,
 				3F6F080A1C05071000ABDA89 /* Main.storyboard in Resources */,
+				3FFD58AE1C0FCB34004E6D78 /* bg-dark.jpg in Resources */,
+				3F1183831C0EAF6D006781C3 /* CircularCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,7 +231,10 @@
 			files = (
 				3F6F082D1C06560B00ABDA89 /* AddFriendsViewController.swift in Sources */,
 				3F6F08071C05071000ABDA89 /* MenuViewController.swift in Sources */,
+				3F1183821C0EAF6D006781C3 /* CircularCollectionViewCell.swift in Sources */,
 				3F6F08051C05071000ABDA89 /* AppDelegate.swift in Sources */,
+				3F1183851C0EAF6D006781C3 /* CollectionViewController.swift in Sources */,
+				3F1183841C0EAF6D006781C3 /* CircularCollectionViewLayout.swift in Sources */,
 				3F6F082B1C05602200ABDA89 /* SettingsViewController.swift in Sources */,
 				3F11837D1C0E8FC8006781C3 /* AddFriendsTableViewCell.swift in Sources */,
 			);
