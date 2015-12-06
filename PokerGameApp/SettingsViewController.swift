@@ -9,8 +9,6 @@
 import UIKit
 
 class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
-
-    
     
     @IBOutlet weak var pickerView: UIPickerView!
     

@@ -2,8 +2,8 @@
 //  CircularCollectionViewLayout.swift
 //  CircularCollectionView
 //
-//  Created by Cui Jing on 11/5/15.
-//  Copyright © 2015 Rounak Jain. All rights reserved.
+//  Created by Cui Jing on 12/4/15.
+//  Copyright © 2015 Jingplusplus. All rights reserved.
 //
 
 import UIKit
@@ -94,7 +94,7 @@ class CircularCollectionViewLayout: UICollectionViewLayout {
         attributes.anchorPoint = CGPoint(x: 0.5, y: anchorPointY2)
       }
 
-      attributes.center = CGPoint(x: centerX, y: CGRectGetMidY(self.collectionView!.bounds) * 0.9)
+      attributes.center = CGPoint(x: centerX, y: CGRectGetMidY(self.collectionView!.bounds) * 1)
 
       attributes.angle = self.angle + (self.anglePerItem * CGFloat(i)) - self.angleOffset
   

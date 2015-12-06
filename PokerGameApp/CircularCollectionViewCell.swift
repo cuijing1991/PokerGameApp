@@ -2,8 +2,8 @@
 //  CircularCollectionViewCell.swift
 //  CircularCollectionView
 //
-//  Created by Rounak Jain on 10/05/15.
-//  Copyright (c) 2015 Rounak Jain. All rights reserved.
+//  Created by Cui Jing on 12/4/15.
+//  Copyright © 2015 Jingplusplus. All rights reserved.
 //
 
 import UIKit
@@ -19,7 +19,7 @@ class CircularCollectionViewCell: UICollectionViewCell {
   
   
     @IBOutlet weak var imageView: UIImageView!
-  required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     contentView.layer.cornerRadius = 5
     contentView.layer.borderColor = UIColor.blackColor().CGColor

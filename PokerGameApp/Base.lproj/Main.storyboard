@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -49,7 +49,10 @@
                                             <constraint firstAttribute="height" constant="70" id="8so-DK-249"/>
                                             <constraint firstAttribute="width" constant="220" id="fmL-e0-2li"/>
                                         </constraints>
-                                        <state key="normal" title="Button" backgroundImage="Button_Background_Light_Brown"/>
+                                        <state key="normal" title="Join a Game" backgroundImage="Button_Background_Light_Brown"/>
+                                        <connections>
+                                            <segue destination="daO-Hd-1ug" kind="presentation" modalTransitionStyle="flipHorizontal" id="kpH-Gc-dlf"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -67,7 +70,7 @@
                                             <constraint firstAttribute="height" constant="70" id="4d0-XZ-QCR"/>
                                             <constraint firstAttribute="width" constant="220" id="ajT-HX-ab1"/>
                                         </constraints>
-                                        <state key="normal" title="Button" backgroundImage="Button_Background_Light_Brown"/>
+                                        <state key="normal" title="New Game" backgroundImage="Button_Background_Light_Brown"/>
                                         <connections>
                                             <segue destination="E7g-IV-pVd" kind="presentation" modalTransitionStyle="flipHorizontal" id="2lw-eF-HDJ"/>
                                         </connections>
@@ -98,7 +101,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="y1Y-Ll-VH9" firstAttribute="leading" secondItem="k0L-XC-mbI" secondAttribute="leading" id="0Pc-GI-eS7"/>
                             <constraint firstItem="C9W-OB-YD0" firstAttribute="top" secondItem="2JW-PY-QgN" secondAttribute="bottom" constant="-1" id="1Bo-uu-ppt"/>
@@ -144,6 +147,29 @@
             </objects>
             <point key="canvasLocation" x="278.5" y="349.5"/>
         </scene>
+        <!--Join Game View Controller-->
+        <scene sceneID="9S4-kT-PIg">
+            <objects>
+                <viewController id="daO-Hd-1ug" customClass="JoinGameViewController" customModule="PokerGameApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6Ry-Eg-G7p"/>
+                        <viewControllerLayoutGuide type="bottom" id="98n-Y9-9lt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tgK-Cr-HHR">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <segue destination="ZeC-zs-8nE" kind="presentation" identifier="openPlayboard" modalTransitionStyle="flipHorizontal" id="TGj-L5-TYC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3jr-aN-Cqd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1223.5" y="349.5"/>
+        </scene>
         <!--Settings View Controller-->
         <scene sceneID="knw-Zr-1x6">
             <objects>
@@ -177,7 +203,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="z7s-a4-ljo" firstAttribute="top" secondItem="fao-1v-uVR" secondAttribute="top" constant="20" id="0cV-OI-pUA"/>
                                     <constraint firstAttribute="trailing" secondItem="hfU-xM-jf5" secondAttribute="trailing" id="E3i-vS-V8w"/>
@@ -216,7 +242,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="OS4-mj-8xg" secondAttribute="trailing" constant="-2" id="7Uh-rL-zsg"/>
                                     <constraint firstItem="SZz-6Z-17D" firstAttribute="top" secondItem="yBs-eT-tjU" secondAttribute="top" constant="75" id="J61-NY-57C"/>
@@ -302,7 +328,7 @@
                                         <color key="thumbTintColor" red="0.46639230847358704" green="0.21065489947795868" blue="0.11332836002111435" alpha="1" colorSpace="calibratedRGB"/>
                                     </switch>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="PM8-3e-hEw" firstAttribute="height" secondItem="82H-aZ-coO" secondAttribute="height" id="144-hB-g3g"/>
                                     <constraint firstItem="Vv9-Q3-nZN" firstAttribute="centerX" secondItem="h44-sK-pHN" secondAttribute="centerX" id="7bV-cS-dDP"/>
@@ -335,7 +361,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="fao-1v-uVR" firstAttribute="leading" secondItem="yBs-eT-tjU" secondAttribute="trailing" id="6MY-OQ-d0m"/>
                             <constraint firstItem="TrF-lE-XIQ" firstAttribute="top" secondItem="h44-sK-pHN" secondAttribute="bottom" constant="10" id="7Pt-aW-yvP"/>
@@ -394,7 +420,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="Psn-df-K5q" firstAttribute="centerY" secondItem="aeP-pp-uOW" secondAttribute="centerY" constant="40" id="3yj-dX-m6O"/>
                                     <constraint firstItem="Psn-df-K5q" firstAttribute="leading" secondItem="aeP-pp-uOW" secondAttribute="leading" id="BFZ-YG-yc5"/>
@@ -418,7 +444,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="ZPE-bv-4t9" firstAttribute="top" secondItem="mbp-9K-UeS" secondAttribute="top" constant="20" id="D3G-ge-cos"/>
                                 </constraints>
@@ -458,7 +484,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="ZU5-eN-9cC" firstAttribute="width" secondItem="Ysw-gl-vxH" secondAttribute="width" id="1Tb-0r-73y"/>
                             <constraint firstItem="ZU5-eN-9cC" firstAttribute="top" secondItem="Ysw-gl-vxH" secondAttribute="bottom" constant="20" id="ANM-5a-Nlh"/>
@@ -517,19 +543,21 @@
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XIK-S9-QmX" userLabel="view1">
                                 <rect key="frame" x="0.0" y="0.0" width="226" height="183"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Button_On" translatesAutoresizingMaskIntoConstraints="NO" id="ZlY-W8-RY1">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Button_On" translatesAutoresizingMaskIntoConstraints="NO" id="ZlY-W8-RY1">
                                         <rect key="frame" x="93" y="143" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="bgF-aV-Nl8"/>
                                             <constraint firstAttribute="width" constant="40" id="doY-Vi-J4T"/>
                                         </constraints>
                                     </imageView>
+                                    <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5tz-dd-mul">
+                                        <rect key="frame" x="29" y="0.0" width="164" height="142"/>
+                                        <connections>
+                                            <segue destination="cXA-O0-NeK" kind="embed" id="G1w-qv-cQo"/>
+                                        </connections>
+                                    </containerView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="ZlY-W8-RY1" secondAttribute="bottom" id="DJf-4l-4NY"/>
-                                    <constraint firstItem="ZlY-W8-RY1" firstAttribute="centerX" secondItem="XIK-S9-QmX" secondAttribute="centerX" id="whB-LL-Zdt"/>
-                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fHi-4l-fOd" userLabel="View2">
                                 <rect key="frame" x="448" y="0.0" width="219" height="183"/>
@@ -604,6 +632,63 @@
             </objects>
             <point key="canvasLocation" x="278.5" y="2206.5"/>
         </scene>
+        <!--Play Card View Controller-->
+        <scene sceneID="9yD-qU-KTC">
+            <objects>
+                <viewController id="cXA-O0-NeK" customClass="PlayCardViewController" customModule="PokerGameApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1hO-1o-7vT"/>
+                        <viewControllerLayoutGuide type="bottom" id="Z0Q-gI-yv4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="K69-dR-Ydh">
+                        <rect key="frame" x="0.0" y="0.0" width="164" height="142"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4RT-Xd-gel">
+                                <rect key="frame" x="0.0" y="0.0" width="164" height="142"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nkj-W8-P12">
+                                    <size key="itemSize" width="60.5" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" reuseIdentifier="cardCell" id="rSL-9i-fWo" customClass="CardCell" customModule="PokerGameApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="60.5" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="60.5" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="433-Qa-WMY">
+                                                    <rect key="frame" x="0.0" y="0.0" width="60.5" height="50"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="433-Qa-WMY" firstAttribute="top" secondItem="rSL-9i-fWo" secondAttribute="topMargin" constant="-8" id="2AW-79-ITe"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="433-Qa-WMY" secondAttribute="bottom" constant="-8" id="Wkz-39-gXT"/>
+                                            <constraint firstAttribute="leadingMargin" secondItem="433-Qa-WMY" secondAttribute="leading" constant="8" id="gfa-7f-xkb"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="433-Qa-WMY" secondAttribute="trailing" constant="-8" id="yjJ-1H-dOy"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="cellImage" destination="433-Qa-WMY" id="JfG-sI-gj1"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="cardsCollectionView" destination="4RT-Xd-gel" id="BeP-9R-U7M"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hya-5O-MiL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-279" y="2083"/>
+        </scene>
     </scenes>
     <resources>
         <image name="ArrowFireButton" width="216" height="124"/>
@@ -619,6 +704,7 @@
         <image name="poker-fire" width="1200" height="1200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Oii-oW-Qoz"/>
+        <segue reference="TGj-L5-TYC"/>
+        <segue reference="2lw-eF-HDJ"/>
     </inferredMetricsTieBreakers>
 </document>
