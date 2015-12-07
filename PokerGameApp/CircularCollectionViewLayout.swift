@@ -30,90 +30,82 @@ class CircularCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
 }
 
 
+var scale = UIScreen.mainScreen().bounds.width
 
 class CircularCollectionViewLayout: UICollectionViewLayout {
 
-  var selected = [Bool](count: 100, repeatedValue: false)
+    var selected = [Bool](count: 100, repeatedValue: false)
   
-  let itemSize = CGSize(width: UIScreen.mainScreen().bounds.width * 233 / 2500, height: UIScreen.mainScreen().bounds.width * 338 / 2500)
-  let itemSize2 = CGSize(width: UIScreen.mainScreen().bounds.width * 233 / 2000, height: UIScreen.mainScreen().bounds.width * 338 / 2000)
+    let itemSize = CGSize(width: scale * 233 / 3000, height: scale * 338 / 3000)
+    let itemSize2 = CGSize(width: scale * 233 / 2400, height: scale * 338 / 2400)
   
-  var angleAtExtreme: CGFloat {
-    return collectionView!.numberOfItemsInSection(0) > 0 ?
+    var angleAtExtreme: CGFloat {
+        return collectionView!.numberOfItemsInSection(0) > 0 ?
       -CGFloat(collectionView!.numberOfItemsInSection(0) - 1) * anglePerItem : 0
-  }
-  var angle: CGFloat {
+    }
+    var angle: CGFloat {
     return angleAtExtreme * collectionView!.contentOffset.x / (collectionViewContentSize().width -
       CGRectGetWidth(collectionView!.bounds))
-  }
-  
-  var angleOffset: CGFloat = 0
-  
-  
-  var radius: CGFloat = 600 {
-    didSet {
-      invalidateLayout()
     }
-  }
   
-  var anglePerItem: CGFloat {
-    return atan(itemSize.width/2 / radius)
-  }
+    var angleOffset: CGFloat = 0
   
-  var attributesList = [CircularCollectionViewLayoutAttributes]()
+    var radius: CGFloat = UIScreen.mainScreen().bounds.width
+  
+    var anglePerItem: CGFloat = scale * 233 / 3000  / 2.5 / scale
+    var attributesList = [CircularCollectionViewLayoutAttributes]()
 
   
-  override func collectionViewContentSize() -> CGSize {
-    return CGSize(width: CGFloat(collectionView!.numberOfItemsInSection(0)) * itemSize.width,
+    override func collectionViewContentSize() -> CGSize {
+        return CGSize(width: CGFloat(collectionView!.numberOfItemsInSection(0)) * itemSize.width,
       height: CGRectGetHeight(collectionView!.bounds))
-  }
+    }
   
-  override class func layoutAttributesClass() -> AnyClass {
-    return CircularCollectionViewLayoutAttributes.self
-  }
+    override class func layoutAttributesClass() -> AnyClass {
+        return CircularCollectionViewLayoutAttributes.self
+    }
   
-  override func prepareLayout() {
-    super.prepareLayout()
+    override func prepareLayout() {
+        super.prepareLayout()
     
-    let centerX = collectionView!.contentOffset.x + (CGRectGetWidth(collectionView!.bounds) / 2.0)
-    let anchorPointY = ((itemSize.height / 2.0) + radius) / itemSize.height
+        let centerX = collectionView!.contentOffset.x + (CGRectGetWidth(collectionView!.bounds) / 2.0)
+        let anchorPointY = ((itemSize.height / 2.0) + radius) / itemSize.height
     
-    let anchorPointY2 = ((itemSize2.height / 2.0) + radius) / itemSize2.height
+        let anchorPointY2 = ((itemSize2.height / 2.0) + radius) / itemSize2.height
     
-    attributesList = (0..<collectionView!.numberOfItemsInSection(0)).map { (i)
-      -> CircularCollectionViewLayoutAttributes in
+        attributesList = (0..<collectionView!.numberOfItemsInSection(0)).map { (i)
+            -> CircularCollectionViewLayoutAttributes in
     
-      let attributes = CircularCollectionViewLayoutAttributes(forCellWithIndexPath: NSIndexPath(forItem: i,
-        inSection: 0))
-      if(!self.selected[i]) {
-        attributes.size = self.itemSize
-        attributes.anchorPoint = CGPoint(x: 0.5, y: anchorPointY)
-      }
-      else {
-        attributes.size = self.itemSize2
-        attributes.anchorPoint = CGPoint(x: 0.5, y: anchorPointY2)
-      }
+            let attributes = CircularCollectionViewLayoutAttributes(forCellWithIndexPath: NSIndexPath(forItem: i,inSection: 0))
+            if(!self.selected[i]) {
+                attributes.size = self.itemSize
+                attributes.anchorPoint = CGPoint(x: 0.5, y: anchorPointY)
+            }
+            else {
+                attributes.size = self.itemSize2
+                attributes.anchorPoint = CGPoint(x: 0.5, y: anchorPointY2)
+            }
 
-      attributes.center = CGPoint(x: centerX, y: CGRectGetMidY(self.collectionView!.bounds) * 1)
+            attributes.center = CGPoint(x: centerX, y: CGRectGetMidY(self.collectionView!.bounds) * 1)
 
-      attributes.angle = self.angle + (self.anglePerItem * CGFloat(i)) - self.angleOffset
+            attributes.angle = self.angle + (self.anglePerItem * CGFloat(i)) - self.angleOffset
   
       
-      return attributes
+            return attributes
+        }
     }
-  }
   
-  override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-    return attributesList
-  }
+    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        return attributesList
+    }
   
-  override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath)
-    -> UICollectionViewLayoutAttributes? {
-      return attributesList[indexPath.row]
-  }
+    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath)
+        -> UICollectionViewLayoutAttributes? {
+            return attributesList[indexPath.row]
+    }
   
-  override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
-    return true
-  }
+    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+        return true
+    }
   
 }

@@ -15,7 +15,7 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
     var refreshControl: UIRefreshControl!
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var connectedFriends = 0
-    var waitingList = [String: Int]()
+    var avilable = [1, 2, 3]
     var images = ["Spades", "Hearts", "Clubs", "Diamonds"]
     
     override func viewDidLoad() {
@@ -56,13 +56,14 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50.0
+        return UIScreen.mainScreen().bounds.height / 8
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("onefriend") as! AddFriendsTableViewCell
         cell.username?.text = appDelegate.mpcManager.foundPeers[indexPath.row].displayName
         cell.selectionStyle = .None
+        cell.backgroundColor = UIColor.blackColor()
         if cell.cellselected {
             cell.accessoryType = .Checkmark
         }
@@ -73,24 +74,29 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = self.friendsTable.cellForRowAtIndexPath(indexPath) as! AddFriendsTableViewCell
-        cell.cellselected = !cell.cellselected
-        if cell.cellselected {
-            cell.pokerImage.image = UIImage(named: images[connectedFriends])!
-            self.connectedFriends += 1
-            let selectedPeer = appDelegate.mpcManager.foundPeers[indexPath.row] as MCPeerID
-            cell.sessionIndex = appDelegate.mpcManager.connectedSessionCount
-            appDelegate.mpcManager.browser.invitePeer(selectedPeer, toSession: appDelegate.mpcManager.sessions[appDelegate.mpcManager.connectedSessionCount], withContext: nil, timeout: 20)
-            appDelegate.mpcManager.connectedSessionCount += 1
+        if(connectedFriends < 3) {
+            let cell = self.friendsTable.cellForRowAtIndexPath(indexPath) as! AddFriendsTableViewCell
+            cell.cellselected = !cell.cellselected
+            if cell.cellselected {
+                cell.pokerImage.image = UIImage(named: images[avilable[0]])!
+                self.connectedFriends += 1
+                let selectedPeer = appDelegate.mpcManager.foundPeers[indexPath.row] as MCPeerID
+                cell.sessionIndex = avilable[0] - 1
+                appDelegate.mpcManager.browser.invitePeer(selectedPeer, toSession: appDelegate.mpcManager.sessions[avilable[0]-1], withContext: nil, timeout: 20)
+                appDelegate.mpcManager.connectedSessionCount += 1
+                avilable.removeAtIndex(0)
 
+            }
+            else {
+                cell.pokerImage.image = nil
+                self.connectedFriends -= 1
+                self.appDelegate.mpcManager.sessions[cell.sessionIndex].disconnect()
+                avilable.append(cell.sessionIndex+1)
+                avilable.sortInPlace()
+                appDelegate.mpcManager.connectedSessionCount -= 1
+            }
+            friendsTable.reloadData()
         }
-        else {
-            cell.pokerImage.image = nil
-            self.connectedFriends -= 1            
-            self.appDelegate.mpcManager.sessions[cell.sessionIndex].disconnect()
-            appDelegate.mpcManager.connectedSessionCount -= 1
-        }
-        friendsTable.reloadData()
     }
     
     // MARK: MPCManagerDelegate method implementation
