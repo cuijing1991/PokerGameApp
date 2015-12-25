@@ -2,8 +2,8 @@
 //  MPCManager.swift
 //  MPCRevisited
 //
-//  Created by Gabriel Theodoropoulos on 11/1/15.
-//  Copyright (c) 2015 Appcoda. All rights reserved.
+//  Created by Jing Cui on 11/1/15.
+//  Copyright © 2015 Jingplusplus. All rights reserved.
 //
 
 import UIKit

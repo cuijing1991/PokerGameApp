@@ -23,7 +23,8 @@ public:
     bool operator==(const Card& rhs);
     int getSuit() const {return m_suit_int;};
     int getRank() const {return m_rank_int;};
-    int getValue() const {return m_value;};
+    bool isKey() const;
+    int computeValue() const;
     static bool compare(const Card& card1, const Card& card2, const Suits& suit, const Ranks& rank);
     
 private:
@@ -31,9 +32,8 @@ private:
     Suits m_suit;
     int m_rank_int;          /* Rank as an integer */
     int m_suit_int;          /* Suit as an integer */
-    int m_value;               /* This value is only used when sorting cards for displaying */
-    
 };
 
 
 #endif
+

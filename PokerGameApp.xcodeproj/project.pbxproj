@@ -30,6 +30,10 @@
 		3F8A079B1C13DC6800A53711 /* Card.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A07941C13DC6800A53711 /* Card.cpp */; };
 		3F8A079C1C13DC6800A53711 /* GameProcedure_CPPWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A07971C13DC6800A53711 /* GameProcedure_CPPWrapper.mm */; };
 		3F8A079D1C13DC6800A53711 /* GameProcedure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A07981C13DC6800A53711 /* GameProcedure.cpp */; };
+		3FD90C381C2DA9C8005A0C43 /* CardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FD90C361C2DA9C8005A0C43 /* CardManager.cpp */; };
+		3FD90C3B1C2DAA6E005A0C43 /* GameInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FD90C391C2DAA6E005A0C43 /* GameInfo.cpp */; };
+		3FD90C3E1C2DAAB9005A0C43 /* CardUnit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FD90C3C1C2DAAB9005A0C43 /* CardUnit.cpp */; };
+		3FD90C471C2DB75D005A0C43 /* CardManager_CPPWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3FD90C461C2DB75D005A0C43 /* CardManager_CPPWrapper.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +80,14 @@
 		3F8A07971C13DC6800A53711 /* GameProcedure_CPPWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GameProcedure_CPPWrapper.mm; path = "C++Classes/GameProcedure_CPPWrapper.mm"; sourceTree = "<group>"; };
 		3F8A07981C13DC6800A53711 /* GameProcedure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameProcedure.cpp; path = "C++Classes/GameProcedure.cpp"; sourceTree = "<group>"; };
 		3F8A07991C13DC6800A53711 /* GameProcedure.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameProcedure.hpp; path = "C++Classes/GameProcedure.hpp"; sourceTree = "<group>"; };
+		3FD90C361C2DA9C8005A0C43 /* CardManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CardManager.cpp; path = "C++Classes/CardManager.cpp"; sourceTree = "<group>"; };
+		3FD90C371C2DA9C8005A0C43 /* CardManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CardManager.hpp; path = "C++Classes/CardManager.hpp"; sourceTree = "<group>"; };
+		3FD90C391C2DAA6E005A0C43 /* GameInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameInfo.cpp; path = "C++Classes/GameInfo.cpp"; sourceTree = "<group>"; };
+		3FD90C3A1C2DAA6E005A0C43 /* GameInfo.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameInfo.hpp; path = "C++Classes/GameInfo.hpp"; sourceTree = "<group>"; };
+		3FD90C3C1C2DAAB9005A0C43 /* CardUnit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CardUnit.cpp; path = "C++Classes/CardUnit.cpp"; sourceTree = "<group>"; };
+		3FD90C3D1C2DAAB9005A0C43 /* CardUnit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CardUnit.hpp; path = "C++Classes/CardUnit.hpp"; sourceTree = "<group>"; };
+		3FD90C451C2DB75D005A0C43 /* CardManager_CPPWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardManager_CPPWrapper.h; path = "C++Classes/CardManager_CPPWrapper.h"; sourceTree = "<group>"; };
+		3FD90C461C2DB75D005A0C43 /* CardManager_CPPWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CardManager_CPPWrapper.mm; path = "C++Classes/CardManager_CPPWrapper.mm"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +111,18 @@
 		3F3C9BB11C13D3D900F59A6D /* C++Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3FD90C451C2DB75D005A0C43 /* CardManager_CPPWrapper.h */,
+				3FD90C461C2DB75D005A0C43 /* CardManager_CPPWrapper.mm */,
 				3F8A07921C13DC6800A53711 /* Card_CPPWrapper.h */,
 				3F8A07931C13DC6800A53711 /* Card_CPPWrapper.mm */,
 				3F8A07941C13DC6800A53711 /* Card.cpp */,
 				3F8A07951C13DC6800A53711 /* Card.hpp */,
+				3FD90C361C2DA9C8005A0C43 /* CardManager.cpp */,
+				3FD90C391C2DAA6E005A0C43 /* GameInfo.cpp */,
+				3FD90C371C2DA9C8005A0C43 /* CardManager.hpp */,
+				3FD90C3A1C2DAA6E005A0C43 /* GameInfo.hpp */,
+				3FD90C3C1C2DAAB9005A0C43 /* CardUnit.cpp */,
+				3FD90C3D1C2DAAB9005A0C43 /* CardUnit.hpp */,
 				3F699D0E1C14DC8B007177D4 /* Constants.cpp */,
 				3F699D0F1C14DC8B007177D4 /* Constants.hpp */,
 				3F8A07961C13DC6800A53711 /* GameProcedure_CPPWrapper.h */,
@@ -279,12 +299,16 @@
 				3F3C9BB01C13C83C00F59A6D /* JoinGameViewController.swift in Sources */,
 				3F8A079D1C13DC6800A53711 /* GameProcedure.cpp in Sources */,
 				3F6F08051C05071000ABDA89 /* AppDelegate.swift in Sources */,
+				3FD90C381C2DA9C8005A0C43 /* CardManager.cpp in Sources */,
 				3F699D101C14DC8B007177D4 /* Constants.cpp in Sources */,
 				3F1183851C0EAF6D006781C3 /* CollectionViewController.swift in Sources */,
 				3F3C9BAC1C134BB900F59A6D /* CardCell.swift in Sources */,
 				3F1183841C0EAF6D006781C3 /* CircularCollectionViewLayout.swift in Sources */,
 				3F8A079C1C13DC6800A53711 /* GameProcedure_CPPWrapper.mm in Sources */,
+				3FD90C471C2DB75D005A0C43 /* CardManager_CPPWrapper.mm in Sources */,
+				3FD90C3B1C2DAA6E005A0C43 /* GameInfo.cpp in Sources */,
 				3F8A079A1C13DC6800A53711 /* Card_CPPWrapper.mm in Sources */,
+				3FD90C3E1C2DAAB9005A0C43 /* CardUnit.cpp in Sources */,
 				3F6F082B1C05602200ABDA89 /* SettingsViewController.swift in Sources */,
 				3F3C9BAA1C1348BA00F59A6D /* PlayCardViewController.swift in Sources */,
 				3F11837D1C0E8FC8006781C3 /* AddFriendsTableViewCell.swift in Sources */,

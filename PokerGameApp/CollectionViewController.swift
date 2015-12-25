@@ -22,6 +22,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     var layout: CircularCollectionViewLayout!
     var lists = [NSMutableArray!](count: 4, repeatedValue: nil)
     var myCards = [Card_CPPWrapper!]()
+    var selectedCards = [Card_CPPWrapper!]()
     
     @IBOutlet weak var collectionView: UICollectionView!
     

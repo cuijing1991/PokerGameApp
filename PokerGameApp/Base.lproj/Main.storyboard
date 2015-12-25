@@ -553,66 +553,24 @@
                             </collectionView>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XIK-S9-QmX" userLabel="view1">
                                 <rect key="frame" x="6" y="5" width="220" height="116"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Button_On" translatesAutoresizingMaskIntoConstraints="NO" id="ZlY-W8-RY1">
-                                        <rect key="frame" x="87" y="76" width="40" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="bgF-aV-Nl8"/>
-                                            <constraint firstAttribute="width" constant="40" id="doY-Vi-J4T"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="ZlY-W8-RY1" secondAttribute="bottom" id="PKr-fA-KAY"/>
-                                    <constraint firstItem="ZlY-W8-RY1" firstAttribute="centerX" secondItem="XIK-S9-QmX" secondAttribute="centerX" id="SiC-VD-6ti"/>
-                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fHi-4l-fOd" userLabel="View2">
                                 <rect key="frame" x="448" y="5" width="214" height="116"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Button_On" translatesAutoresizingMaskIntoConstraints="NO" id="TWe-oU-zhN">
-                                        <rect key="frame" x="89" y="76" width="40" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="4jv-E4-Ajo"/>
-                                            <constraint firstAttribute="width" constant="40" id="7aJ-Kt-3Pv"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="TWe-oU-zhN" secondAttribute="bottom" id="GDm-Wn-eYp"/>
-                                    <constraint firstItem="TWe-oU-zhN" firstAttribute="centerX" secondItem="fHi-4l-fOd" secondAttribute="centerX" id="lua-kj-7WM"/>
-                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GWM-zb-N2p" userLabel="View3">
                                 <rect key="frame" x="226" y="5" width="224" height="116"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Button_On" translatesAutoresizingMaskIntoConstraints="NO" id="9Y7-lj-Tsk">
-                                        <rect key="frame" x="92" y="76" width="40" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="09B-xj-xos"/>
-                                            <constraint firstAttribute="width" constant="40" id="Byy-nh-IDu"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
                                 <color key="backgroundColor" red="1" green="0.69354002250000002" blue="0.103785909" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="9Y7-lj-Tsk" secondAttribute="bottom" id="8z8-it-H56"/>
-                                    <constraint firstItem="9Y7-lj-Tsk" firstAttribute="centerX" secondItem="GWM-zb-N2p" secondAttribute="centerX" id="Baa-xZ-oIz"/>
-                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rGW-Fd-rka" userLabel="View4">
                                 <rect key="frame" x="226" y="124" width="224" height="110"/>
                                 <color key="backgroundColor" red="1" green="0.69354002250000002" blue="0.103785909" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Button_On" translatesAutoresizingMaskIntoConstraints="NO" id="KJ1-rv-UNA">
-                                <rect key="frame" x="314" y="335" width="40" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="MMX-R0-uSO"/>
-                                    <constraint firstAttribute="width" constant="40" id="nVo-hf-iR4"/>
-                                </constraints>
-                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMQ-Xo-K8X">
+                                <rect key="frame" x="616" y="204" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -622,7 +580,6 @@
                             <constraint firstItem="T1Y-zW-Hhw" firstAttribute="leading" secondItem="XIK-S9-QmX" secondAttribute="leading" id="IXu-7h-fc1"/>
                             <constraint firstItem="GWM-zb-N2p" firstAttribute="height" secondItem="XIK-S9-QmX" secondAttribute="height" id="O4U-Bz-L6t"/>
                             <constraint firstItem="5TU-Tx-6aH" firstAttribute="top" secondItem="T1Y-zW-Hhw" secondAttribute="bottom" id="OgO-Bf-z4z"/>
-                            <constraint firstItem="KJ1-rv-UNA" firstAttribute="centerX" secondItem="T1Y-zW-Hhw" secondAttribute="centerX" id="OtY-nO-uos"/>
                             <constraint firstItem="rGW-Fd-rka" firstAttribute="width" secondItem="XIK-S9-QmX" secondAttribute="width" id="PWB-m8-MBw"/>
                             <constraint firstItem="XIK-S9-QmX" firstAttribute="leading" secondItem="GZA-0Y-f8P" secondAttribute="leadingMargin" constant="-14" id="Saw-zM-2ym"/>
                             <constraint firstItem="T1Y-zW-Hhw" firstAttribute="top" secondItem="rGW-Fd-rka" secondAttribute="bottom" constant="2" id="XbQ-5V-Nzp"/>
@@ -630,7 +587,6 @@
                             <constraint firstItem="fHi-4l-fOd" firstAttribute="leading" secondItem="GWM-zb-N2p" secondAttribute="trailing" constant="-2" id="fXn-VR-Eb8"/>
                             <constraint firstItem="rGW-Fd-rka" firstAttribute="top" secondItem="GWM-zb-N2p" secondAttribute="bottom" constant="3" id="fiW-Xh-Arl"/>
                             <constraint firstItem="fHi-4l-fOd" firstAttribute="top" secondItem="XIK-S9-QmX" secondAttribute="top" id="gbY-B5-Bf2"/>
-                            <constraint firstItem="KJ1-rv-UNA" firstAttribute="bottom" secondItem="T1Y-zW-Hhw" secondAttribute="bottom" id="hCv-da-9tL"/>
                             <constraint firstItem="rGW-Fd-rka" firstAttribute="leading" secondItem="GWM-zb-N2p" secondAttribute="leading" id="jME-Ym-S9x"/>
                             <constraint firstItem="GWM-zb-N2p" firstAttribute="top" secondItem="XIK-S9-QmX" secondAttribute="top" id="k48-05-IbE"/>
                             <constraint firstItem="T1Y-zW-Hhw" firstAttribute="height" secondItem="XIK-S9-QmX" secondAttribute="height" id="lgr-Fd-jaw"/>
