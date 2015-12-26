@@ -23,10 +23,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     var lists = [NSMutableArray!](count: 4, repeatedValue: nil)
     var myCards = [Card_CPPWrapper]()
     
-    
-    
     @IBOutlet weak var collectionView: UICollectionView!
-  
     @IBOutlet weak var playButton: UIButton!
     
     
@@ -54,7 +51,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             let gameprocedure = GameProcedure_CPPWrapper()
             gameprocedure.GameProcedure_CPPWrapper()
             gameprocedure.ShuffleCards(lists[0], pca2: lists[1], pca3: lists[2], pca4: lists[3])
-            appendImage(0)
+            assignCard_to_all(0)
         }
         
         
@@ -68,7 +65,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         return c1.compare(c1, to: c2, suit: keysuit, rank: keyrank)
     }
     
-    func appendImage(index: Int) {
+    func assignCard_to_all(index: Int) {
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC))
         dispatch_after(time, dispatch_get_main_queue(), {
             self.images.append("Images/PNG-cards-All/" + self.lists[0][index].toString() + ".png")
@@ -92,7 +89,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.layout.invalidateLayout()
             }
             if(index < 26) {
-                self.appendImage(index+1)
+                self.assignCard_to_all(index+1)
             }
             else {
                 self.manager.CardManager_CPPWrapper(self.myCards)
@@ -217,8 +214,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
             print ("bad")
         }
-       // self.collectionView.reloadData()
-        
     }
     
     @IBAction func playCards(sender: AnyObject) {
@@ -231,9 +226,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         //playButton.enabled = false
         //playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
-        
-        //self.layout.angleOffset = 0
-        //self.layout.anglePerItem = scale * 233 / 3000  / 1.7 / scale
+
         self.layout.invalidateLayout()
         self.collectionView.reloadData()
         

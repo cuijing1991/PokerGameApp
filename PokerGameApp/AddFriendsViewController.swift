@@ -121,7 +121,6 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
         
         let declineAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alertAction) -> Void in
             self.appDelegate.mpcManager.invitationHandler = nil
-            //self.appDelegate.mpcManager.invitationHandler!(false, nil)
         }
         
         alert.addAction(acceptAction)
@@ -138,10 +137,5 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
         })
         
         print("Connected")
-        /*
-        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
-        self.performSegueWithIdentifier("idSegueChat", sender: self)
-        }
-        */
     }
  }
