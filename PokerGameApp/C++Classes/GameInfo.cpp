@@ -8,6 +8,10 @@
 
 #include "GameInfo.hpp"
 #include "Constants.hpp"
+#include "Card.hpp"
+#include <list>
 
 Ranks GameInfo::keyRank = Four;
 Suits GameInfo::keySuit = Spade;
+Suits GameInfo::currentSuit = Diamond;
+std::list<Card> GameInfo::format = std::list<Card>();

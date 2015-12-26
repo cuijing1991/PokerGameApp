@@ -44,6 +44,9 @@ CardManager::CardManager(const list<Card> &cards) {
             }
         }
     }
+    cout << "Spade = " << spades.size() << endl;
+    cout << "Diamond = " << diamonds.size() << endl;
+
 }
 
 
@@ -132,7 +135,7 @@ list<CardUnit> CardManager::getStructure(const list<Card> &cards) {
     std::vector<int>::const_iterator iterator;
     int order = 0;
     for (iterator = card_array.begin(); iterator != card_array.end(); ++iterator) {
-        if (*iterator != 0)
+        if (*iterator != 0) {
             if ((cards.begin())->isKey()) {
                 if (GameInfo::keySuit != Joker && (order==13 || order==14))
                     cu_list.push_back(CardUnit(*iterator, 12));
@@ -144,6 +147,7 @@ list<CardUnit> CardManager::getStructure(const list<Card> &cards) {
             else {
                 cu_list.push_back(CardUnit(*iterator, order));
             }
+        }
         order ++;
     }
     cu_list.sort([](const CardUnit &cu1, const CardUnit &cu2) { return CardUnit::compare(cu1, cu2);});
@@ -152,12 +156,12 @@ list<CardUnit> CardManager::getStructure(const list<Card> &cards) {
 
 /* Assume cards in format have the same suit */
 bool CardManager::testCards(const Suits suit, const list<Card> &format, const list<Card> &cards) {
-    int size_format = format.size();
-    int size_all = getList(suit).size();
-    int size = cards.size();
+    int size_format = (int)format.size();
+    int size_all = (int)getList(suit).size();
+    int size = (int)cards.size();
     int size_test = 0;
     
-    if (size != size_format) return 0;
+    if (size != size_format) return false;
     
     if (suit == GameInfo::keySuit) {
         for (Card card: cards) {
@@ -167,12 +171,12 @@ bool CardManager::testCards(const Suits suit, const list<Card> &format, const li
     }
     else {
         for (Card card: cards) {
-            if (card.getSuit() == static_cast<int>(suit))
+            if (card.getSuit() == static_cast<int>(suit) && !card.isKey())
                 size_test ++;
         }
     }
     
-    
+    if(size_test > size_all) return false;
     if(size_test > size_format) return false;
     if(size_test < size_format && size_test != size_all) return false;
     if(size_test < size_format && size_test == size_all) return true;
@@ -286,7 +290,10 @@ bool CardManager::remove(const Card card, list<Card>& l) {
     list<Card>::const_iterator iterator;
     for (iterator = l.begin(); iterator != l.end(); ++iterator) {
         if (iterator->getSuit() == card.getSuit() && iterator->getRank() == card.getRank()) {
+            cout << "Size = " << l.size() << endl;
+            cout << "Suit = " << iterator->getSuit() << " Rank = " << iterator->getRank() << endl;
             l.erase(iterator);
+            cout << "Size = " << l.size() << endl;
             return true;
         }
     }

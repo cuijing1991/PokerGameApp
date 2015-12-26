@@ -46,7 +46,7 @@ class CircularCollectionViewLayout: UICollectionViewLayout {
     var angle: CGFloat {
     return angleAtExtreme * collectionView!.contentOffset.x / (collectionViewContentSize().width -
       CGRectGetWidth(collectionView!.bounds))
-    }
+    }    
   
     var angleOffset: CGFloat = 0
   

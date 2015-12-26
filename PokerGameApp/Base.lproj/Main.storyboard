@@ -570,6 +570,9 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMQ-Xo-K8X">
                                 <rect key="frame" x="616" y="204" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="playCards:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="9tk-d3-zTh"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -600,6 +603,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="collectionView" destination="T1Y-zW-Hhw" id="JAF-Yc-5yl"/>
+                        <outlet property="playButton" destination="DMQ-Xo-K8X" id="dMd-Jp-bH3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hTk-lj-C5r" userLabel="First Responder" sceneMemberID="firstResponder"/>

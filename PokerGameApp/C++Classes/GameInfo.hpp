@@ -9,11 +9,15 @@
 #ifndef GAMEINFO_H
 #define GAMEINFO_H
 #include "Constants.hpp"
+#include "Card.hpp"
+#include <list>
 
 class GameInfo {
 public:
     static Suits keySuit;
     static Ranks keyRank;
+    static Suits currentSuit;
+    static std::list<Card> format;
 };
 
 

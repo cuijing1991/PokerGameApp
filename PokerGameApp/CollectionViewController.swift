@@ -13,18 +13,22 @@ let reuseIdentifier = "Cell"
 
 class CollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    var keysuit = 4
-    var keyrank = 1
-    
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let manager = CardManager_CPPWrapper()
     
+    var keysuit = 0
+    var keyrank = 4
     var images = [String]()
     var layout: CircularCollectionViewLayout!
     var lists = [NSMutableArray!](count: 4, repeatedValue: nil)
-    var myCards = [Card_CPPWrapper!]()
-    var selectedCards = [Card_CPPWrapper!]()
+    var myCards = [Card_CPPWrapper]()
+    
+    
     
     @IBOutlet weak var collectionView: UICollectionView!
+  
+    @IBOutlet weak var playButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,15 +42,11 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         collectionView.allowsMultipleSelection = true
         view.addSubview(collectionView)
         view.sendSubviewToBack(collectionView)
-        
+        playButton.enabled = false
         
         if (self.appDelegate.mpcManager.server) {
             
-            // *********   Test c++ Code  ********************************//
-            let wrapperCard = Card_CPPWrapper()
-            wrapperCard.Card_CPPWrapper(3, rank: 12)
-            print("String: \(wrapperCard.toString())")
-            
+            /***********************   Server Device  **********************/
             for index in 0...3 {
                 lists[index] = NSMutableArray()
             }
@@ -54,12 +54,13 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             let gameprocedure = GameProcedure_CPPWrapper()
             gameprocedure.GameProcedure_CPPWrapper()
             gameprocedure.ShuffleCards(lists[0], pca2: lists[1], pca3: lists[2], pca4: lists[3])
-            
             appendImage(0)
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleMPCReceivedDataWithNotification:", name: "receivedMPCDataNotification", object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "handleMPCReceivedDataWithNotification:",
+            name: "receivedMPCDataNotification", object: nil)
     }
     
     
@@ -85,7 +86,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             self.collectionView.reloadData()
             self.layout.invalidateLayout()
             if(index == self.lists[0].count-1) {
-                self.layout.angleOffset = 0
+                //self.layout.angleOffset = 0
                 self.layout.anglePerItem = scale * 233 / 3000  / 1.7 / scale
                 self.collectionView.reloadData()
                 self.layout.invalidateLayout()
@@ -93,11 +94,13 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             if(index < 26) {
                 self.appendImage(index+1)
             }
+            else {
+                self.manager.CardManager_CPPWrapper(self.myCards)
+            }
         })
     }
     
     
-    // MARK: UICollectionViewDataSource
     
     func collectionView(collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
@@ -107,8 +110,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     func collectionView(collectionView: UICollectionView,
         cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CircularCollectionViewCell
-            
-            //  cell.imageName = images[indexPath.row]
             cell.imageName = "Images/PNG-cards-All/" + myCards[indexPath.row].toString() + ".png"
             return cell
     }
@@ -118,29 +119,18 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             print(indexPath.row)
             self.layout.selected[indexPath.row] = true
             self.layout.invalidateLayout()
+            self.updateView()
     }
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath:NSIndexPath) {
         self.layout.selected[indexPath.row] = false
         self.layout.invalidateLayout()
+        self.updateView()
     }
     
     
     func assignCard(index: Int, player: Int) -> Bool{
         
         let message = "_assign_card_"
-        //    let value = "Images/PNG-cards-All/" + self.lists[player + 1][index].toString() + ".png"
-        //    let messageDictionary: [String: String] = ["message": message, "value": value]
-        //
-        //    let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-        //
-        //        do {
-        //          try appDelegate.mpcManager.sessions[player].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[player].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-        //        }
-        //        catch let error as NSError {
-        //          print(error.localizedDescription)
-        //          print("Can not send data")
-        //          return false
-        //        }
         let card = self.lists[player + 1][index] as! Card_CPPWrapper
         let messageDictionary: [String: AnyObject] = ["message": message, "card": card]
         
@@ -177,27 +167,75 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.myCards.append(card);
                 self.myCards.sortInPlace(self.forwards)
                 print(myCards.count)
-                self.updateView()
+                self.collectionView.reloadData()
                 self.layout.invalidateLayout()
                 if(self.myCards.count > 12) {
                     self.layout.angleOffset += self.layout.anglePerItem
                 }
                 if(self.myCards.count == 27) {
-                    self.layout.angleOffset = 0
+                    //self.layout.angleOffset = 0
                     self.layout.anglePerItem = scale * 233 / 3000  / 1.7 / scale
                     self.collectionView.reloadData()
                     self.layout.invalidateLayout()
+                    self.manager.CardManager_CPPWrapper(self.myCards)
                 }
                 
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                    self.updateView()
+                    self.collectionView.reloadData()
+                    self.layout.invalidateLayout()
                 })
             }
         }
     }
     
     func updateView(){
-        self.collectionView.reloadData()
         self.layout.invalidateLayout()
+        var selectedCards = [Card_CPPWrapper]()
+        for i in 0...myCards.count-1 {
+            if (self.layout.selected[i]) {
+                selectedCards.append(myCards[i])
+            }
+        }
+        var format = [Card_CPPWrapper]();
+        let c1 = Card_CPPWrapper()
+        c1.Card_CPPWrapper(3,rank:3)
+        format.append(c1);
+        let c2 = Card_CPPWrapper()
+        c2.Card_CPPWrapper(3,rank:3)
+        format.append(c2);
+        let c3 = Card_CPPWrapper()
+        c3.Card_CPPWrapper(3,rank:10)
+        format.append(c3);
+
+        if(manager.testCards(3, format:format, cards:selectedCards)) {
+            playButton.enabled = true
+            playButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
+            print ("cheer")
+        }
+        else {
+            playButton.enabled = false
+            playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+            print ("bad")
+        }
+       // self.collectionView.reloadData()
+        
+    }
+    
+    @IBAction func playCards(sender: AnyObject) {
+        for var i = myCards.count-1; i >= 0; i-- {
+            if (self.layout.selected[i]) {
+                manager.remove(myCards[i])
+                myCards.removeAtIndex(i)
+                self.layout.selected.removeAtIndex(i)
+            }
+        }
+        //playButton.enabled = false
+        //playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        
+        //self.layout.angleOffset = 0
+        //self.layout.anglePerItem = scale * 233 / 3000  / 1.7 / scale
+        self.layout.invalidateLayout()
+        self.collectionView.reloadData()
+        
     }
 }
