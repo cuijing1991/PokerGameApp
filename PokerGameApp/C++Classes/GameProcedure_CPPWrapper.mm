@@ -11,6 +11,7 @@
 #import "Card_CPPWrapper.h"
 #include "Card.hpp"
 #include "GameProcedure.hpp"
+#include <iostream>
 
 @interface GameProcedure_CPPWrapper()
 @property GameProcedure *gameProcedure;
@@ -63,28 +64,30 @@
     
 }
 
--(NSArray<Card_CPPWrapper*>*)testStarter:(NSArray<Card_CPPWrapper*>*)cards suit:(int)suit n:(int)n {
+-(NSArray<Card_CPPWrapper*>*)testStarter:(NSArray<Card_CPPWrapper*>*)cards suit:(NSInteger)suit n:(NSInteger)n {
     std::list<Card> cards_cpp;
     for(Card_CPPWrapper *c in cards) {
         cards_cpp.push_back(Card((int)c.suit, (int)c.rank));
     }
-    list<Card> l = self.gameProcedure->testStarter(cards_cpp, static_cast<Suits>(suit), n);
-    NSMutableArray *mutableArray;
+    list<Card> l = self.gameProcedure->testStarter(cards_cpp, static_cast<Suits>(suit), (int)n);
+    NSMutableArray *mutableArray = [[NSMutableArray alloc]init];
     for(Card c : l) {
         Card_CPPWrapper *cardwrapper;
         cardwrapper = [Card_CPPWrapper alloc];
         [cardwrapper Card_CPPWrapper:c.getSuit() rank:c.getRank()];
         [mutableArray addObject:cardwrapper];
+        printf("*");
     }
-    NSArray *array = [mutableArray copy];
+    std::cout << "Test:" << mutableArray.count << std::endl;
+    NSArray *array = [NSArray arrayWithArray:mutableArray];
     return array;
 }
 
-- (bool)remove: (NSArray<Card_CPPWrapper*>*)removeList n:(int)n {
+- (bool)remove: (NSArray<Card_CPPWrapper*>*)removeList n:(NSInteger)n {
     std::list<Card> removeList_cpp;
     for(Card_CPPWrapper *c in removeList) {
         removeList_cpp.push_back(Card((int)c.suit, (int)c.rank));
     }
-    return self.gameProcedure->remove(removeList_cpp, n);
+    return self.gameProcedure->remove(removeList_cpp, (int)n);
 }
 @end
