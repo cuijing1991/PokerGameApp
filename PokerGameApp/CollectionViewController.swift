@@ -22,6 +22,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     var layout: CircularCollectionViewLayout!
     var lists = [NSMutableArray!](count: 4, repeatedValue: nil)
     var myCards = [Card_CPPWrapper]()
+    var enableTest = false
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var playButton: UIButton!
@@ -40,6 +41,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         view.addSubview(collectionView)
         view.sendSubviewToBack(collectionView)
         playButton.enabled = false
+        playButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         
         if (self.appDelegate.mpcManager.server) {
             
@@ -93,6 +95,18 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             }
             else {
                 self.manager.CardManager_CPPWrapper(self.myCards)
+                var format = [Card_CPPWrapper]();
+                let c1 = Card_CPPWrapper()
+                c1.Card_CPPWrapper(2,rank:3)
+                format.append(c1);
+                let c2 = Card_CPPWrapper()
+                c2.Card_CPPWrapper(2,rank:3)
+                format.append(c2);
+                let c3 = Card_CPPWrapper()
+                c3.Card_CPPWrapper(2,rank:10)
+                format.append(c3);
+                self.broadcast(true, fromplayer: 0, cards: format)
+                self.assignNext(true, player: 0)
             }
         })
     }
@@ -146,7 +160,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func handleMPCReceivedDataWithNotification(notification: NSNotification) {
-        print("yes")
         // Get the dictionary containing the data and the source peer from the notification.
         let receivedDataDictionary = notification.object as! Dictionary<String, AnyObject>
         
@@ -156,7 +169,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         // Convert the data (NSData) into a Dictionary object.
         let dataDictionary = NSKeyedUnarchiver.unarchiveObjectWithData(data!) as! Dictionary<String, AnyObject>
         
-        // Check if there's an entry with the "message" key.
+        // Check if there's an entry with the "_assign_card_" key.
         if let message = dataDictionary["message"] {
             if message as! String == "_assign_card_"{
                 let card = dataDictionary["card"] as! Card_CPPWrapper
@@ -182,6 +195,23 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                     self.layout.invalidateLayout()
                 })
             }
+            // Check if there's an entry with the "_assign_next_" key.
+            if message as! String == "_assign_next_" {
+                print ("_assign_next_")
+                playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+                playButton.enabled = false
+                self.updateView()
+                let flag = dataDictionary["flag"] as! Bool
+                self.enableTest = flag;
+            }
+            // Check if there's an entry with the "_broadcast_" key.
+            if message as! String == "_broadcast_" {
+                let flag = dataDictionary["flag"] as! Bool
+                if (flag) {
+                    let format = dataDictionary["cards"] as! [Card_CPPWrapper]
+                    manager.setFormat(format)
+                }
+            }
         }
     }
     
@@ -193,26 +223,28 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 selectedCards.append(myCards[i])
             }
         }
-        var format = [Card_CPPWrapper]();
-        let c1 = Card_CPPWrapper()
-        c1.Card_CPPWrapper(3,rank:3)
-        format.append(c1);
-        let c2 = Card_CPPWrapper()
-        c2.Card_CPPWrapper(3,rank:3)
-        format.append(c2);
-        let c3 = Card_CPPWrapper()
-        c3.Card_CPPWrapper(3,rank:10)
-        format.append(c3);
 
-        if(manager.testCards(3, format:format, cards:selectedCards)) {
-            playButton.enabled = true
-            playButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
-            print ("cheer")
+        if (self.enableTest) {
+            if (manager.testCards(selectedCards)) {
+                playButton.enabled = true
+                playButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
+                print ("cheer")
+            }
+            else {
+                playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+                playButton.enabled = false
+                print ("bad")
+            }
         }
         else {
-            playButton.enabled = false
-            playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
-            print ("bad")
+            if (selectedCards.count > 0) {
+                playButton.enabled = true
+                playButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
+            }
+            else {
+                playButton.enabled = false
+                playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+            }
         }
     }
     
@@ -224,11 +256,55 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.layout.selected.removeAtIndex(i)
             }
         }
-        //playButton.enabled = false
-        //playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        playButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        playButton.enabled = false
+        
 
         self.layout.invalidateLayout()
         self.collectionView.reloadData()
-        
     }
+    
+    func assignNext(flag: Bool, player: Int) -> Bool{
+        
+        let message = "_assign_next_"
+
+        let messageDictionary: [String: AnyObject] = ["message": message, "flag": flag]
+        
+        let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
+        
+        do {
+            try appDelegate.mpcManager.sessions[player].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[player].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+        }
+        catch let error as NSError {
+            print(error.localizedDescription)
+            print("Can not send data")
+            return false
+        }
+        return true
+    }
+    
+    
+    func broadcast(flag: Bool, fromplayer: Int, cards: [Card_CPPWrapper]) -> Bool{
+        
+        let message = "_broadcast_"
+        
+        let messageDictionary: [String: AnyObject] = ["message": message, "flag": flag, "fromplayer": fromplayer, "cards": cards]
+        
+        let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
+        
+        if (self.appDelegate.mpcManager.connectedSessionCount > 0) {
+            for playerID in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
+                do {
+                    try appDelegate.mpcManager.sessions[playerID].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[playerID].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+                }
+                catch let error as NSError {
+                    print(error.localizedDescription)
+                    print("Can not send data")
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
 }
