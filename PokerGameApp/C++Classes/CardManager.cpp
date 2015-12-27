@@ -44,9 +44,6 @@ CardManager::CardManager(const list<Card> &cards) {
             }
         }
     }
-    cout << "Spade = " << spades.size() << endl;
-    cout << "Diamond = " << diamonds.size() << endl;
-
 }
 
 

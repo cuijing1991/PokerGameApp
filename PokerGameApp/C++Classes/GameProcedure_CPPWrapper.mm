@@ -32,7 +32,7 @@
 
 -(void)ShuffleCards:(NSMutableArray *)pca1 pca2:(NSMutableArray *)pca2 pca3:(NSMutableArray *)pca3 pca4:(NSMutableArray *)pca4 {
   
-    self.gameProcedure->ShuffleCards(self.list1, self.list2, self.list3, self.list4);
+    self.gameProcedure->ShuffleCards(*self.list1, *self.list2, *self.list3, *self.list4);
   
     for(Card c : *self.list1) {
       Card_CPPWrapper *cardwrapper;
@@ -61,5 +61,30 @@
       [pca4 addObject:cardwrapper];
     }
     
+}
+
+-(NSArray<Card_CPPWrapper*>*)testStarter:(NSArray<Card_CPPWrapper*>*)cards suit:(int)suit n:(int)n {
+    std::list<Card> cards_cpp;
+    for(Card_CPPWrapper *c in cards) {
+        cards_cpp.push_back(Card((int)c.suit, (int)c.rank));
+    }
+    list<Card> l = self.gameProcedure->testStarter(cards_cpp, static_cast<Suits>(suit), n);
+    NSMutableArray *mutableArray;
+    for(Card c : l) {
+        Card_CPPWrapper *cardwrapper;
+        cardwrapper = [Card_CPPWrapper alloc];
+        [cardwrapper Card_CPPWrapper:c.getSuit() rank:c.getRank()];
+        [mutableArray addObject:cardwrapper];
+    }
+    NSArray *array = [mutableArray copy];
+    return array;
+}
+
+- (bool)remove: (NSArray<Card_CPPWrapper*>*)removeList n:(int)n {
+    std::list<Card> removeList_cpp;
+    for(Card_CPPWrapper *c in removeList) {
+        removeList_cpp.push_back(Card((int)c.suit, (int)c.rank));
+    }
+    return self.gameProcedure->remove(removeList_cpp, n);
 }
 @end

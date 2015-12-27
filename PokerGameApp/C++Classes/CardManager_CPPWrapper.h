@@ -17,8 +17,10 @@
 - (instancetype)CardManager_CPPWrapper:(NSArray<Card_CPPWrapper*>*)cards;
 - (bool) testCards: (NSInteger)suit format: (NSArray<Card_CPPWrapper*>*)format cards: (NSArray<Card_CPPWrapper*>*)cards;
 - (bool) testCards: (NSArray<Card_CPPWrapper*>*)cards;
+- (bool) removeList: (NSArray<Card_CPPWrapper*>*)cards;
 - (bool) remove: (Card_CPPWrapper*)card;
 - (void) setFormat: (NSArray<Card_CPPWrapper*>*)format;
+- (int)  isUniform: (NSArray<Card_CPPWrapper*>*) cards;
 
 @end
 

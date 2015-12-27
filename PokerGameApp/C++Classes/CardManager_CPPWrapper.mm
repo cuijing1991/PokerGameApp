@@ -61,12 +61,27 @@
     }
     GameInfo::format = format_cpp;
 }
-
+- (bool) removeList: (NSArray<Card_CPPWrapper*>*)cards {
+    for (Card_CPPWrapper *c in cards) {
+        if([self remove: c]) ;
+        else return false;
+    }
+    return true;
+}
 - (bool) remove: (Card_CPPWrapper*)card {
     Card card_cpp((int)card.suit, (int)card.rank);
     self.manager->remove(card_cpp);
     std::cout << self.manager->getList(Diamond).size() << std::endl;
     return true;
 }
+
+- (int)  isUniform: (NSArray<Card_CPPWrapper*>*) cards{
+    std::list<Card> cards_cpp;
+    for(Card_CPPWrapper *c in cards) {
+        cards_cpp.push_back(Card((int)c.suit, (int)c.rank));
+    }
+    return self.manager->isUniform(cards_cpp);
+}
+
 @end
 

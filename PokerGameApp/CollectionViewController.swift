@@ -23,6 +23,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     var lists = [NSMutableArray!](count: 4, repeatedValue: nil)
     var myCards = [Card_CPPWrapper]()
     var enableTest = false
+    var gameprocedure: GameProcedure_CPPWrapper!
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var playButton: UIButton!
@@ -50,9 +51,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 lists[index] = NSMutableArray()
             }
             
-            let gameprocedure = GameProcedure_CPPWrapper()
+            gameprocedure = GameProcedure_CPPWrapper()
             gameprocedure.GameProcedure_CPPWrapper()
             gameprocedure.ShuffleCards(lists[0], pca2: lists[1], pca3: lists[2], pca4: lists[3])
+
             assignCard_to_all(0)
         }
         
@@ -68,7 +70,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func assignCard_to_all(index: Int) {
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC))
+        let time = dispatch_time(DISPATCH_TIME_NOW, 2*Int64(NSEC_PER_SEC))
         dispatch_after(time, dispatch_get_main_queue(), {
             self.images.append("Images/PNG-cards-All/" + self.lists[0][index].toString() + ".png")
             self.myCards.append(self.lists[0][index] as! Card_CPPWrapper)
@@ -130,12 +132,12 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             print(indexPath.row)
             self.layout.selected[indexPath.row] = true
             self.layout.invalidateLayout()
-            self.updateView()
+            self.updateButton()
     }
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath:NSIndexPath) {
         self.layout.selected[indexPath.row] = false
         self.layout.invalidateLayout()
-        self.updateView()
+        self.updateButton()
     }
     
     
@@ -183,7 +185,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                     self.layout.angleOffset += self.layout.anglePerItem
                 }
                 if(self.myCards.count == 27) {
-                    //self.layout.angleOffset = 0
                     self.layout.anglePerItem = scale * 233 / 3000  / 1.7 / scale
                     self.collectionView.reloadData()
                     self.layout.invalidateLayout()
@@ -197,25 +198,41 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             }
             // Check if there's an entry with the "_assign_next_" key.
             if message as! String == "_assign_next_" {
-                print ("_assign_next_")
-                playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
-                playButton.enabled = false
-                self.updateView()
-                let flag = dataDictionary["flag"] as! Bool
-                self.enableTest = flag;
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+                    self.playButton.enabled = false
+                    let flag = dataDictionary["flag"] as! Bool
+                    self.enableTest = flag;
+                })
             }
             // Check if there's an entry with the "_broadcast_" key.
             if message as! String == "_broadcast_" {
-                let flag = dataDictionary["flag"] as! Bool
-                if (flag) {
-                    let format = dataDictionary["cards"] as! [Card_CPPWrapper]
-                    manager.setFormat(format)
-                }
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    let flag = dataDictionary["flag"] as! Bool
+                    if (flag) {
+                        let format = dataDictionary["cards"] as! [Card_CPPWrapper]
+                        self.manager.setFormat(format)
+                    }
+                 })
+            }
+            // Check if there's an entry with the "_play_cards_" key.
+            if message as! String == "_play_cards_" {
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    let flag = dataDictionary["flag"] as! Bool
+                    let cards = dataDictionary["cards"] as! [Card_CPPWrapper]
+                    let fromplayer = dataDictionary["fromplayer"] as! Int
+                    if (flag) {
+                        self.broadcast(flag, fromplayer: fromplayer, cards: cards)
+                    }
+                    else {
+                        
+                    }
+                })
             }
         }
     }
     
-    func updateView(){
+    func updateButton(){
         self.layout.invalidateLayout()
         var selectedCards = [Card_CPPWrapper]()
         for i in 0...myCards.count-1 {
@@ -237,7 +254,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             }
         }
         else {
-            if (selectedCards.count > 0) {
+            if (selectedCards.count > 0 && (manager.isUniform(selectedCards) != -1)) {
                 playButton.enabled = true
                 playButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
             }
@@ -249,19 +266,37 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     @IBAction func playCards(sender: AnyObject) {
-        for var i = myCards.count-1; i >= 0; i-- {
-            if (self.layout.selected[i]) {
-                manager.remove(myCards[i])
-                myCards.removeAtIndex(i)
-                self.layout.selected.removeAtIndex(i)
+        if (enableTest) {
+            var selectedCards = [Card_CPPWrapper]()
+            for i in 0...myCards.count-1 {
+                if (self.layout.selected[i]) {
+                    selectedCards.append(myCards[i])
+                }
             }
+            if(!self.appDelegate.mpcManager.server) {
+                let message = "_play_card_"
+                let messageDictionary: [String: AnyObject] = ["message": message, "flag": true, "cards": selectedCards]
+                let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
+                do {
+                    try appDelegate.mpcManager.sessions[0].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[0].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+                }
+                catch let error as NSError {
+                    print(error.localizedDescription)
+                    print("Can not send data")
+                }
+                for var i = myCards.count-1; i >= 0; i-- {
+                    if (self.layout.selected[i]) {
+                        manager.remove(myCards[i])
+                        myCards.removeAtIndex(i)
+                        self.layout.selected.removeAtIndex(i)
+                    }
+                }
+            }
+            playButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+            playButton.enabled = false
+            self.layout.invalidateLayout()
+            self.collectionView.reloadData()
         }
-        playButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        playButton.enabled = false
-        
-
-        self.layout.invalidateLayout()
-        self.collectionView.reloadData()
     }
     
     func assignNext(flag: Bool, player: Int) -> Bool{

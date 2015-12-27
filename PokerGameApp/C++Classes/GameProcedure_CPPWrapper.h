@@ -11,10 +11,15 @@
 
 
 #import <Foundation/Foundation.h>
+#import "Card_CPPWrapper.h"
 
 @interface GameProcedure_CPPWrapper : NSObject
 - (instancetype)GameProcedure_CPPWrapper;
 - (void)ShuffleCards:(NSMutableArray*)pca1 pca2:(NSMutableArray*)pca2 pca3:(NSMutableArray*)pca3 pca4:(NSMutableArray*)pca4;
-@end
 
+-(NSArray<Card_CPPWrapper*>*)testStarter:(NSArray<Card_CPPWrapper*>*)cards suit:(int)suit n:(int)n;
+
+- (bool)remove: (NSArray<Card_CPPWrapper*>*)removeList n:(int)n;
+
+@end
 #endif /* GameProcedure_CPPWrapper_h */

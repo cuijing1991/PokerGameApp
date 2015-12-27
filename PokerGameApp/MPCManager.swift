@@ -42,6 +42,7 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     var connectedSessionCount = 0
   
     var server: Bool = true
+    
   
     override init() {
         super.init()
@@ -140,44 +141,4 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         print("Made first contact with peer and have identity information about the remote peer (certificate may be nil)")
         certificateHandler(true)
     }
-    
-    // MARK: Custom method implementation
-    
-//    func sendData(dictionaryWithData dictionary: Dictionary<String, String>, toPeer targetPeer: MCPeerID) -> Bool {
-//        let dataToSend = NSKeyedArchiver.archivedDataWithRootObject(dictionary)
-//        var peersArray = [MCPeerID]()
-//        peersArray.append(targetPeer)
-//        
-//        
-//        for session: MCSession! in sessions {
-//        
-//            do {
-//                try session.sendData(dataToSend, toPeers: peersArray, withMode: MCSessionSendDataMode.Reliable)
-//            }
-//            catch let error as NSError {
-//                print(error.localizedDescription)
-//                return false
-//            }
-//        }
-//        return true
-//    }
-    
-//    func sendData(dictionaryWithCard dictionary: Dictionary<String, AnyObject>, toPeer targetPeer: MCPeerID) -> Bool {
-//        let dataToSend = NSKeyedArchiver.archivedDataWithRootObject(dictionary)
-//        var peersArray = [MCPeerID]()
-//        peersArray.append(targetPeer)        
-//        
-//        for session: MCSession! in sessions {
-//            
-//            do {
-//                try session.sendData(dataToSend, toPeers: peersArray, withMode: MCSessionSendDataMode.Reliable)
-//            }
-//            catch let error as NSError {
-//                print(error.localizedDescription)
-//                return false
-//            }
-//        }
-//        return true
-//    }
-
 }
