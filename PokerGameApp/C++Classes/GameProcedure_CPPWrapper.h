@@ -21,5 +21,6 @@
 
 - (bool)remove: (NSArray<Card_CPPWrapper*>*)removeList n:(NSInteger)n;
 
+- (NSInteger) Winner:(NSArray<Card_CPPWrapper*>*)l0 player1:(NSArray<Card_CPPWrapper*>*)l1 player2:(NSArray<Card_CPPWrapper*>*)l2 player3:(NSArray<Card_CPPWrapper*>*)l3;
 @end
 #endif /* GameProcedure_CPPWrapper_h */

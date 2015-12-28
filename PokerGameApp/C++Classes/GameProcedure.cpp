@@ -150,13 +150,14 @@ int GameProcedure::Winner (const list<Card> &pc1, const list<Card> &pc2, const l
             index_max = 4;
         }
     }
-    return index_max;
+    return index_max-1;
 }
 
 list<Card> GameProcedure::testStarter (const list<Card> cards, Suits suit, int n) {
     
     if (suit == GameInfo::keySuit || suit == Joker) {
         cout << "Error -- GameProcedure: testStarter()" << endl;
+        return cards;
     }
     
     list<CardUnit> cu = CardManager::getStructure(cards);

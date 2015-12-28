@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -567,7 +567,7 @@
                                 <rect key="frame" x="226" y="124" width="224" height="110"/>
                                 <color key="backgroundColor" red="1" green="0.69354002250000002" blue="0.103785909" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMQ-Xo-K8X">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMQ-Xo-K8X">
                                 <rect key="frame" x="616" y="204" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
@@ -586,11 +586,13 @@
                             <constraint firstItem="rGW-Fd-rka" firstAttribute="width" secondItem="XIK-S9-QmX" secondAttribute="width" id="PWB-m8-MBw"/>
                             <constraint firstItem="XIK-S9-QmX" firstAttribute="leading" secondItem="GZA-0Y-f8P" secondAttribute="leadingMargin" constant="-14" id="Saw-zM-2ym"/>
                             <constraint firstItem="T1Y-zW-Hhw" firstAttribute="top" secondItem="rGW-Fd-rka" secondAttribute="bottom" constant="2" id="XbQ-5V-Nzp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="DMQ-Xo-K8X" secondAttribute="trailing" constant="-15" id="bEo-ye-Qqo"/>
                             <constraint firstItem="GWM-zb-N2p" firstAttribute="width" secondItem="XIK-S9-QmX" secondAttribute="width" id="fUi-Q5-jIQ"/>
                             <constraint firstItem="fHi-4l-fOd" firstAttribute="leading" secondItem="GWM-zb-N2p" secondAttribute="trailing" constant="-2" id="fXn-VR-Eb8"/>
                             <constraint firstItem="rGW-Fd-rka" firstAttribute="top" secondItem="GWM-zb-N2p" secondAttribute="bottom" constant="3" id="fiW-Xh-Arl"/>
                             <constraint firstItem="fHi-4l-fOd" firstAttribute="top" secondItem="XIK-S9-QmX" secondAttribute="top" id="gbY-B5-Bf2"/>
                             <constraint firstItem="rGW-Fd-rka" firstAttribute="leading" secondItem="GWM-zb-N2p" secondAttribute="leading" id="jME-Ym-S9x"/>
+                            <constraint firstItem="T1Y-zW-Hhw" firstAttribute="top" secondItem="DMQ-Xo-K8X" secondAttribute="bottom" constant="2" id="jrX-mB-pOK"/>
                             <constraint firstItem="GWM-zb-N2p" firstAttribute="top" secondItem="XIK-S9-QmX" secondAttribute="top" id="k48-05-IbE"/>
                             <constraint firstItem="T1Y-zW-Hhw" firstAttribute="height" secondItem="XIK-S9-QmX" secondAttribute="height" id="lgr-Fd-jaw"/>
                             <constraint firstItem="fHi-4l-fOd" firstAttribute="height" secondItem="XIK-S9-QmX" secondAttribute="height" id="nfb-gR-jaW"/>
