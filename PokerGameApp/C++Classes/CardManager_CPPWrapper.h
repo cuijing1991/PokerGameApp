@@ -20,7 +20,11 @@
 - (bool) removeList: (NSArray<Card_CPPWrapper*>*)cards;
 - (bool) remove: (Card_CPPWrapper*)card;
 - (void) setFormat: (NSArray<Card_CPPWrapper*>*)format;
-- (int)  isUniform: (NSArray<Card_CPPWrapper*>*) cards;
+- (NSInteger)  isUniform: (NSArray<Card_CPPWrapper*>*) cards;
+- (NSInteger) structureSize: (NSArray<Card_CPPWrapper*>*) cards;
+
+//put it here is not good
+- (void) updateKeySuit: (NSInteger)keysuit;
 
 @end
 

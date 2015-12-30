@@ -75,7 +75,7 @@
     return true;
 }
 
-- (int)  isUniform: (NSArray<Card_CPPWrapper*>*) cards{
+- (NSInteger)  isUniform: (NSArray<Card_CPPWrapper*>*) cards{
     std::list<Card> cards_cpp;
     for(Card_CPPWrapper *c in cards) {
         cards_cpp.push_back(Card((int)c.suit, (int)c.rank));
@@ -83,5 +83,16 @@
     return self.manager->isUniform(cards_cpp);
 }
 
+- (NSInteger) structureSize: (NSArray<Card_CPPWrapper*>*) cards {
+    std::list<Card> cards_cpp;
+    for(Card_CPPWrapper *c in cards) {
+        cards_cpp.push_back(Card((int)c.suit, (int)c.rank));
+    }
+    return self.manager->getStructure(cards_cpp).size();
+}
+
+- (void) updateKeySuit: (NSInteger)keysuit {
+    GameInfo::keySuit = static_cast<Suits>((int)keysuit);
+}
 @end
 

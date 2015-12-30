@@ -21,9 +21,9 @@ class CircularCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-    contentView.layer.cornerRadius = 5
-    contentView.layer.borderColor = UIColor.blackColor().CGColor
-    contentView.layer.borderWidth = 1
+    contentView.layer.cornerRadius = 3
+    //contentView.layer.borderColor = UIColor.blackColor().CGColor
+    //contentView.layer.borderWidth = 1
     contentView.layer.shouldRasterize = true
     contentView.layer.rasterizationScale = UIScreen.mainScreen().scale
     contentView.clipsToBounds = true

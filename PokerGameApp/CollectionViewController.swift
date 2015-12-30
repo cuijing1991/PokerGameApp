@@ -16,28 +16,43 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let manager = CardManager_CPPWrapper()
     
+    // keysuit can keyrank should be updated while assigning cards
     var keysuit = 0
     var keyrank = 4
     var images = [String]()
     var layout: CircularCollectionViewLayout!
-    var lists = [NSMutableArray!](count: 4, repeatedValue: nil)
     var myCards = [Card_CPPWrapper]()
-    var enableTest = false
     var gameprocedure: GameProcedure_CPPWrapper!
     var playerID = 0
+    var myTurn = false
+    var enableTest = false
+    var keyCardsCount = [NSInteger](count:6, repeatedValue:0)
+    var single = false;
+    var double = false;
+    var lowjoker = false;
+    var highjoker = false;
+
+    
+    // only used for server
+    var lists = [NSMutableArray!](count: 4, repeatedValue: nil)
+    var playList = [NSArray!](count:4, repeatedValue: nil)
     var currentPlayer = 1
     var playCount = 0
-    var myTurn = false
-    var playList = [NSArray!](count:4, repeatedValue: nil)
     
+   
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var playButton: UIButton!
-    
+    @IBOutlet weak var spadeButton: UIButton!
+    @IBOutlet weak var heartButton: UIButton!
+    @IBOutlet weak var clubButton: UIButton!
+    @IBOutlet weak var diamondButton: UIButton!
+    @IBOutlet weak var jokerButton: UIButton!
+    @IBOutlet weak var highjokerButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        layout = CircularCollectionViewLayout()
         
+        layout = CircularCollectionViewLayout()
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.setCollectionViewLayout(self.layout, animated: false)
@@ -47,10 +62,21 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         view.sendSubviewToBack(collectionView)
         playButton.enabled = false
         playButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        
+        spadeButton.enabled = false
+        spadeButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        heartButton.enabled = false
+        heartButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        clubButton.enabled = false
+        clubButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        diamondButton.enabled = false
+        diamondButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        jokerButton.enabled = false
+        jokerButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        highjokerButton.enabled = false
+        highjokerButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+
+        /************************************* Server Device  *********************************/
         if (self.appDelegate.mpcManager.server) {
-            
-            /***********************   Server Device  **********************/
             for index in 0...3 {
                 lists[index] = NSMutableArray()
             }
@@ -60,7 +86,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             gameprocedure.ShuffleCards(lists[0], pca2: lists[1], pca3: lists[2], pca4: lists[3])
             assignCard_to_all(0)
         }
-        
+        /**************************************************************************************/
         
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "handleMPCReceivedDataWithNotification:",
@@ -73,11 +99,12 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func assignCard_to_all(index: Int) {
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC))
+        let time = dispatch_time(DISPATCH_TIME_NOW, 2*Int64(NSEC_PER_SEC))
         dispatch_after(time, dispatch_get_main_queue(), {
             self.images.append("Images/PNG-cards-All/" + self.lists[0][index].toString() + ".png")
             self.myCards.append(self.lists[0][index] as! Card_CPPWrapper)
             self.myCards.sortInPlace(self.forwards)
+            self.updateSuitButton(self.lists[0][index] as! Card_CPPWrapper)
             
             if (self.appDelegate.mpcManager.connectedSessionCount > 0) {
                 for playerID in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
@@ -90,7 +117,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             self.collectionView.reloadData()
             self.layout.invalidateLayout()
             if(index == self.lists[0].count-1) {
-                //self.layout.angleOffset = 0
                 self.layout.anglePerItem = scale * 233 / 3000  / 1.7 / scale
                 self.collectionView.reloadData()
                 self.layout.invalidateLayout()
@@ -100,17 +126,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             }
             else {
                 self.manager.CardManager_CPPWrapper(self.myCards)
-//                var format = [Card_CPPWrapper]();
-//                let c1 = Card_CPPWrapper()
-//                c1.Card_CPPWrapper(2,rank:3)
-//                format.append(c1);
-//                let c2 = Card_CPPWrapper()
-//                c2.Card_CPPWrapper(2,rank:3)
-//                format.append(c2);
-//                let c3 = Card_CPPWrapper()
-//                c3.Card_CPPWrapper(2,rank:10)
-//                format.append(c3);
-//                self.broadcast(false, fromplayer: 0, cards: format)
                 self.assignPlayerID(1)
                 self.assignPlayerID(2)
                 self.assignPlayerID(3)
@@ -163,7 +178,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             print("Can not send data")
             return false
         }
-        
         return true
     }
     
@@ -196,6 +210,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                     }
                     self.collectionView.reloadData()
                     self.layout.invalidateLayout()
+                    self.updateSuitButton(card)
                 })
             }
             // Check if there's an entry with the "_assign_next_" key.
@@ -251,7 +266,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                         self.assignNext(true, player: self.currentPlayer)
                     }
                     else {
-                        // ****************** Place Holder **********************//
                         let winner = self.gameprocedure.Winner(self.playList[0] as! [Card_CPPWrapper], player1:self.playList[1] as! [Card_CPPWrapper], player2: self.playList[2] as! [Card_CPPWrapper], player3: self.playList[3] as! [Card_CPPWrapper])
                         print("winner = ")
                         print(winner)
@@ -272,6 +286,24 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             // Check if there's an entry with the "_player_ID" key.
             if message as! String == "_player_ID_" {
                 self.playerID = dataDictionary["playerID"] as! Int
+            }
+            // Check if there's an entry with the "_change_state_" key.
+            if message as! String == "_change_state_" {
+                let buttonID = dataDictionary["buttonID"] as! Int
+                let state = dataDictionary["state"] as! Int
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.changeState(buttonID, state: state)
+                })
+            }
+            // Check if there's an entry with the "_change_state_request_" key.
+            if message as! String == "_change_state_request_" {
+                let buttonID = dataDictionary["buttonID"] as! Int
+                let state = dataDictionary["state"] as! Int
+                if ((state == 1 && !single) || state == 2) {
+                    NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                        self.changeStateBroadcast(buttonID, state: state)
+                    })
+                }
             }
         }
     }
@@ -299,8 +331,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         else if(self.myTurn) {
             if (selectedCards.count > 0 && (manager.isUniform(selectedCards) != -1)) {
-                playButton.enabled = true
-                playButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
+                if (manager.isUniform(selectedCards) == keysuit && manager.structureSize(selectedCards) != 1) {
+                    playButton.enabled = false
+                    playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+                }
+                else {
+                    playButton.enabled = true
+                    playButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
+                }
             }
             else {
                 playButton.enabled = false
@@ -321,7 +359,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             let messageDictionary: [String: AnyObject] = ["message": message, "flag": enableTest, "fromplayer": self.playerID, "cards": selectedCards]
             let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
             do {
-                print("_play_cards_")
                 try appDelegate.mpcManager.sessions[0].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[0].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
             }
             catch let error as NSError {
@@ -350,6 +387,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                         self.playList[self.playCount % 4] = selectedCards
                     }
                 }
+                self.gameprocedure.remove(selectedCards, n: 0) //*****************//
             }
             else {
                 let cardsBack = self.gameprocedure.testStarter(selectedCards, suit:selectedCards[0].suit, n:0);
@@ -365,7 +403,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.assignNext(true, player: self.currentPlayer)
             }
             else {
-                // ****************** Place Holder **********************//
                 let winner = self.gameprocedure.Winner(self.playList[0] as! [Card_CPPWrapper], player1:self.playList[1] as! [Card_CPPWrapper], player2: self.playList[2] as! [Card_CPPWrapper], player3: self.playList[3] as! [Card_CPPWrapper])
                 print("winner = ")
                 print(winner)
@@ -422,8 +459,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         else {
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-
-                print ("------Test xxxxx ------")
                 self.myTurn = true
                 self.enableTest = flag
                 self.updateButton()
@@ -445,18 +480,17 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             return false
         }
         return true
-
     }
     
     
-    func broadcast(flag: Bool, fromplayer: Int, cards: [Card_CPPWrapper]) -> Bool{
+    func broadcast(flag: Bool, fromplayer: Int, cards: [Card_CPPWrapper]) -> Bool {
         let message = "_broadcast_"
         let messageDictionary: [String: AnyObject] = ["message": message, "flag": flag, "fromplayer": fromplayer, "cards": cards]
         let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
         if (self.appDelegate.mpcManager.connectedSessionCount > 0) {
-            for playerID in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
+            for sessionID in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
                 do {
-                    try appDelegate.mpcManager.sessions[playerID].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[playerID].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+                    try appDelegate.mpcManager.sessions[sessionID].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[sessionID].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
                 }
                 catch let error as NSError {
                     print(error.localizedDescription)
@@ -470,5 +504,172 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         return true
     }
-
+    
+    func changeStateBroadcast(buttonID: Int, state: Int) -> Bool {
+        let message = "_change_state_"
+        let messageDictionary: [String: AnyObject] = ["message": message, "buttonID": buttonID, "state": state]
+        let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
+        if (self.appDelegate.mpcManager.connectedSessionCount > 0) {
+            for sessionID in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
+                do {
+                    try appDelegate.mpcManager.sessions[sessionID].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[sessionID].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+                }
+                catch let error as NSError {
+                    print(error.localizedDescription)
+                    print("Can not send data")
+                    return false
+                }
+            }
+        }
+        self.changeState(buttonID, state:state)
+        return true
+    }
+    
+    func updateSuitButton(card: Card_CPPWrapper) {
+        var n : NSInteger
+        let color = UIColor.redColor()
+        if (card.rank == keyrank) {
+            n = ++keyCardsCount[card.suit]
+            if ((n==1 && !single) || (n==2 && card.suit > keysuit) || (n==2 && !double)){
+                print("change suit button state")
+                switch (card.suit) {
+                case 0:
+                    self.spadeButton.enabled = true
+                    self.spadeButton.setTitleColor(color, forState: UIControlState.Normal)
+                    break
+                case 1:
+                    self.heartButton.enabled = true
+                    self.heartButton.setTitleColor(color, forState: UIControlState.Normal)
+                    break
+                case 2:
+                    self.clubButton.enabled = true
+                    self.clubButton.setTitleColor(color, forState: UIControlState.Normal)
+                    break
+                case 3:
+                    self.diamondButton.enabled = true
+                    self.diamondButton.setTitleColor(color, forState: UIControlState.Normal)
+                    break
+                default:
+                    break
+                }
+            }
+            
+        }
+        if (card.suit == 4) {
+            n = ++keyCardsCount[card.rank + 4]
+            if (n==2) {
+                switch (card.rank) {
+                case 0:
+                    self.jokerButton.enabled = true
+                    self.jokerButton.setTitleColor(color, forState: UIControlState.Normal)
+                    break
+                case 1:
+                    self.highjokerButton.enabled = true
+                    self.highjokerButton.setTitleColor(color, forState: UIControlState.Normal)
+                    break
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    func changeState(buttonID: Int, state: Int) {
+        if (buttonID < 5) {
+            keysuit = buttonID
+            self.manager.updateKeySuit(buttonID)
+        }
+        else {
+            keysuit = 4
+            self.manager.updateKeySuit(buttonID)
+        }
+        self.myCards.sortInPlace(self.forwards)
+        self.collectionView.reloadData()
+        self.layout.invalidateLayout()
+        let color = UIColor.blackColor()
+        if (state == 1){ single = true }
+        if (state == 2){ double = true}
+        for index in 0...5 {
+            if (keyCardsCount[index] == 1 || (keyCardsCount[index] == state && index <= buttonID)) {
+                switch (index) {
+                case 0:
+                    self.spadeButton.enabled = false
+                    self.spadeButton.setTitleColor(color, forState: UIControlState.Normal)
+                    break
+                case 1:
+                    self.heartButton.enabled = false
+                    self.heartButton.setTitleColor(color, forState: UIControlState.Normal)
+                    break
+                case 2:
+                    self.clubButton.enabled = false
+                    self.clubButton.setTitleColor(color, forState: UIControlState.Normal)
+                    break
+                case 3:
+                    self.diamondButton.enabled = false
+                    self.diamondButton.setTitleColor(color, forState: UIControlState.Normal)
+                    break
+                case 4:
+                    self.jokerButton.enabled = false
+                    self.jokerButton.setTitleColor(color, forState: UIControlState.Normal)
+                    break
+                case 5:
+                    self.highjokerButton.enabled = false
+                    self.highjokerButton.setTitleColor(color, forState: UIControlState.Normal)
+                    break
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    func changeStateRequest(buttonID: Int) -> Bool {
+        var state: Int
+        if (single || buttonID > 3) { state = 2 }
+        else { state = 1 }
+        if(self.appDelegate.mpcManager.server) {
+            self.changeStateBroadcast(buttonID, state: state)
+            return true;
+        }
+        else {
+            let message = "_change_state_request_"
+            let messageDictionary: [String: AnyObject] = ["message": message, "buttonID": buttonID, "state": state]
+            let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
+            do {
+                try appDelegate.mpcManager.sessions[0].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[0].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+            }
+            catch let error as NSError {
+                print(error.localizedDescription)
+                print("Can not send data")
+                return false
+            }
+        }
+        return true;
+    }
+    
+    @IBAction func spadesButton(sender: AnyObject) {
+        self.changeStateRequest(0)
+    }
+    
+    @IBAction func heartsButton(sender: AnyObject) {
+        self.changeStateRequest(1)
+    }
+    
+    @IBAction func clubsButton(sender: AnyObject) {
+        self.changeStateRequest(2)
+    }
+    
+    @IBAction func diamondsButton(sender: AnyObject) {
+        self.changeStateRequest(3)
+    }
+    
+    @IBAction func jokersButton(sender: AnyObject) {
+        self.changeStateRequest(4)
+    }
+    
+    @IBAction func highjokersButton(sender: AnyObject) {
+        self.changeStateRequest(5)
+    }
 }
+
+
