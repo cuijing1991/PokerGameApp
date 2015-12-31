@@ -102,6 +102,11 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         leftCards.append(c2)
         leftCards.append(c2)
         leftCards.append(c2)
+        leftCards.append(c1)
+        leftCards.append(c1)
+        leftCards.append(c1)
+        leftCards.append(c1)
+        leftCards.append(c1)
         
         rightCards.append(c1)
         topCards.append(c2)
@@ -116,9 +121,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         bottom.delegate = self
         bottom.dataSource = self
         
-        let width = 43
-        let height = 63
-        let minimumInteritemSpacing : CGFloat = -27
+        let screenHeight = UIScreen.mainScreen().bounds.height
+        let height = Int(screenHeight * 0.15)
+        let width = Int(height * 233 / 338)
+        let minimumInteritemSpacing = -CGFloat(width) / 1.5
         
         let layoutx: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layoutx.itemSize = CGSize(width: width, height: height)

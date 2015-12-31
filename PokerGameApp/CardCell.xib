@@ -14,12 +14,18 @@
                 <rect key="frame" x="0.0" y="0.0" width="46.5" height="67.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ySM-Gi-Bhy">
-                        <rect key="frame" x="0.0" y="0.0" width="42" height="62"/>
+                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ySM-Gi-Bhy">
+                        <rect key="frame" x="0.0" y="0.0" width="46.5" height="67.5"/>
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
+            <constraints>
+                <constraint firstItem="ySM-Gi-Bhy" firstAttribute="leading" secondItem="IMH-vo-gc6" secondAttribute="leading" id="6Gm-4A-ClG"/>
+                <constraint firstItem="ySM-Gi-Bhy" firstAttribute="top" secondItem="IMH-vo-gc6" secondAttribute="top" id="giI-ny-CoH"/>
+                <constraint firstAttribute="trailing" secondItem="ySM-Gi-Bhy" secondAttribute="trailing" id="vyR-wc-K3a"/>
+                <constraint firstAttribute="bottom" secondItem="ySM-Gi-Bhy" secondAttribute="bottom" id="zIY-sP-5fx"/>
+            </constraints>
             <connections>
                 <outlet property="cellImage" destination="ySM-Gi-Bhy" id="u55-px-mNa"/>
             </connections>
