@@ -536,8 +536,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="T1Y-zW-Hhw">
-                                <rect key="frame" x="6" y="236" width="656" height="139"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="T1Y-zW-Hhw">
+                                <rect key="frame" x="0.0" y="242" width="667" height="133"/>
                                 <collectionViewLayout key="collectionViewLayout" id="UBy-rU-ole" customClass="CircularCollectionViewLayout" customModule="PokerGameApp" customModuleProvider="target"/>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="J6d-hP-ead" customClass="CircularCollectionViewCell" customModule="PokerGameApp" customModuleProvider="target">
@@ -551,129 +551,208 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XIK-S9-QmX" userLabel="view1">
-                                <rect key="frame" x="6" y="5" width="220" height="116"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fHi-4l-fOd" userLabel="View2">
-                                <rect key="frame" x="448" y="5" width="214" height="116"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GWM-zb-N2p" userLabel="View3">
-                                <rect key="frame" x="226" y="5" width="224" height="116"/>
-                                <color key="backgroundColor" red="1" green="0.69354002250000002" blue="0.103785909" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rGW-Fd-rka" userLabel="View4">
-                                <rect key="frame" x="226" y="124" width="224" height="110"/>
-                                <color key="backgroundColor" red="1" green="0.69354002250000002" blue="0.103785909" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMQ-Xo-K8X">
-                                <rect key="frame" x="616" y="204" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMQ-Xo-K8X">
+                                <rect key="frame" x="612" y="212" width="46" height="30"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="playCards:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="9tk-d3-zTh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vgf-yV-2EM">
-                                <rect key="frame" x="6" y="199" width="35" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vgf-yV-2EM">
+                                <rect key="frame" x="6" y="207" width="35" height="35"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="S"/>
                                 <connections>
                                     <action selector="spadesButton:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="cFa-p1-WhF"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTv-Pv-cf9">
-                                <rect key="frame" x="40" y="199" width="35" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTv-Pv-cf9">
+                                <rect key="frame" x="40" y="207" width="35" height="35"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="H"/>
                                 <connections>
                                     <action selector="heartsButton:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="D3B-yP-Vcn"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zGi-EP-ipU">
-                                <rect key="frame" x="74" y="199" width="35" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zGi-EP-ipU">
+                                <rect key="frame" x="74" y="207" width="35" height="35"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="C"/>
                                 <connections>
                                     <action selector="clubsButton:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="DUk-qK-JmY"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MJg-pt-NEa">
-                                <rect key="frame" x="108" y="199" width="35" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MJg-pt-NEa">
+                                <rect key="frame" x="108" y="207" width="35" height="35"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="D"/>
                                 <connections>
                                     <action selector="diamondsButton:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="Q5B-Lb-ws9"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2to-Vl-zOL">
-                                <rect key="frame" x="142" y="199" width="35" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2to-Vl-zOL">
+                                <rect key="frame" x="142" y="207" width="35" height="35"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="J"/>
                                 <connections>
                                     <action selector="jokersButton:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="C3J-Wk-osb"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QGQ-2t-vfX">
-                                <rect key="frame" x="176" y="199" width="35" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QGQ-2t-vfX">
+                                <rect key="frame" x="176" y="207" width="35" height="35"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="J"/>
                                 <connections>
                                     <action selector="highjokersButton:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="4Ij-q3-ipS"/>
                                 </connections>
                             </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Rvx-Vd-JwL">
+                                <rect key="frame" x="227" y="10" width="302" height="61"/>
+                                <color key="backgroundColor" red="0.99170845750000003" green="0.58130258319999994" blue="0.033975746479999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="OhO-cs-Fmw">
+                                    <size key="itemSize" width="42" height="62"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="DEe-Ga-VZF" customClass="CardCell" customModule="PokerGameApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="42" height="62"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="42" height="62"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Bqi-JC-fiJ">
+                                <rect key="frame" x="227" y="142" width="320" height="59"/>
+                                <color key="backgroundColor" red="0.99170845750000003" green="0.58130258319999994" blue="0.033975746479999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="j6a-N8-nGh">
+                                    <size key="itemSize" width="42" height="62"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="pBZ-If-6vh" customClass="CardCell" customModule="PokerGameApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="42" height="62"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="42" height="62"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bec-gl-zef">
+                                <rect key="frame" x="405" y="75" width="262" height="62"/>
+                                <color key="backgroundColor" red="0.99170845750000003" green="0.58130258319999994" blue="0.033975746479999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nBt-nx-BEi">
+                                    <size key="itemSize" width="42" height="62"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cellx" id="qjv-nt-Rrh" customClass="CardCell" customModule="PokerGameApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="42" height="62"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="42" height="62"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="I1N-v6-oCl">
+                                <rect key="frame" x="67" y="76" width="269" height="62"/>
+                                <color key="backgroundColor" red="0.99170845750000003" green="0.58130258319999994" blue="0.033975746479999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Np2-LJ-45U">
+                                    <size key="itemSize" width="42" height="62"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cellx" id="m1s-kJ-s72" customClass="CardCell" customModule="PokerGameApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="42" height="62"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="42" height="62"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="6.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="rRn-SX-UHP">
+                                <rect key="frame" x="162" y="10" width="61" height="61"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="4.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="fqY-2P-pL9">
+                                <rect key="frame" x="3" y="76" width="61" height="61"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="8.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="MoG-yY-Dug">
+                                <rect key="frame" x="162" y="141" width="61" height="61"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yGM-ho-rc6">
+                                <rect key="frame" x="56" y="11" width="103" height="61"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="5xY-ru-V49"/>
+                                    <constraint firstAttribute="width" secondItem="yGM-ho-rc6" secondAttribute="height" multiplier="103:61" id="Uut-Uq-trM"/>
+                                </constraints>
+                                <state key="normal" image="ArrowFireButtonInverse"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bw4-ma-eyN">
+                                <rect key="frame" x="528" y="11" width="103" height="61"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="PO2-Od-2oz"/>
+                                    <constraint firstAttribute="width" secondItem="Bw4-ma-eyN" secondAttribute="height" multiplier="103:61" id="oyA-tU-kM3"/>
+                                </constraints>
+                                <state key="normal" image="ArrowFireButton"/>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="11.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="4Wr-D8-dlp">
+                                <rect key="frame" x="340" y="76" width="61" height="61"/>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="fHi-4l-fOd" firstAttribute="width" secondItem="XIK-S9-QmX" secondAttribute="width" id="6wn-HQ-jpt"/>
-                            <constraint firstItem="XIK-S9-QmX" firstAttribute="top" secondItem="ZA4-Yu-OwU" secondAttribute="bottom" constant="-15" id="8fx-t3-wBS"/>
-                            <constraint firstItem="QGQ-2t-vfX" firstAttribute="leading" secondItem="2to-Vl-zOL" secondAttribute="trailing" constant="-1" id="9Iy-Yk-rbK"/>
-                            <constraint firstItem="2to-Vl-zOL" firstAttribute="leading" secondItem="MJg-pt-NEa" secondAttribute="trailing" constant="-1" id="FPn-e1-jey"/>
-                            <constraint firstItem="fHi-4l-fOd" firstAttribute="trailing" secondItem="T1Y-zW-Hhw" secondAttribute="trailing" id="Ga7-AH-K9N"/>
-                            <constraint firstItem="T1Y-zW-Hhw" firstAttribute="leading" secondItem="XIK-S9-QmX" secondAttribute="leading" id="IXu-7h-fc1"/>
-                            <constraint firstItem="T1Y-zW-Hhw" firstAttribute="top" secondItem="zGi-EP-ipU" secondAttribute="bottom" constant="2" id="NJc-oa-hVc"/>
-                            <constraint firstItem="GWM-zb-N2p" firstAttribute="height" secondItem="XIK-S9-QmX" secondAttribute="height" id="O4U-Bz-L6t"/>
-                            <constraint firstItem="5TU-Tx-6aH" firstAttribute="top" secondItem="T1Y-zW-Hhw" secondAttribute="bottom" id="OgO-Bf-z4z"/>
-                            <constraint firstItem="rGW-Fd-rka" firstAttribute="width" secondItem="XIK-S9-QmX" secondAttribute="width" id="PWB-m8-MBw"/>
-                            <constraint firstItem="T1Y-zW-Hhw" firstAttribute="top" secondItem="MJg-pt-NEa" secondAttribute="bottom" constant="2" id="Pnu-XU-wU8"/>
-                            <constraint firstItem="Vgf-yV-2EM" firstAttribute="leading" secondItem="GZA-0Y-f8P" secondAttribute="leadingMargin" constant="-14" id="RlY-u7-GUt"/>
-                            <constraint firstItem="cTv-Pv-cf9" firstAttribute="leading" secondItem="Vgf-yV-2EM" secondAttribute="trailing" constant="-1" id="SP5-pI-Lez"/>
-                            <constraint firstItem="zGi-EP-ipU" firstAttribute="leading" secondItem="cTv-Pv-cf9" secondAttribute="trailing" constant="-1" id="SZg-Le-gGQ"/>
-                            <constraint firstItem="XIK-S9-QmX" firstAttribute="leading" secondItem="GZA-0Y-f8P" secondAttribute="leadingMargin" constant="-14" id="Saw-zM-2ym"/>
-                            <constraint firstItem="T1Y-zW-Hhw" firstAttribute="top" secondItem="QGQ-2t-vfX" secondAttribute="bottom" constant="2" id="W5j-nD-vEc"/>
-                            <constraint firstItem="T1Y-zW-Hhw" firstAttribute="top" secondItem="rGW-Fd-rka" secondAttribute="bottom" constant="2" id="XbQ-5V-Nzp"/>
-                            <constraint firstItem="T1Y-zW-Hhw" firstAttribute="top" secondItem="2to-Vl-zOL" secondAttribute="bottom" constant="2" id="ZN5-mO-J6v"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="DMQ-Xo-K8X" secondAttribute="trailing" constant="-15" id="bEo-ye-Qqo"/>
-                            <constraint firstItem="GWM-zb-N2p" firstAttribute="width" secondItem="XIK-S9-QmX" secondAttribute="width" id="fUi-Q5-jIQ"/>
-                            <constraint firstItem="fHi-4l-fOd" firstAttribute="leading" secondItem="GWM-zb-N2p" secondAttribute="trailing" constant="-2" id="fXn-VR-Eb8"/>
-                            <constraint firstItem="rGW-Fd-rka" firstAttribute="top" secondItem="GWM-zb-N2p" secondAttribute="bottom" constant="3" id="fiW-Xh-Arl"/>
-                            <constraint firstItem="fHi-4l-fOd" firstAttribute="top" secondItem="XIK-S9-QmX" secondAttribute="top" id="gbY-B5-Bf2"/>
-                            <constraint firstItem="MJg-pt-NEa" firstAttribute="leading" secondItem="zGi-EP-ipU" secondAttribute="trailing" constant="-1" id="hjS-bV-xZi"/>
-                            <constraint firstItem="rGW-Fd-rka" firstAttribute="leading" secondItem="GWM-zb-N2p" secondAttribute="leading" id="jME-Ym-S9x"/>
-                            <constraint firstItem="T1Y-zW-Hhw" firstAttribute="top" secondItem="DMQ-Xo-K8X" secondAttribute="bottom" constant="2" id="jrX-mB-pOK"/>
-                            <constraint firstItem="GWM-zb-N2p" firstAttribute="top" secondItem="XIK-S9-QmX" secondAttribute="top" id="k48-05-IbE"/>
-                            <constraint firstItem="T1Y-zW-Hhw" firstAttribute="height" secondItem="XIK-S9-QmX" secondAttribute="height" id="lgr-Fd-jaw"/>
-                            <constraint firstItem="fHi-4l-fOd" firstAttribute="height" secondItem="XIK-S9-QmX" secondAttribute="height" id="nfb-gR-jaW"/>
-                            <constraint firstItem="T1Y-zW-Hhw" firstAttribute="top" secondItem="cTv-Pv-cf9" secondAttribute="bottom" constant="2" id="p8W-fw-pG2"/>
-                            <constraint firstItem="GWM-zb-N2p" firstAttribute="leading" secondItem="XIK-S9-QmX" secondAttribute="trailing" id="rIS-Ao-JEn"/>
-                            <constraint firstItem="T1Y-zW-Hhw" firstAttribute="top" secondItem="Vgf-yV-2EM" secondAttribute="bottom" constant="2" id="ttv-O1-jNa"/>
-                            <constraint firstItem="rGW-Fd-rka" firstAttribute="height" secondItem="XIK-S9-QmX" secondAttribute="height" id="tyk-6y-k4y"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="fHi-4l-fOd" secondAttribute="trailing" constant="-15" id="zOV-Wq-Jig"/>
+                            <constraint firstItem="Bw4-ma-eyN" firstAttribute="width" secondItem="Bw4-ma-eyN" secondAttribute="height" multiplier="103:61" id="62Z-uj-RLg"/>
+                            <constraint firstItem="yGM-ho-rc6" firstAttribute="width" secondItem="yGM-ho-rc6" secondAttribute="height" multiplier="103:61" id="tNO-61-IyA"/>
                         </constraints>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="bottom" destination="Bqi-JC-fiJ" id="ygI-pZ-mQ0"/>
                         <outlet property="clubButton" destination="zGi-EP-ipU" id="rJj-ca-e0g"/>
                         <outlet property="collectionView" destination="T1Y-zW-Hhw" id="JAF-Yc-5yl"/>
                         <outlet property="diamondButton" destination="MJg-pt-NEa" id="ito-48-U7a"/>
                         <outlet property="heartButton" destination="cTv-Pv-cf9" id="FlP-8G-9Vo"/>
                         <outlet property="highjokerButton" destination="QGQ-2t-vfX" id="Ina-kL-hsi"/>
                         <outlet property="jokerButton" destination="2to-Vl-zOL" id="vNh-Mo-gGZ"/>
+                        <outlet property="left" destination="I1N-v6-oCl" id="MhH-RY-zaO"/>
                         <outlet property="playButton" destination="DMQ-Xo-K8X" id="dMd-Jp-bH3"/>
+                        <outlet property="right" destination="bec-gl-zef" id="cew-He-0fR"/>
                         <outlet property="spadeButton" destination="Vgf-yV-2EM" id="2ZJ-BZ-JVU"/>
+                        <outlet property="top" destination="Rvx-Vd-JwL" id="e9d-vX-MdJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hTk-lj-C5r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="278.5" y="2206.5"/>
+            <point key="canvasLocation" x="288.5" y="2220.5"/>
         </scene>
     </scenes>
     <resources>
+        <image name="11.jpg" width="200" height="200"/>
+        <image name="4.jpg" width="200" height="200"/>
+        <image name="6.jpg" width="200" height="200"/>
+        <image name="8.jpg" width="200" height="200"/>
         <image name="ArrowFireButton" width="216" height="124"/>
         <image name="ArrowFireButtonInverse" width="216" height="124"/>
         <image name="Button_Background_Light_Brown" width="218" height="71"/>

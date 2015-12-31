@@ -10,6 +10,7 @@ import UIKit
 import MultipeerConnectivity
 
 let reuseIdentifier = "Cell"
+let Identifier = "Cellx"
 
 class CollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -31,6 +32,11 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     var double = false;
     var lowjoker = false;
     var highjoker = false;
+    
+    var leftCards = [Card_CPPWrapper]()
+    var rightCards = [Card_CPPWrapper]()
+    var topCards = [Card_CPPWrapper]()
+    var bottomCards = [Card_CPPWrapper]()
 
     
     // only used for server
@@ -41,6 +47,12 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
    
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBOutlet weak var left: UICollectionView!
+    @IBOutlet weak var right: UICollectionView!
+    @IBOutlet weak var top: UICollectionView!
+    @IBOutlet weak var bottom: UICollectionView!
+    
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var spadeButton: UIButton!
     @IBOutlet weak var heartButton: UIButton!
@@ -58,7 +70,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         collectionView.setCollectionViewLayout(self.layout, animated: false)
         collectionView.registerNib(UINib(nibName: "CircularCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.allowsMultipleSelection = true
-        view.addSubview(collectionView)
+        //view.addSubview(collectionView)
         view.sendSubviewToBack(collectionView)
         playButton.enabled = false
         playButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
@@ -74,6 +86,61 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         jokerButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         highjokerButton.enabled = false
         highjokerButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+
+        
+        left.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: Identifier)
+        right.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: Identifier)
+        top.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: Identifier)
+        bottom.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: Identifier)
+        
+        let c1 = Card_CPPWrapper()
+        c1.Card_CPPWrapper(1, rank: 5)
+        let c2 = Card_CPPWrapper()
+        c2.Card_CPPWrapper(2, rank: 11)
+        leftCards.append(c2)
+        leftCards.append(c2)
+        leftCards.append(c2)
+        leftCards.append(c2)
+        leftCards.append(c2)
+        
+        rightCards.append(c1)
+        topCards.append(c2)
+        bottomCards.append(c1)
+        
+        left.delegate = self
+        left.dataSource = self
+        right.delegate = self
+        right.dataSource = self
+        top.delegate = self
+        top.dataSource = self
+        bottom.delegate = self
+        bottom.dataSource = self
+        
+        let width = 43
+        let height = 63
+        let minimumInteritemSpacing : CGFloat = -27
+        
+        let layoutx: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layoutx.itemSize = CGSize(width: width, height: height)
+        layoutx.minimumInteritemSpacing = minimumInteritemSpacing
+
+
+        let layouty: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layouty.itemSize = CGSize(width: width, height: height)
+        layouty.minimumInteritemSpacing = minimumInteritemSpacing
+
+        let layoutz: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layoutz.itemSize = CGSize(width: width, height: height)
+        layoutz.minimumInteritemSpacing = minimumInteritemSpacing
+
+        let layoutw: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layoutw.itemSize = CGSize(width: width, height: height)
+        layoutw.minimumInteritemSpacing = minimumInteritemSpacing
+        
+        left.setCollectionViewLayout(layoutx, animated: false)
+        right.setCollectionViewLayout(layouty, animated: false)
+        top.setCollectionViewLayout(layoutz, animated: false)
+        bottom.setCollectionViewLayout(layoutw, animated: false)
 
         /************************************* Server Device  *********************************/
         if (self.appDelegate.mpcManager.server) {
@@ -134,18 +201,44 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         })
     }
     
-    
+    //************************************** Collection View *****************************************//
     
     func collectionView(collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
-            return myCards.count
+            if collectionView == self.collectionView { return myCards.count }
+            else if collectionView == self.left {return leftCards.count}
+            else if collectionView == self.right {return rightCards.count}
+            else if collectionView == self.top {return topCards.count}
+            else if collectionView == self.bottom {return bottomCards.count}
+            else { return 0 }
     }
+    
     
     func collectionView(collectionView: UICollectionView,
         cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CircularCollectionViewCell
-            cell.imageName = "Images/PNG-cards-All/" + myCards[indexPath.row].toString() + ".png"
-            return cell
+            
+            if collectionView == self.collectionView {
+                let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CircularCollectionViewCell
+                cell.imageName = "Images/PNG-cards-All/" + myCards[indexPath.row].toString() + ".png"
+                return cell
+            }
+            else {
+                let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Identifier, forIndexPath: indexPath) as! CardCell
+                if collectionView == self.left {
+                    cell.imageName = "Images/PNG-cards-All/" + leftCards[indexPath.row].toString() + ".png"
+                }
+                else if collectionView == self.right {
+                    cell.imageName = "Images/PNG-cards-All/" + rightCards[indexPath.row].toString() + ".png"
+                }
+                else if collectionView == self.top {
+                    cell.imageName = "Images/PNG-cards-All/" + topCards[indexPath.row].toString() + ".png"
+                }
+                else if collectionView == self.bottom {
+                    cell.imageName = "Images/PNG-cards-All/" + bottomCards[indexPath.row].toString() + ".png"
+                }
+                return cell
+            }
+            
     }
     
     func collectionView(collectionView: UICollectionView,
@@ -160,6 +253,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         self.layout.invalidateLayout()
         self.updateButton()
     }
+    
+    
+    //*************************************************************************************************//
     
     
     func assignCard(index: Int, player: Int) -> Bool{

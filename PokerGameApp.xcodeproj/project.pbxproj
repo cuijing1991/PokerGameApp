@@ -17,6 +17,7 @@
 		3F3C9BAC1C134BB900F59A6D /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3C9BAB1C134BB900F59A6D /* CardCell.swift */; };
 		3F3C9BAE1C13BCDA00F59A6D /* MPCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3C9BAD1C13BCDA00F59A6D /* MPCManager.swift */; };
 		3F3C9BB01C13C83C00F59A6D /* JoinGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3C9BAF1C13C83C00F59A6D /* JoinGameViewController.swift */; };
+		3F5D09721C34AD3F001149BC /* CardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F5D09711C34AD3F001149BC /* CardCell.xib */; };
 		3F699D101C14DC8B007177D4 /* Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F699D0E1C14DC8B007177D4 /* Constants.cpp */; };
 		3F6F08051C05071000ABDA89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F08041C05071000ABDA89 /* AppDelegate.swift */; };
 		3F6F08071C05071000ABDA89 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F08061C05071000ABDA89 /* MenuViewController.swift */; };
@@ -58,6 +59,7 @@
 		3F3C9BAD1C13BCDA00F59A6D /* MPCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCManager.swift; sourceTree = "<group>"; };
 		3F3C9BAF1C13C83C00F59A6D /* JoinGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinGameViewController.swift; sourceTree = "<group>"; };
 		3F3C9BC61C13D94400F59A6D /* PokerGameApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PokerGameApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		3F5D09711C34AD3F001149BC /* CardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardCell.xib; sourceTree = "<group>"; };
 		3F699D0E1C14DC8B007177D4 /* Constants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Constants.cpp; path = "C++Classes/Constants.cpp"; sourceTree = "<group>"; };
 		3F699D0F1C14DC8B007177D4 /* Constants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Constants.hpp; path = "C++Classes/Constants.hpp"; sourceTree = "<group>"; };
 		3F6F08011C05071000ABDA89 /* PokerGameApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokerGameApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -163,6 +165,7 @@
 				3F6F08081C05071000ABDA89 /* Main.storyboard */,
 				3F3C9BAF1C13C83C00F59A6D /* JoinGameViewController.swift */,
 				3F3C9BAB1C134BB900F59A6D /* CardCell.swift */,
+				3F5D09711C34AD3F001149BC /* CardCell.xib */,
 				3F3C9BA91C1348BA00F59A6D /* PlayCardViewController.swift */,
 				3F11837E1C0EAF6D006781C3 /* CircularCollectionViewCell.swift */,
 				3F11837F1C0EAF6D006781C3 /* CircularCollectionViewCell.xib */,
@@ -271,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F1183871C0F400A006781C3 /* Images in Resources */,
+				3F5D09721C34AD3F001149BC /* CardCell.xib in Resources */,
 				3F6F080F1C05071000ABDA89 /* LaunchScreen.storyboard in Resources */,
 				3F6F080C1C05071000ABDA89 /* Assets.xcassets in Resources */,
 				3F6F080A1C05071000ABDA89 /* Main.storyboard in Resources */,
