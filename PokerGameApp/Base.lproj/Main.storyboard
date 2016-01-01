@@ -553,75 +553,74 @@
                                 </cells>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMQ-Xo-K8X">
-                                <rect key="frame" x="612" y="212" width="46" height="30"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Button"/>
+                                <rect key="frame" x="612" y="196.5" width="45" height="45"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="DMQ-Xo-K8X" secondAttribute="height" multiplier="1:1" id="8hI-J7-K33"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="Button_Off"/>
                                 <connections>
                                     <action selector="playCards:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="9tk-d3-zTh"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vgf-yV-2EM">
                                 <rect key="frame" x="6" y="207" width="35" height="35"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Vgf-yV-2EM" secondAttribute="height" multiplier="1:1" id="Sfr-ED-P7Q"/>
                                 </constraints>
-                                <state key="normal" title="S"/>
+                                <state key="normal" backgroundImage="spadesButton2.png"/>
                                 <connections>
                                     <action selector="spadesButton:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="cFa-p1-WhF"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTv-Pv-cf9">
                                 <rect key="frame" x="44" y="207" width="35" height="35"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="cTv-Pv-cf9" secondAttribute="height" multiplier="1:1" id="Ey0-KM-rVo"/>
                                 </constraints>
-                                <state key="normal" title="H"/>
+                                <state key="normal" backgroundImage="heartsButton.png"/>
                                 <connections>
                                     <action selector="heartsButton:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="D3B-yP-Vcn"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zGi-EP-ipU">
                                 <rect key="frame" x="82" y="207" width="35" height="35"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="zGi-EP-ipU" secondAttribute="height" multiplier="1:1" id="7ov-bT-wUl"/>
                                 </constraints>
-                                <state key="normal" title="C"/>
+                                <state key="normal" backgroundImage="clubsButton2.png"/>
                                 <connections>
                                     <action selector="clubsButton:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="DUk-qK-JmY"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MJg-pt-NEa">
                                 <rect key="frame" x="120" y="207" width="35" height="35"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="MJg-pt-NEa" secondAttribute="height" multiplier="1:1" id="2vy-7d-dGY"/>
                                 </constraints>
-                                <state key="normal" title="D"/>
+                                <state key="normal" backgroundImage="diamondsButton.png"/>
                                 <connections>
                                     <action selector="diamondsButton:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="Q5B-Lb-ws9"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2to-Vl-zOL">
                                 <rect key="frame" x="158" y="207" width="35" height="35"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="2to-Vl-zOL" secondAttribute="height" multiplier="1:1" id="bLp-MT-INa"/>
                                 </constraints>
-                                <state key="normal" title="J"/>
+                                <state key="normal" backgroundImage="jokerButton"/>
                                 <connections>
                                     <action selector="jokersButton:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="C3J-Wk-osb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QGQ-2t-vfX">
                                 <rect key="frame" x="196" y="207" width="35" height="35"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="QGQ-2t-vfX" secondAttribute="height" multiplier="1:1" id="yZj-dn-4bp"/>
                                 </constraints>
-                                <state key="normal" title="J"/>
+                                <state key="normal" backgroundImage="jokerButton"/>
                                 <connections>
                                     <action selector="highjokersButton:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="4Ij-q3-ipS"/>
                                 </connections>
@@ -731,7 +730,6 @@
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yGM-ho-rc6">
                                 <rect key="frame" x="37" y="11" width="103" height="61"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="5xY-ru-V49"/>
                                     <constraint firstAttribute="width" secondItem="yGM-ho-rc6" secondAttribute="height" multiplier="103:61" id="Uut-Uq-trM"/>
                                 </constraints>
                                 <state key="normal" image="ArrowFireButtonInverse"/>
@@ -745,7 +743,6 @@
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bw4-ma-eyN">
                                 <rect key="frame" x="535" y="10" width="103" height="61"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="PO2-Od-2oz"/>
                                     <constraint firstAttribute="width" secondItem="Bw4-ma-eyN" secondAttribute="height" multiplier="103:61" id="oyA-tU-kM3"/>
                                 </constraints>
                                 <state key="normal" image="ArrowFireButton"/>
@@ -773,6 +770,7 @@
                             <constraint firstItem="I1N-v6-oCl" firstAttribute="leading" secondItem="fqY-2P-pL9" secondAttribute="trailing" constant="4" id="ChX-hw-cv9"/>
                             <constraint firstItem="2to-Vl-zOL" firstAttribute="height" secondItem="Vgf-yV-2EM" secondAttribute="height" id="DbC-2P-dXh"/>
                             <constraint firstItem="cTv-Pv-cf9" firstAttribute="width" secondItem="Vgf-yV-2EM" secondAttribute="width" id="GBS-XG-t1z"/>
+                            <constraint firstItem="DMQ-Xo-K8X" firstAttribute="height" secondItem="GZA-0Y-f8P" secondAttribute="height" multiplier="0.1" id="ILW-5t-had"/>
                             <constraint firstItem="T1Y-zW-Hhw" firstAttribute="height" secondItem="GZA-0Y-f8P" secondAttribute="height" multiplier="0.4" id="JeQ-Mj-QbC"/>
                             <constraint firstItem="Rvx-Vd-JwL" firstAttribute="top" secondItem="rRn-SX-UHP" secondAttribute="top" id="KCH-tM-geJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="DMQ-Xo-K8X" secondAttribute="trailing" constant="-11" id="M7Z-cQ-mHK"/>
@@ -810,7 +808,6 @@
                             <constraint firstItem="QGQ-2t-vfX" firstAttribute="height" secondItem="Vgf-yV-2EM" secondAttribute="height" id="rgm-Y8-KwF"/>
                             <constraint firstItem="zGi-EP-ipU" firstAttribute="leading" secondItem="cTv-Pv-cf9" secondAttribute="trailing" constant="3" id="sKz-gv-Mgp"/>
                             <constraint firstItem="cTv-Pv-cf9" firstAttribute="leading" secondItem="Vgf-yV-2EM" secondAttribute="trailing" constant="3" id="sPI-ml-EmZ"/>
-                            <constraint firstItem="DMQ-Xo-K8X" firstAttribute="height" secondItem="QGQ-2t-vfX" secondAttribute="height" id="sSe-Px-ibM"/>
                             <constraint firstItem="cTv-Pv-cf9" firstAttribute="height" secondItem="Vgf-yV-2EM" secondAttribute="height" id="sgW-LO-8xO"/>
                             <constraint firstItem="yGM-ho-rc6" firstAttribute="width" secondItem="yGM-ho-rc6" secondAttribute="height" multiplier="103:61" id="tNO-61-IyA"/>
                             <constraint firstItem="4Wr-D8-dlp" firstAttribute="leading" secondItem="I1N-v6-oCl" secondAttribute="trailing" constant="4" id="uGL-Zj-tjp"/>
@@ -855,11 +852,16 @@
         <image name="Diamonds" width="781" height="781"/>
         <image name="Hearts" width="855" height="855"/>
         <image name="Spades" width="852" height="851"/>
+        <image name="clubsButton2.png" width="177" height="177"/>
+        <image name="diamondsButton.png" width="167" height="167"/>
         <image name="fire1" width="147" height="201"/>
+        <image name="heartsButton.png" width="160" height="160"/>
+        <image name="jokerButton" width="400" height="400"/>
         <image name="poker-fire" width="1200" height="1200"/>
+        <image name="spadesButton2.png" width="164" height="164"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="2lw-eF-HDJ"/>
         <segue reference="B25-kx-EnI"/>
-        <segue reference="Oii-oW-Qoz"/>
     </inferredMetricsTieBreakers>
 </document>

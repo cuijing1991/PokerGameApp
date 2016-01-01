@@ -82,7 +82,7 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
                 self.connectedFriends += 1
                 let selectedPeer = appDelegate.mpcManager.foundPeers[indexPath.row] as MCPeerID
                 cell.sessionIndex = avilable[0] - 1
-                appDelegate.mpcManager.browser.invitePeer(selectedPeer, toSession: appDelegate.mpcManager.sessions[avilable[0]-1], withContext: nil, timeout: 20)
+                appDelegate.mpcManager.browser.invitePeer(selectedPeer, toSession: appDelegate.mpcManager.sessions[avilable[0]-1], withContext: nil, timeout: 200)
                 appDelegate.mpcManager.connectedSessionCount += 1
                 avilable.removeAtIndex(0)
 

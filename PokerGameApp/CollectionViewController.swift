@@ -11,6 +11,8 @@ import MultipeerConnectivity
 
 let reuseIdentifier = "Cell"
 let Identifier = "Cellx"
+let imageOn = UIImage(named: "Button_On") as UIImage!
+let imageOff = UIImage(named: "Button_Off") as UIImage!
 
 class CollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -87,6 +89,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         highjokerButton.enabled = false
         highjokerButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
 
+        
         
         left.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: Identifier)
         right.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: Identifier)
@@ -172,7 +175,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func assignCard_to_all(index: Int) {
-        let time = dispatch_time(DISPATCH_TIME_NOW, 2*Int64(NSEC_PER_SEC))
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC))
         dispatch_after(time, dispatch_get_main_queue(), {
             self.images.append("Images/PNG-cards-All/" + self.lists[0][index].toString() + ".png")
             self.myCards.append(self.lists[0][index] as! Card_CPPWrapper)
@@ -319,6 +322,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             if message as! String == "_assign_next_" {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     self.playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+                    self.playButton.setBackgroundImage(imageOn, forState: UIControlState.Normal)
                     self.playButton.enabled = false
                     self.myTurn = true
                     self.enableTest = dataDictionary["flag"] as! Bool
@@ -423,10 +427,12 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             if (manager.testCards(selectedCards)) {
                 playButton.enabled = true
                 playButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
+                self.playButton.setBackgroundImage(imageOn, forState: UIControlState.Normal)
                 print ("cheer")
             }
             else {
                 playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+                self.playButton.setBackgroundImage(imageOn, forState: UIControlState.Normal)
                 playButton.enabled = false
                 print ("bad")
             }
@@ -436,15 +442,18 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 if (manager.isUniform(selectedCards) == keysuit && manager.structureSize(selectedCards) != 1) {
                     playButton.enabled = false
                     playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+                    self.playButton.setBackgroundImage(imageOn, forState: UIControlState.Normal)
                 }
                 else {
                     playButton.enabled = true
                     playButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
+                    self.playButton.setBackgroundImage(imageOn, forState: UIControlState.Normal)
                 }
             }
             else {
                 playButton.enabled = false
                 playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+                self.playButton.setBackgroundImage(imageOn, forState: UIControlState.Normal)
             }
         }
     }
@@ -514,6 +523,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         
         playButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        playButton.setBackgroundImage(imageOff, forState: UIControlState.Normal)
         playButton.enabled = false
         self.layout.invalidateLayout()
         self.collectionView.reloadData()
