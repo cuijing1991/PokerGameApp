@@ -48,13 +48,15 @@ void GameProcedure::ShuffleCards(list<Card> &pc1, list<Card> &pc2, list<Card> &p
     manager[1] = CardManager(pc2);
     manager[2] = CardManager(pc3);
     manager[3] = CardManager(pc4);
+    
+    scores = 0;
 }
 
 
 
 
 
-int GameProcedure::Winner (const list<Card> &pc1, const list<Card> &pc2, const list<Card> &pc3, const list<Card> &pc4) {
+int GameProcedure::Winner (int ID, const list<Card> &pc1, const list<Card> &pc2, const list<Card> &pc3, const list<Card> &pc4) {
     int suit1, suit2, suit3, suit4;
     int order1 = -1, order2 = -1, order3 = -1, order4 = -1;
     int suit_max;
@@ -150,7 +152,17 @@ int GameProcedure::Winner (const list<Card> &pc1, const list<Card> &pc2, const l
             index_max = 4;
         }
     }
-    return index_max-1;
+    
+    int winnerIndex = index_max - 1;
+    
+    if((winnerIndex + ID) % 2 != GameInfo::lordID % 2) {
+        for (Card c : pc1) { scores += c.value; }
+        for (Card c : pc2) { scores += c.value; }
+        for (Card c : pc3) { scores += c.value; }
+        for (Card c : pc4) { scores += c.value; }
+        
+    }
+    return winnerIndex;
 }
 
 list<Card> GameProcedure::testStarter (const list<Card> cards, Suits suit, int n) {
@@ -187,6 +199,9 @@ list<Card> GameProcedure::testStarter (const list<Card> cards, Suits suit, int n
 int GameProcedure::testStarter (const list<CardUnit> cu, const list<Card> cards) {
     list<CardUnit> cu_all = CardManager::getStructure(cards);
     int i = 0;
+    for (CardUnit c2 : cu_all) {
+        cout << "(" << c2.m_type << ", " << c2.m_head << ")" << endl;
+    }
     for (CardUnit c1 : cu) {
         for (CardUnit c2 : cu_all) {
             if ( c2.m_type >= c1.m_type && c2.m_head > c1.m_head)

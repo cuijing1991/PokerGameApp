@@ -747,6 +747,15 @@
                                 </constraints>
                                 <state key="normal" image="ArrowFireButton"/>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BJE-EB-gZM">
+                                <rect key="frame" x="254" y="209" width="57" height="32.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="BJE-EB-gZM" secondAttribute="height" multiplier="57:32" id="rsh-bx-XSz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -782,6 +791,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="T1Y-zW-Hhw" secondAttribute="trailing" constant="-20" id="QdQ-Jw-Znn"/>
                             <constraint firstItem="Vgf-yV-2EM" firstAttribute="height" secondItem="GZA-0Y-f8P" secondAttribute="height" multiplier="0.08" id="Qhj-L8-roE"/>
                             <constraint firstItem="Bqi-JC-fiJ" firstAttribute="top" secondItem="I1N-v6-oCl" secondAttribute="bottom" constant="4" id="Spu-bK-CGF"/>
+                            <constraint firstItem="BJE-EB-gZM" firstAttribute="bottom" secondItem="QGQ-2t-vfX" secondAttribute="bottom" id="Trd-Ri-cGO"/>
                             <constraint firstItem="Rvx-Vd-JwL" firstAttribute="height" secondItem="GZA-0Y-f8P" secondAttribute="height" multiplier="0.15" id="UCq-qI-tfP"/>
                             <constraint firstItem="T1Y-zW-Hhw" firstAttribute="top" secondItem="QGQ-2t-vfX" secondAttribute="bottom" id="UTm-LQ-L09"/>
                             <constraint firstItem="rRn-SX-UHP" firstAttribute="height" secondItem="fqY-2P-pL9" secondAttribute="height" id="VMQ-wa-ZEt"/>
@@ -792,12 +802,14 @@
                             <constraint firstItem="2to-Vl-zOL" firstAttribute="bottom" secondItem="Vgf-yV-2EM" secondAttribute="bottom" id="ayI-Fm-eUb"/>
                             <constraint firstItem="MJg-pt-NEa" firstAttribute="bottom" secondItem="Vgf-yV-2EM" secondAttribute="bottom" id="bbE-8k-qI9"/>
                             <constraint firstItem="Bqi-JC-fiJ" firstAttribute="centerX" secondItem="GZA-0Y-f8P" secondAttribute="centerX" multiplier="1.15" id="btX-6o-b5N"/>
+                            <constraint firstItem="BJE-EB-gZM" firstAttribute="leading" secondItem="QGQ-2t-vfX" secondAttribute="trailing" constant="23" id="cwx-dn-3if"/>
                             <constraint firstItem="MJg-pt-NEa" firstAttribute="width" secondItem="Vgf-yV-2EM" secondAttribute="width" id="eL8-Yf-p6r"/>
                             <constraint firstItem="2to-Vl-zOL" firstAttribute="leading" secondItem="MJg-pt-NEa" secondAttribute="trailing" constant="3" id="gNP-NR-sqR"/>
                             <constraint firstItem="Rvx-Vd-JwL" firstAttribute="height" secondItem="fqY-2P-pL9" secondAttribute="height" id="gPn-8J-pTL"/>
                             <constraint firstItem="zGi-EP-ipU" firstAttribute="bottom" secondItem="Vgf-yV-2EM" secondAttribute="bottom" id="haa-aO-sod"/>
                             <constraint firstItem="Rvx-Vd-JwL" firstAttribute="width" secondItem="GZA-0Y-f8P" secondAttribute="width" multiplier="0.38" id="iQt-NW-TH2"/>
                             <constraint firstItem="I1N-v6-oCl" firstAttribute="top" secondItem="Rvx-Vd-JwL" secondAttribute="bottom" constant="5" id="ibA-p0-RNK"/>
+                            <constraint firstItem="BJE-EB-gZM" firstAttribute="height" secondItem="QGQ-2t-vfX" secondAttribute="height" id="iyd-Pa-Tt6"/>
                             <constraint firstItem="Bqi-JC-fiJ" firstAttribute="height" secondItem="I1N-v6-oCl" secondAttribute="height" id="lFV-tR-DwS"/>
                             <constraint firstItem="Bw4-ma-eyN" firstAttribute="leading" secondItem="Rvx-Vd-JwL" secondAttribute="trailing" constant="20" id="mI0-Fj-4cV"/>
                             <constraint firstItem="Rvx-Vd-JwL" firstAttribute="centerX" secondItem="GZA-0Y-f8P" secondAttribute="centerX" multiplier="1.15" id="on2-iH-Wot"/>
@@ -820,6 +832,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="bottom" destination="Bqi-JC-fiJ" id="ygI-pZ-mQ0"/>
+                        <outlet property="bottomImage" destination="MoG-yY-Dug" id="yeO-9u-gwy"/>
                         <outlet property="clubButton" destination="zGi-EP-ipU" id="rJj-ca-e0g"/>
                         <outlet property="collectionView" destination="T1Y-zW-Hhw" id="JAF-Yc-5yl"/>
                         <outlet property="diamondButton" destination="MJg-pt-NEa" id="ito-48-U7a"/>
@@ -827,15 +840,19 @@
                         <outlet property="highjokerButton" destination="QGQ-2t-vfX" id="Ina-kL-hsi"/>
                         <outlet property="jokerButton" destination="2to-Vl-zOL" id="vNh-Mo-gGZ"/>
                         <outlet property="left" destination="I1N-v6-oCl" id="MhH-RY-zaO"/>
+                        <outlet property="leftImage" destination="fqY-2P-pL9" id="t4B-Gq-7v7"/>
                         <outlet property="playButton" destination="DMQ-Xo-K8X" id="dMd-Jp-bH3"/>
                         <outlet property="right" destination="bec-gl-zef" id="cew-He-0fR"/>
+                        <outlet property="rightImage" destination="4Wr-D8-dlp" id="WXZ-P9-3qC"/>
+                        <outlet property="scores" destination="BJE-EB-gZM" id="9Eg-Qc-seM"/>
                         <outlet property="spadeButton" destination="Vgf-yV-2EM" id="2ZJ-BZ-JVU"/>
                         <outlet property="top" destination="Rvx-Vd-JwL" id="e9d-vX-MdJ"/>
+                        <outlet property="topImage" destination="rRn-SX-UHP" id="nwB-9J-uhI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hTk-lj-C5r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="450.5" y="2133.5"/>
+            <point key="canvasLocation" x="221.5" y="2203.5"/>
         </scene>
     </scenes>
     <resources>

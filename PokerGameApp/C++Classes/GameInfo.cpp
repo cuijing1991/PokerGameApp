@@ -15,3 +15,4 @@ Ranks GameInfo::keyRank = Four;
 Suits GameInfo::keySuit = Spade;
 Suits GameInfo::currentSuit = Diamond;
 std::list<Card> GameInfo::format = std::list<Card>();
+int GameInfo::lordID = 1;

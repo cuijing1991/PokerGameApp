@@ -29,7 +29,7 @@ public:
     void ShuffleCards (list<Card> &pc1, list<Card> &pc2, list<Card> &pc3, list<Card> &pc4);
     
     /* Find the winner from 4 players */
-    int Winner (const list<Card> &pc1, const list<Card> &pc2, const list<Card> &pc3, const list<Card> &pc4);
+    int Winner (int ID, const list<Card> &pc1, const list<Card> &pc2, const list<Card> &pc3, const list<Card> &pc4);
     
     /* Test whether the starter's cards (cu) are legal
      * If legal return the -1
@@ -40,6 +40,9 @@ public:
     
     /*  Remove Cards from manager */
     bool remove(const list<Card> removeList, int n);
+    
+    /* Record Game Scores */
+    int scores;
     
 private:
     CardManager manager[4];

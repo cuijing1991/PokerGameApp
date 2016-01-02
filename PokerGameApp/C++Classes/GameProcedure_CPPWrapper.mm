@@ -91,7 +91,7 @@
     return self.gameProcedure->remove(removeList_cpp, (int)n);
 }
 
-- (NSInteger) Winner:(NSArray<Card_CPPWrapper*>*)l0 player1:(NSArray<Card_CPPWrapper*>*)l1 player2:(NSArray<Card_CPPWrapper*>*)l2 player3:(NSArray<Card_CPPWrapper*>*)l3 {
+- (NSInteger) Winner:(NSInteger)ID player0:(NSArray<Card_CPPWrapper*>*)l0 player1:(NSArray<Card_CPPWrapper*>*)l1 player2:(NSArray<Card_CPPWrapper*>*)l2 player3:(NSArray<Card_CPPWrapper*>*)l3 {
     std::list<Card> p0, p1, p2, p3;
     for(Card_CPPWrapper *c in l0) {
         p0.push_back(Card((int)c.suit, (int)c.rank));
@@ -105,6 +105,10 @@
     for(Card_CPPWrapper *c in l3) {
         p3.push_back(Card((int)c.suit, (int)c.rank));
     }
-    return self.gameProcedure->Winner(p0, p1, p2, p3);
+    return self.gameProcedure->Winner(ID, p0, p1, p2, p3);
+}
+
+- (NSInteger) getScores{
+    return self.gameProcedure->scores;
 }
 @end

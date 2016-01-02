@@ -15,6 +15,15 @@ Card::Card(int suit, int rank) {
     m_rank = static_cast<Ranks>(rank);
     m_rank_int = rank;
     m_suit_int = suit;
+    if (m_rank_int == 10 || m_rank_int == 13) {
+        value = 10;
+    }
+    else if (m_rank_int == 5) {
+        value = 5;
+    }
+    else {
+        value = 0;
+    }
 }
 
 Card::Card(Suits suit, Ranks rank) {
@@ -22,6 +31,15 @@ Card::Card(Suits suit, Ranks rank) {
     m_rank = rank;
     m_rank_int = static_cast<int>(rank);
     m_suit_int = static_cast<int>(suit);
+    if (m_rank_int == 10 || m_rank_int == 13) {
+        value = 10;
+    }
+    else if (m_rank_int == 5) {
+        value = 5;
+    }
+    else {
+        value = 0;
+    }
 }
 
 const string Card::toString() const {

@@ -18,6 +18,7 @@ public:
     static Ranks keyRank;
     static Suits currentSuit;
     static std::list<Card> format;
+    static int lordID;
 };
 
 

@@ -26,7 +26,7 @@ public:
     bool isKey() const;
     int computeValue() const;
     static bool compare(const Card& card1, const Card& card2, const Suits& suit, const Ranks& rank);
-    
+    int value;
 private:
     Ranks m_rank;
     Suits m_suit;
