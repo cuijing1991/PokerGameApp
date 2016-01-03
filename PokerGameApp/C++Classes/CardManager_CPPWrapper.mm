@@ -51,7 +51,13 @@
     for(Card_CPPWrapper *c in cards) {
         cards_cpp.push_back(Card((int)c.suit, (int)c.rank));
     }
-    return self.manager->testCards(static_cast<Suits>(GameInfo::format.begin()->getSuit()), GameInfo::format, cards_cpp);
+    if (GameInfo::format.begin()->isKey()) {
+        std::cout << "key" << std::endl;
+        return self.manager->testCards(static_cast<Suits>(GameInfo::keySuit), GameInfo::format, cards_cpp);        
+    }
+    else {
+        return self.manager->testCards(static_cast<Suits>(GameInfo::format.begin()->getSuit()), GameInfo::format, cards_cpp);
+    }
 }
 
 - (void) setFormat: (NSArray<Card_CPPWrapper*>*)format {
@@ -91,8 +97,8 @@
     return self.manager->getStructure(cards_cpp).size();
 }
 
-- (void) updateKeySuit: (NSInteger)keysuit {
-    GameInfo::keySuit = static_cast<Suits>((int)keysuit);
-}
+//- (void) updateKeySuit: (NSInteger)keysuit {
+//    GameInfo::keySuit = static_cast<Suits>((int)keysuit);
+//}
 @end
 

@@ -21,8 +21,8 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     let manager = CardManager_CPPWrapper()
     
     // keysuit can keyrank should be updated while assigning cards
-    var keysuit = 0
-    var keyrank = 4
+    var keysuit = GameInfo_CPPWrapper.getKeySuit()
+    var keyrank = GameInfo_CPPWrapper.getKeyRank()
     var lord = 0
     var images = [String]()
     var layout: CircularCollectionViewLayout!
@@ -49,6 +49,17 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     var lists = [NSMutableArray!](count: 4, repeatedValue: nil)
     var playList = [NSArray!](count:4, repeatedValue: nil)
     var currentPlayer = 0
+    var playCardCount = 0 {
+        didSet {
+            if (playCardCount == endNum * 4) {
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.gameEnd = true;
+                    self.nextGameButton.enabled = true;
+                })
+            }
+        }
+    }
+    var gameEnd = false;
     
    
     @IBOutlet weak var collectionView: UICollectionView!
@@ -70,7 +81,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var bottomImage: UIImageView!
     @IBOutlet weak var rightImage: UIImageView!
     @IBOutlet weak var topImage: UIImageView!
+    
     @IBOutlet weak var scores: UILabel!
+    @IBOutlet weak var nextGameButton: UIButton!
+    
     
     override func viewDidLoad() {
         layout = CircularCollectionViewLayout()
@@ -106,6 +120,8 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         bottomImage.image = nil
         rightImage.image = nil
         scores.text = "0"
+        
+        nextGameButton.enabled = false
         
         left.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: Identifier)
         right.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: Identifier)
@@ -211,6 +227,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.assignPlayerID(1)
                 self.assignPlayerID(2)
                 self.assignPlayerID(3)
+                self.declareGameInfo()
                 
 //                for i in 0...3 {
 //                    self.assignCard(25, playerID: self.lord, listID: i)
@@ -320,7 +337,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                         self.playList[self.playCount % 4] = cards
                     }
                     else {
-                        let cardsBack = self.gameprocedure.testStarter(cards, suit:cards[0].suit, n:fromplayer);
+                        var cardsBack: [Card_CPPWrapper];
+                        if (cards[0].suit == self.keysuit || cards[0].suit == 4 || cards[0].rank == self.keyrank) {
+                            cardsBack = self.gameprocedure.testStarter(cards, suit:self.keysuit, n:fromplayer);
+                        }
+                        else {
+                            cardsBack = self.gameprocedure.testStarter(cards, suit:cards[0].suit, n:fromplayer);
+                        }
+                        //let cardsBack = self.gameprocedure.testStarter(cards, suit:cards[0].suit, n:fromplayer);
                         let message = "_play_cards_back_"
                         let messageDictionary: [String: AnyObject] = ["message": message, "cardsback": cardsBack]
                         let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
@@ -339,7 +363,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                     self.playCount++
                     if (self.playCount % 4 != 0) {
                         self.currentPlayer = (self.currentPlayer + 1) % 4
-                        self.assignNext(true, player: self.currentPlayer)
+                        if (!self.gameEnd) {
+                            self.assignNext(true, player: self.currentPlayer)
+                        }
                     }
                     else {
                         let winner = self.gameprocedure.Winner((self.currentPlayer + 1) % 4, player0: self.playList[0] as! [Card_CPPWrapper], player1:self.playList[1] as! [Card_CPPWrapper], player2: self.playList[2] as! [Card_CPPWrapper], player3: self.playList[3] as! [Card_CPPWrapper])
@@ -347,7 +373,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                         print(winner)
                         self.updateScores()
                         self.currentPlayer = (self.currentPlayer + 1 + winner) % 4
-                        self.assignNext(false, player: self.currentPlayer)
+                        if (!self.gameEnd) {
+                            self.assignNext(false, player: self.currentPlayer)
+                        }
                     }
                     
                     
@@ -399,6 +427,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 let scores = dataDictionary["scores"] as! Int
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     self.scores.text = String(scores)
+                })
+            }
+            // Check if there's an entry with the "_declare_gameinfo_" key.
+            if message as! String == "_declare_gameinfo_" {
+                let keyRank = dataDictionary["keyRank"] as! Int
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.keyrank = keyRank
+                    GameInfo_CPPWrapper.updateKeyRank(keyRank)
                 })
             }
         }
@@ -491,7 +527,13 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.gameprocedure.remove(selectedCards, n: 0)
             }
             else {
-                let cardsBack = self.gameprocedure.testStarter(selectedCards, suit:selectedCards[0].suit, n:0);
+                var cardsBack: [Card_CPPWrapper];
+                if (selectedCards[0].suit == self.keysuit || selectedCards[0].suit == 4 || selectedCards[0].rank == self.keyrank) {
+                    cardsBack = self.gameprocedure.testStarter(selectedCards, suit:self.keysuit, n:0);
+                }
+                else {
+                    cardsBack = self.gameprocedure.testStarter(selectedCards, suit:selectedCards[0].suit, n:0);
+                }
                 self.broadcast(false, fromplayer: 0, cards: cardsBack)
                 self.gameprocedure.remove(cardsBack, n: 0)
                 self.removeCardsBack(cardsBack)
@@ -501,7 +543,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             self.playCount++
             if (self.playCount % 4 != 0) {
                 self.currentPlayer = (self.currentPlayer + 1) % 4
-                self.assignNext(true, player: self.currentPlayer)
+                if (!self.gameEnd) {
+                    self.assignNext(true, player: self.currentPlayer)
+                }
             }
             else {
                 let winner = self.gameprocedure.Winner((self.currentPlayer + 1) % 4, player0: self.playList[0] as! [Card_CPPWrapper], player1:self.playList[1] as! [Card_CPPWrapper], player2: self.playList[2] as! [Card_CPPWrapper], player3: self.playList[3] as! [Card_CPPWrapper])
@@ -509,7 +553,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 print(winner)
                 self.updateScores()
                 self.currentPlayer = (self.currentPlayer + 1 + winner) % 4
-                self.assignNext(false, player: self.currentPlayer)
+                if (!self.gameEnd) {
+                    self.assignNext(false, player: self.currentPlayer)
+                }
             }
         }
         
@@ -625,6 +671,8 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         if(!flag) {
             self.manager.setFormat(cards)
         }
+        self.playCardCount += cards.count
+        print(cards.count)
         return true
     }
     
@@ -731,11 +779,13 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     func changeState(buttonID: Int, state: Int) {
         if (buttonID < 5) {
             keysuit = buttonID
-            self.manager.updateKeySuit(buttonID)
+            //self.manager.updateKeySuit(buttonID)
+            GameInfo_CPPWrapper.updateKeySuit(buttonID)
         }
         else {
             keysuit = 4
-            self.manager.updateKeySuit(buttonID)
+            //self.manager.updateKeySuit(buttonID)
+            GameInfo_CPPWrapper.updateKeySuit(buttonID)
         }
         self.myCards.sortInPlace(self.forwards)
         self.collectionView.reloadData()
@@ -799,6 +849,25 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             }
         }
         return true;
+    }
+    
+    func declareGameInfo() -> Bool {
+        let message = "_declare_gameinfo_"
+        let messageDictionary: [String: AnyObject] = ["message": message, "keyRank": GameInfo_CPPWrapper.getKeyRank()]
+        let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
+        if (self.appDelegate.mpcManager.connectedSessionCount > 0) {
+            for sessionID in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
+                do {
+                    try appDelegate.mpcManager.sessions[sessionID].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[sessionID].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+                }
+                catch let error as NSError {
+                    print(error.localizedDescription)
+                    print("Can not send data")
+                    return false
+                }
+            }
+        }
+        return true
     }
     
     @IBAction func spadesButton(sender: AnyObject) {
@@ -878,7 +947,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         self.layout.invalidateLayout()
         self.updateButton()
     }
-    
     
     //*************************************************************************************************//
 

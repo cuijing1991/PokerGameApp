@@ -24,7 +24,7 @@
 - (NSInteger) structureSize: (NSArray<Card_CPPWrapper*>*) cards;
 
 //put it here is not good
-- (void) updateKeySuit: (NSInteger)keysuit;
+//- (void) updateKeySuit: (NSInteger)keysuit;
 
 @end
 

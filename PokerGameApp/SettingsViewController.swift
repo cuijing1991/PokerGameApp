@@ -36,9 +36,6 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         return pickerDataSource.count;
     }
     
-//    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return pickerDataSource[row]
-//    }
     func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
         let pickerLabel = UILabel()
         let titleData = pickerDataSource[row]
@@ -48,6 +45,13 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         pickerLabel.backgroundColor = UIColor(hue: hue, saturation: 1.0, brightness:1.0, alpha: 1.0)
         pickerLabel.textAlignment = .Center
         return pickerLabel
+    }
+   
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    {
+        GameInfo_CPPWrapper.updateKeyRank(row+2)
+        print(row)
+        
     }
 
 }

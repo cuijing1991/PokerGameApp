@@ -160,7 +160,7 @@ bool CardManager::testCards(const Suits suit, const list<Card> &format, const li
     
     if (size != size_format) return false;
     
-    if (suit == GameInfo::keySuit) {
+    if (suit == GameInfo::keySuit || suit == 4) {
         for (Card card: cards) {
             if (card.isKey())
                 size_test ++;
@@ -206,6 +206,8 @@ list<Card> CardManager::getList(const Suits suit) {
             return clubs;
         case Diamond:
             return diamonds;
+        case Joker:
+            return keys;
         default:
             cout << "Error -- CardManager: getList()" << endl;
             return keys;

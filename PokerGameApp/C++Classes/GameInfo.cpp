@@ -11,8 +11,8 @@
 #include "Card.hpp"
 #include <list>
 
-Ranks GameInfo::keyRank = Four;
-Suits GameInfo::keySuit = Spade;
+Ranks GameInfo::keyRank = Two;
+Suits GameInfo::keySuit = Joker;
 Suits GameInfo::currentSuit = Diamond;
 std::list<Card> GameInfo::format = std::list<Card>();
 int GameInfo::lordID = 1;

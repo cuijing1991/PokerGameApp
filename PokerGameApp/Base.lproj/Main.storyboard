@@ -386,7 +386,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ay4-Zw-9aS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="278.5" y="1001.5"/>
+            <point key="canvasLocation" x="270.5" y="990.5"/>
         </scene>
         <!--Add Friends View Controller-->
         <scene sceneID="Khi-DO-19y">
@@ -759,6 +759,9 @@
                                     <constraint firstAttribute="width" secondItem="Bw4-ma-eyN" secondAttribute="height" multiplier="103:61" id="oyA-tU-kM3"/>
                                 </constraints>
                                 <state key="normal" image="ArrowFireButton"/>
+                                <connections>
+                                    <segue destination="ZeC-zs-8nE" kind="presentation" modalTransitionStyle="flipHorizontal" id="lhi-jW-Opd"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BJE-EB-gZM">
                                 <rect key="frame" x="254" y="209" width="57" height="32.5"/>
@@ -854,6 +857,7 @@
                         <outlet property="jokerButton" destination="2to-Vl-zOL" id="vNh-Mo-gGZ"/>
                         <outlet property="left" destination="I1N-v6-oCl" id="MhH-RY-zaO"/>
                         <outlet property="leftImage" destination="fqY-2P-pL9" id="t4B-Gq-7v7"/>
+                        <outlet property="nextGameButton" destination="Bw4-ma-eyN" id="XmQ-YT-eAx"/>
                         <outlet property="playButton" destination="DMQ-Xo-K8X" id="dMd-Jp-bH3"/>
                         <outlet property="right" destination="bec-gl-zef" id="cew-He-0fR"/>
                         <outlet property="rightImage" destination="4Wr-D8-dlp" id="WXZ-P9-3qC"/>

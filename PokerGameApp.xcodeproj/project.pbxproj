@@ -31,6 +31,7 @@
 		3F8A079B1C13DC6800A53711 /* Card.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A07941C13DC6800A53711 /* Card.cpp */; };
 		3F8A079C1C13DC6800A53711 /* GameProcedure_CPPWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A07971C13DC6800A53711 /* GameProcedure_CPPWrapper.mm */; };
 		3F8A079D1C13DC6800A53711 /* GameProcedure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A07981C13DC6800A53711 /* GameProcedure.cpp */; };
+		3FC153B31C38B20800E22FDD /* GameInfo_CPPWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3FC153B21C38B20800E22FDD /* GameInfo_CPPWrapper.mm */; };
 		3FD90C381C2DA9C8005A0C43 /* CardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FD90C361C2DA9C8005A0C43 /* CardManager.cpp */; };
 		3FD90C3B1C2DAA6E005A0C43 /* GameInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FD90C391C2DAA6E005A0C43 /* GameInfo.cpp */; };
 		3FD90C3E1C2DAAB9005A0C43 /* CardUnit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FD90C3C1C2DAAB9005A0C43 /* CardUnit.cpp */; };
@@ -82,6 +83,8 @@
 		3F8A07971C13DC6800A53711 /* GameProcedure_CPPWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GameProcedure_CPPWrapper.mm; path = "C++Classes/GameProcedure_CPPWrapper.mm"; sourceTree = "<group>"; };
 		3F8A07981C13DC6800A53711 /* GameProcedure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameProcedure.cpp; path = "C++Classes/GameProcedure.cpp"; sourceTree = "<group>"; };
 		3F8A07991C13DC6800A53711 /* GameProcedure.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameProcedure.hpp; path = "C++Classes/GameProcedure.hpp"; sourceTree = "<group>"; };
+		3FC153B21C38B20800E22FDD /* GameInfo_CPPWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GameInfo_CPPWrapper.mm; path = "C++Classes/GameInfo_CPPWrapper.mm"; sourceTree = "<group>"; };
+		3FC153B41C38B21C00E22FDD /* GameInfo_CPPWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameInfo_CPPWrapper.h; sourceTree = "<group>"; };
 		3FD90C361C2DA9C8005A0C43 /* CardManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CardManager.cpp; path = "C++Classes/CardManager.cpp"; sourceTree = "<group>"; };
 		3FD90C371C2DA9C8005A0C43 /* CardManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CardManager.hpp; path = "C++Classes/CardManager.hpp"; sourceTree = "<group>"; };
 		3FD90C391C2DAA6E005A0C43 /* GameInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameInfo.cpp; path = "C++Classes/GameInfo.cpp"; sourceTree = "<group>"; };
@@ -123,6 +126,8 @@
 				3FD90C371C2DA9C8005A0C43 /* CardManager.hpp */,
 				3FD90C391C2DAA6E005A0C43 /* GameInfo.cpp */,
 				3FD90C3A1C2DAA6E005A0C43 /* GameInfo.hpp */,
+				3FC153B21C38B20800E22FDD /* GameInfo_CPPWrapper.mm */,
+				3FC153B41C38B21C00E22FDD /* GameInfo_CPPWrapper.h */,
 				3FD90C3C1C2DAAB9005A0C43 /* CardUnit.cpp */,
 				3FD90C3D1C2DAAB9005A0C43 /* CardUnit.hpp */,
 				3F699D0E1C14DC8B007177D4 /* Constants.cpp */,
@@ -303,6 +308,7 @@
 				3F3C9BB01C13C83C00F59A6D /* JoinGameViewController.swift in Sources */,
 				3F8A079D1C13DC6800A53711 /* GameProcedure.cpp in Sources */,
 				3F6F08051C05071000ABDA89 /* AppDelegate.swift in Sources */,
+				3FC153B31C38B20800E22FDD /* GameInfo_CPPWrapper.mm in Sources */,
 				3FD90C381C2DA9C8005A0C43 /* CardManager.cpp in Sources */,
 				3F699D101C14DC8B007177D4 /* Constants.cpp in Sources */,
 				3F1183851C0EAF6D006781C3 /* CollectionViewController.swift in Sources */,

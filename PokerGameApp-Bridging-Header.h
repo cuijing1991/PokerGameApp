@@ -5,3 +5,4 @@
 #import "Card_CPPWrapper.h"
 #import "GameProcedure_CPPWrapper.h"
 #import "CardManager_CPPWrapper.h"
+#import "GameInfo_CPPWrapper.h"
