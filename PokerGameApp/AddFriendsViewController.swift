@@ -12,6 +12,9 @@ import MultipeerConnectivity
 class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableViewDataSource, MPCManagerDelegate1 {
 
     @IBOutlet weak var friendsTable: UITableView!
+    @IBOutlet weak var addFriendsButton: UIButton!
+    @IBOutlet weak var startGameButton: UIButton!
+    
     var refreshControl: UIRefreshControl!
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var connectedFriends = 0
@@ -23,6 +26,8 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
         friendsTable.delegate = self
         friendsTable.dataSource = self
         
+        addFriendsButton.enabled = false
+        startGameButton.enabled = false
         appDelegate.mpcManager.delegate1 = self
         appDelegate.mpcManager.browser.startBrowsingForPeers()
         appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
@@ -64,6 +69,7 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
         cell.username?.text = appDelegate.mpcManager.foundPeers[indexPath.row].displayName
         cell.selectionStyle = .None
         cell.backgroundColor = UIColor.blackColor()
+        cell.cellselected = false
         if cell.cellselected {
             cell.accessoryType = .Checkmark
         }
@@ -72,63 +78,81 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
         }
         return cell
     }
+ 
+// ***************************************************************************//
+// ************ Below is the original version *****************//
+// ******   DO NOT DELETE for now ***************//
+// **********************************//
+// **********************//
+// ************//
+// ***//
+    
+    
+    
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        if(connectedFriends < 3) {
+//            let cell = self.friendsTable.cellForRowAtIndexPath(indexPath) as! AddFriendsTableViewCell
+//            cell.cellselected = !cell.cellselected
+//            if cell.cellselected {
+//                cell.pokerImage.image = UIImage(named: images[avilable[0]])!
+//                self.connectedFriends += 1
+//                let selectedPeer = appDelegate.mpcManager.foundPeers[indexPath.row] as MCPeerID
+//                cell.sessionIndex = avilable[0] - 1
+//                appDelegate.mpcManager.browser.invitePeer(selectedPeer, toSession: appDelegate.mpcManager.sessions[avilable[0]-1], withContext: nil, timeout: 200)
+//                appDelegate.mpcManager.connectedSessionCount += 1
+//                avilable.removeAtIndex(0)
+//
+//            }
+//            else {
+//                cell.pokerImage.image = nil
+//                self.connectedFriends -= 1
+//                self.appDelegate.mpcManager.sessions[cell.sessionIndex].disconnect()
+//                avilable.append(cell.sessionIndex+1)
+//                avilable.sortInPlace()
+//                appDelegate.mpcManager.connectedSessionCount -= 1
+//            }
+//            friendsTable.reloadData()
+//        }
+//    }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if(connectedFriends < 3) {
-            let cell = self.friendsTable.cellForRowAtIndexPath(indexPath) as! AddFriendsTableViewCell
-            cell.cellselected = !cell.cellselected
-            if cell.cellselected {
-                cell.pokerImage.image = UIImage(named: images[avilable[0]])!
-                self.connectedFriends += 1
-                let selectedPeer = appDelegate.mpcManager.foundPeers[indexPath.row] as MCPeerID
-                cell.sessionIndex = avilable[0] - 1
-                appDelegate.mpcManager.browser.invitePeer(selectedPeer, toSession: appDelegate.mpcManager.sessions[avilable[0]-1], withContext: nil, timeout: 200)
-                appDelegate.mpcManager.connectedSessionCount += 1
-                avilable.removeAtIndex(0)
-
-            }
-            else {
-                cell.pokerImage.image = nil
-                self.connectedFriends -= 1
-                self.appDelegate.mpcManager.sessions[cell.sessionIndex].disconnect()
-                avilable.append(cell.sessionIndex+1)
-                avilable.sortInPlace()
-                appDelegate.mpcManager.connectedSessionCount -= 1
-            }
-            friendsTable.reloadData()
+        let cell = self.friendsTable.cellForRowAtIndexPath(indexPath) as! AddFriendsTableViewCell
+        if cell.cellselected {
+            self.connectedFriends -= 1
+            cell.accessoryType = .None
+            cell.cellselected = false
+        }
+        else {
+            self.connectedFriends += 1
+            cell.accessoryType = .Checkmark
+            cell.cellselected = true
+        }
+        self.updateAddFriendsButtonState()
+    }
+    
+    
+    func reload() {
+        friendsTable.reloadData()
+        self.updateAddFriendsButtonState()
+    }
+    
+    func updateAddFriendsButtonState() {
+        if self.connectedFriends == 3 {
+            addFriendsButton.enabled = true
+        }
+        else {
+            addFriendsButton.enabled = false
         }
     }
     
     // MARK: MPCManagerDelegate method implementation
-    
     func foundPeer() {
-        friendsTable.reloadData()
+        self.reload()
     }
     
     
     func lostPeer() {
-        friendsTable.reloadData()
-    }
-    
-    func invitationWasReceived(fromPeer: String) {
-        let alert = UIAlertController(title: "", message: "\(fromPeer) wants to chat with you.", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        let acceptAction: UIAlertAction = UIAlertAction(title: "Accept", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
-            self.appDelegate.mpcManager.invitationHandler!(true, self.appDelegate.mpcManager.sessions[0])
-            self.appDelegate.mpcManager.connectedSessionCount += 1
-            self.appDelegate.mpcManager.server = false
-        }
-        
-        let declineAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alertAction) -> Void in
-            self.appDelegate.mpcManager.invitationHandler = nil
-        }
-        
-        alert.addAction(acceptAction)
-        alert.addAction(declineAction)
-        
-        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
-            self.presentViewController(alert, animated: true, completion: nil)
-        }
+        self.reload()
     }
 
     func connectedWithPeer(peerID: MCPeerID) {
@@ -137,5 +161,26 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
         })
         
         print("Connected")
+    }
+    
+    func enableStartGame() {
+        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            self.startGameButton.enabled = true
+        })
+    }
+    
+    @IBAction func addThreeFriends(sender: AnyObject) {
+        var selectedPeer: MCPeerID
+        var cell: AddFriendsTableViewCell
+        var count = 0
+        for index in 0...self.friendsTable.numberOfRowsInSection(0)-1 {
+            cell = self.friendsTable.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as! AddFriendsTableViewCell
+            if (cell.cellselected) {
+                selectedPeer = appDelegate.mpcManager.foundPeers[index] as MCPeerID
+                appDelegate.mpcManager.browser.invitePeer(selectedPeer, toSession: appDelegate.mpcManager.sessions[count], withContext: nil, timeout: 30)
+                count += 1
+            }
+        }
+        self.addFriendsButton.enabled = false
     }
  }

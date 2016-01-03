@@ -16,6 +16,9 @@ protocol MPCManagerDelegate1 {
     func lostPeer()
     
     func connectedWithPeer(peerID: MCPeerID)
+    
+    func enableStartGame()
+    
 }
 protocol MPCManagerDelegate2 {
     func invitationWasReceived(fromPeer: String)
@@ -39,7 +42,13 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     var invitationHandler: ((Bool, MCSession)->Void)!
     
-    var connectedSessionCount = 0
+    var connectedSessionCount = 0 {
+        didSet {
+            if (connectedSessionCount == 3) {
+                delegate1?.enableStartGame()
+            }
+        }
+    }
   
     var server: Bool = true
     
@@ -115,6 +124,7 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         case MCSessionState.Connected:
             print("Connected to session: \(session)")
             delegate1?.connectedWithPeer(peerID)
+            connectedSessionCount += 1
             
         case MCSessionState.Connecting:
             print("Connecting to session: \(session)")

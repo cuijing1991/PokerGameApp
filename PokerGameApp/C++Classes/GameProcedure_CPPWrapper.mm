@@ -105,7 +105,7 @@
     for(Card_CPPWrapper *c in l3) {
         p3.push_back(Card((int)c.suit, (int)c.rank));
     }
-    return self.gameProcedure->Winner(ID, p0, p1, p2, p3);
+    return self.gameProcedure->Winner((int)ID, p0, p1, p2, p3);
 }
 
 - (NSInteger) getScores{

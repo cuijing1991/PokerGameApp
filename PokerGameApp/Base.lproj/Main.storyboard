@@ -415,19 +415,30 @@
                                             <constraint firstAttribute="height" constant="50" id="EOR-KG-tOg"/>
                                             <constraint firstAttribute="width" secondItem="qic-xA-9od" secondAttribute="height" multiplier="103:61" id="dTY-40-yM2"/>
                                         </constraints>
-                                        <state key="normal" image="ArrowFireButton"/>
+                                        <state key="normal" backgroundImage="ArrowFireButton"/>
                                         <connections>
                                             <segue destination="ZeC-zs-8nE" kind="presentation" modalTransitionStyle="flipHorizontal" id="B25-kx-EnI"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oac-KJ-20b">
+                                        <rect key="frame" x="8" y="283" width="203" height="35"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <state key="normal" title="Add Selected Friends"/>
+                                        <connections>
+                                            <action selector="addThreeFriends:" destination="F94-kI-BKT" eventType="touchUpInside" id="LlC-Qj-81A"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="Psn-df-K5q" firstAttribute="centerY" secondItem="aeP-pp-uOW" secondAttribute="centerY" constant="40" id="3yj-dX-m6O"/>
+                                    <constraint firstItem="Oac-KJ-20b" firstAttribute="width" secondItem="Psn-df-K5q" secondAttribute="width" id="5WX-Pe-c2e"/>
                                     <constraint firstItem="Psn-df-K5q" firstAttribute="leading" secondItem="aeP-pp-uOW" secondAttribute="leading" id="BFZ-YG-yc5"/>
                                     <constraint firstItem="qic-xA-9od" firstAttribute="centerX" secondItem="aeP-pp-uOW" secondAttribute="centerX" id="DhM-bu-l7J"/>
                                     <constraint firstItem="qic-xA-9od" firstAttribute="top" secondItem="aeP-pp-uOW" secondAttribute="top" constant="20" id="F7w-K9-zNw"/>
+                                    <constraint firstItem="Oac-KJ-20b" firstAttribute="top" secondItem="Psn-df-K5q" secondAttribute="bottom" constant="3" id="KEh-Tt-OCg"/>
                                     <constraint firstAttribute="trailing" secondItem="Psn-df-K5q" secondAttribute="trailing" id="or2-sn-iJt"/>
+                                    <constraint firstAttribute="trailing" secondItem="Oac-KJ-20b" secondAttribute="trailing" id="zSe-WT-Lqe"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mbp-9K-UeS">
@@ -518,7 +529,9 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="addFriendsButton" destination="Oac-KJ-20b" id="QDJ-3r-YBm"/>
                         <outlet property="friendsTable" destination="ZU5-eN-9cC" id="Daw-fy-kqI"/>
+                        <outlet property="startGameButton" destination="qic-xA-9od" id="1kp-FT-6Ek"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pTh-SJ-Y7l" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -878,7 +891,7 @@
         <image name="spadesButton2.png" width="164" height="164"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2lw-eF-HDJ"/>
+        <segue reference="Oii-oW-Qoz"/>
         <segue reference="B25-kx-EnI"/>
     </inferredMetricsTieBreakers>
 </document>
