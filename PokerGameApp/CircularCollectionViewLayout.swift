@@ -44,8 +44,8 @@ class CircularCollectionViewLayout: UICollectionViewLayout {
       -CGFloat(collectionView!.numberOfItemsInSection(0) - 1) * anglePerItem : 0
     }
     var angle: CGFloat {
-    return angleAtExtreme * collectionView!.contentOffset.x / (collectionViewContentSize().width -
-      CGRectGetWidth(collectionView!.bounds))
+    return angleAtExtreme * (collectionView!.contentOffset.x / (collectionViewContentSize().width -
+      CGRectGetWidth(collectionView!.bounds)))
     }    
   
     var angleOffset: CGFloat = 0
@@ -90,11 +90,21 @@ class CircularCollectionViewLayout: UICollectionViewLayout {
 
             attributes.angle = self.angle + (self.anglePerItem * CGFloat(i)) - self.angleOffset
   
-      
             return attributes
         }
     }
-  
+    
+    func rotate() {
+        self.angleOffset += self.anglePerItem/2
+//        self.collectionView!.contentOffset.x = offset/2.0 * CGFloat(collectionViewContentSize().width - CGRectGetWidth(self.collectionView!.bounds))
+//        self.angle
+    }
+
+    func rotateBack() {
+        self.angleOffset = 0
+        self.collectionView!.contentOffset.x = 0.5 * CGFloat(collectionViewContentSize().width - CGRectGetWidth(self.collectionView!.bounds))
+    }
+    
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         return attributesList
     }
