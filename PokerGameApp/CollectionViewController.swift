@@ -41,6 +41,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     var myTable = false
     var sorted = false
     var keySuitCaller = -1
+    var myInquireSuit = false
     
     var leftCards = [Card_CPPWrapper]()
     var rightCards = [Card_CPPWrapper]()
@@ -64,6 +65,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
     }
     var gameEnd = false;
+    var skippedNum = 0;
     
    
     @IBOutlet weak var collectionView: UICollectionView!
@@ -444,10 +446,19 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 let buttonID = dataDictionary["buttonID"] as! Int
                 let state = dataDictionary["state"] as! Int
                 let fromplayer = dataDictionary["fromplayer"] as! Int
+                let inquireSuit = dataDictionary["inquireSuit"] as! Bool
                 if ((state == 1 && !single) || state == 2) {
                     NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                         self.serverChangeKeysuitBroadcast(buttonID, state: state, fromplayer: fromplayer)
+                        print("fromplayer : ")
+                        print(fromplayer)
+                        print(buttonID)
+                        print(state)
                     })
+                }
+                if (inquireSuit) {
+                    skippedNum = 0
+                    assignTableCards(fromplayer)
                 }
             }
             // Check if there's an entry with the "_update_scores_" key.
@@ -481,6 +492,27 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                     self.lists[4].addObject(card)
                 }
                 self.gameprocedure.remove(cards, n: fromplayer)
+                self.assignInquireSuit((fromplayer+1)%4)
+            }
+            // Check if there's an entry with the "_inquire_suit_" key.
+            if message as! String == "_inquire_suit_" {
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.inquireSuit()
+                })
+            }
+            // Check if there's an entry with the "_skip_" key.
+            if message as! String == "_skip_" {
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    let fromplayer = dataDictionary["fromplayer"] as! Int
+                    self.skippedNum++
+                    print(self.skippedNum)
+                    if (self.skippedNum < 3) {
+                        self.assignInquireSuit((fromplayer+1)%4)
+                    }
+                    else {
+                        self.assignNext(false, player: self.currentPlayer)
+                    }
+                })
             }
         }
     }
@@ -534,6 +566,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 playButton.enabled = true
                 self.playButton.setBackgroundImage(imageRed, forState: UIControlState.Normal)
             }
+            else {
+                playButton.enabled = false
+                self.playButton.setBackgroundImage(imageRed, forState: UIControlState.Normal)
+            }
+        }
+        if (self.myInquireSuit) {
+            playButton.enabled = true
+            self.playButton.setBackgroundImage(imageRed, forState: UIControlState.Normal)
         }
     }
     
@@ -618,8 +658,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             else {
                 removeTableCards()
                 self.playButton.setBackgroundImage(imageOff, forState: UIControlState.Normal)
-                self.playButton.enabled = false;
+                self.playButton.enabled = false
+                self.myTable = false
             }
+        }
+        if(self.myInquireSuit) {
+            self.skip()
+            self.playButton.setBackgroundImage(imageOff, forState: UIControlState.Normal)
+            self.playButton.enabled = false
         }
     }
     
@@ -670,6 +716,58 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             self.removeSelectedCards()
         }
         
+    }
+    
+    func skip() {
+        if (playerID == 0) {
+            self.skippedNum++
+            if(skippedNum < 3) {
+                self.assignInquireSuit(1)
+            }
+            else {
+                self.assignNext(false, player: self.currentPlayer)
+            }
+        }
+        else {
+            let message = "_skip_"
+            let messageDictionary: [String: AnyObject] = ["message": message, "fromplayer": playerID]
+            let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
+            do {
+                try appDelegate.mpcManager.sessions[0].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[0].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+            }
+            catch let error as NSError {
+                print(error.localizedDescription)
+                print("Can not send data: skip")
+            }
+        }
+        self.myInquireSuit = false
+        self.updateButton()
+    }
+    
+    func assignInquireSuit(playerID: Int) {
+        if (playerID == 0) {
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                self.inquireSuit()
+            })
+        }
+        else {
+            let message = "_inquire_suit_"
+            let messageDictionary: [String: AnyObject] = ["message": message]
+            let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
+            do {
+                try appDelegate.mpcManager.sessions[playerID-1].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[playerID-1].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+            }
+            catch let error as NSError {
+                print(error.localizedDescription)
+                print("Can not send data: skip")
+            }
+        }
+    }
+    
+    func inquireSuit() {
+        self.myInquireSuit = true
+        self.updateSuitButton()
+        self.updateButton()
     }
     
     func removeCardsBack(cardsBack:[Card_CPPWrapper]) {
@@ -876,25 +974,25 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     func updateSuitButton() {
         
-        if(keyCardsCount[0]==1 && !single || (keyCardsCount[0]==2 && (!double || self.keysuit < 0) && (self.keySuitCaller != self.playerID || keysuit == 0))) {
+        if((keyCardsCount[0]==1 && !single && !joker) || (keyCardsCount[0]==2 && (!double || self.keysuit < 0) && (self.keySuitCaller != self.playerID || keysuit == 0))) {
             spadeButton.enabled = true
         }
         else {
             spadeButton.enabled = false
         }
-        if(keyCardsCount[1]==1 && !single || (keyCardsCount[1]==2 && (!double || keysuit < 1) && (keySuitCaller != self.playerID || keysuit == 1))) {
+        if((keyCardsCount[1]==1 && !single && !joker) || (keyCardsCount[1]==2 && (!double || keysuit < 1) && (keySuitCaller != self.playerID || keysuit == 1))) {
             heartButton.enabled = true
         }
         else {
             heartButton.enabled = false
         }
-        if(keyCardsCount[2]==1 && !single || (keyCardsCount[2]==2 && (!double || keysuit < 2) && (keySuitCaller != self.playerID || keysuit == 2))) {
+        if((keyCardsCount[2]==1 && !single && !joker) || (keyCardsCount[2]==2 && (!double || keysuit < 2) && (keySuitCaller != self.playerID || keysuit == 2))) {
             clubButton.enabled = true
         }
         else {
             clubButton.enabled = false
         }
-        if(keyCardsCount[3]==1 && !single || (keyCardsCount[3]==2 && (!double || keysuit < 3) && (keySuitCaller != self.playerID || keysuit == 3))) {
+        if((keyCardsCount[3]==1 && !single && !joker) || (keyCardsCount[3]==2 && (!double || keysuit < 3) && (keySuitCaller != self.playerID || keysuit == 3))) {
             diamondButton.enabled = true
         }
         else {
@@ -918,17 +1016,16 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         self.keySuitCaller = fromplayer
         if (buttonID < 5) {
             keysuit = buttonID
-            GameInfo_CPPWrapper.updateKeySuit(buttonID)
+            GameInfo_CPPWrapper.updateKeySuit(keysuit)
         }
         else {
             keysuit = 4
-            GameInfo_CPPWrapper.updateKeySuit(buttonID)
+            GameInfo_CPPWrapper.updateKeySuit(4)
             joker = true
         }
         self.myCards.sortInPlace(self.forwards)
         self.collectionView.reloadData()
         self.layout.invalidateLayout()
-        //let color = UIColor.blackColor()
         if (state == 1){ single = true }
         if (state == 2){ double = true}
         updateSuitButton()
@@ -992,11 +1089,16 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         else { state = 1 }
         if(self.appDelegate.mpcManager.server) {
             self.serverChangeKeysuitBroadcast(buttonID, state: state, fromplayer: 0)
+            if(self.myInquireSuit) {
+                self.skippedNum = 0;
+                assignTableCards(0)
+            }
             return true;
         }
         else {
+
             let message = "_change_keysuit_request_"
-            let messageDictionary: [String: AnyObject] = ["message": message, "buttonID": buttonID, "state": state, "fromplayer": self.playerID]
+            let messageDictionary: [String: AnyObject] = ["message": message, "buttonID": buttonID, "state": state, "fromplayer": self.playerID, "inquireSuit": myInquireSuit]
             let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
             do {
                 try appDelegate.mpcManager.sessions[0].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[0].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
