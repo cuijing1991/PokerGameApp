@@ -15,25 +15,26 @@
 
 @interface GameProcedure_CPPWrapper()
 @property GameProcedure *gameProcedure;
-@property std::list<Card> *list1, *list2, *list3, *list4;
+@property std::list<Card> *list1, *list2, *list3, *list4, *tb;
 @end
 
 
 
 @implementation GameProcedure_CPPWrapper
 - (instancetype)GameProcedure_CPPWrapper {
-  self.gameProcedure = new GameProcedure();
-  self.list1 = new std::list<Card>();
-  self.list2 = new std::list<Card>();
-  self.list3 = new std::list<Card>();
-  self.list4 = new std::list<Card>();
+    self.gameProcedure = new GameProcedure();
+    self.list1 = new std::list<Card>();
+    self.list2 = new std::list<Card>();
+    self.list3 = new std::list<Card>();
+    self.list4 = new std::list<Card>();
+    self.tb = new std::list<Card>();
 
   return self;
 }
 
--(void)ShuffleCards:(NSMutableArray *)pca1 pca2:(NSMutableArray *)pca2 pca3:(NSMutableArray *)pca3 pca4:(NSMutableArray *)pca4 {
+-(void)ShuffleCards:(NSMutableArray *)pca1 pca2:(NSMutableArray *)pca2 pca3:(NSMutableArray *)pca3 pca4:(NSMutableArray *)pca4 tb:(NSMutableArray *)tbca {
   
-    self.gameProcedure->ShuffleCards(*self.list1, *self.list2, *self.list3, *self.list4);
+    self.gameProcedure->ShuffleCards(*self.list1, *self.list2, *self.list3, *self.list4, *self.tb);
   
     for(Card c : *self.list1) {
       Card_CPPWrapper *cardwrapper;
@@ -41,8 +42,6 @@
       [cardwrapper Card_CPPWrapper:c.getSuit() rank:c.getRank()];
       [pca1 addObject: cardwrapper];
     }
-  
-  
     for(Card c : *self.list2) {
       Card_CPPWrapper *cardwrapper;
       cardwrapper = [Card_CPPWrapper alloc];
@@ -60,6 +59,12 @@
       cardwrapper = [Card_CPPWrapper alloc];
       [cardwrapper Card_CPPWrapper:c.getSuit() rank:c.getRank()];
       [pca4 addObject:cardwrapper];
+    }
+    for(Card c : *self.tb) {
+        Card_CPPWrapper *cardwrapper;
+        cardwrapper = [Card_CPPWrapper alloc];
+        [cardwrapper Card_CPPWrapper:c.getSuit() rank:c.getRank()];
+        [tbca addObject:cardwrapper];
     }
     
 }

@@ -17,7 +17,7 @@ using std::list;
 using std::cout;
 using std::endl;
 
-void GameProcedure::ShuffleCards(list<Card> &pc1, list<Card> &pc2, list<Card> &pc3, list<Card> &pc4) {
+void GameProcedure::ShuffleCards(list<Card> &pc1, list<Card> &pc2, list<Card> &pc3, list<Card> &pc4, list<Card> &tb) {
     
     vector<Card> doubleDeck;
     
@@ -37,13 +37,17 @@ void GameProcedure::ShuffleCards(list<Card> &pc1, list<Card> &pc2, list<Card> &p
     //seed = 149;  // 149 has some really nice feature
     shuffle (doubleDeck.begin(), doubleDeck.end(), std::default_random_engine(seed));
     
-    for ( int i = 0; i < doubleDeckSize; i = i + 4 ) {
-        
+    for ( int i = 0; i < (doubleDeckSize - tableCardSize); i = i + 4 ) {
         pc1.push_back(doubleDeck[i]);
         pc2.push_back(doubleDeck[i+1]);
         pc3.push_back(doubleDeck[i+2]);
         pc4.push_back(doubleDeck[i+3]);
     }
+    
+    for ( int i = doubleDeckSize - tableCardSize; i < doubleDeckSize; i = i + 1 ) {
+        tb.push_back(doubleDeck[i]);
+    }
+    
     manager[0] = CardManager(pc1);
     manager[1] = CardManager(pc2);
     manager[2] = CardManager(pc3);

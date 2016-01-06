@@ -15,7 +15,7 @@
 
 @interface GameProcedure_CPPWrapper : NSObject
 - (instancetype)GameProcedure_CPPWrapper;
-- (void)ShuffleCards:(NSMutableArray*)pca1 pca2:(NSMutableArray*)pca2 pca3:(NSMutableArray*)pca3 pca4:(NSMutableArray*)pca4;
+- (void)ShuffleCards:(NSMutableArray*)pca1 pca2:(NSMutableArray*)pca2 pca3:(NSMutableArray*)pca3 pca4:(NSMutableArray*)pca4 tb:(NSMutableArray*)tbca;
 
 -(NSArray<Card_CPPWrapper*>*)testStarter:(NSArray<Card_CPPWrapper*>*)cards suit:(NSInteger)suit n:(NSInteger)n;
 

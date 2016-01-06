@@ -26,7 +26,7 @@ public:
     GameProcedure () {};
     
     /* ShuffleCards takes in four empty list and shuffle a doubledeck. */
-    void ShuffleCards (list<Card> &pc1, list<Card> &pc2, list<Card> &pc3, list<Card> &pc4);
+    void ShuffleCards (list<Card> &pc1, list<Card> &pc2, list<Card> &pc3, list<Card> &pc4, list<Card> &tb);
     
     /* Find the winner from 4 players */
     int Winner (int ID, const list<Card> &pc1, const list<Card> &pc2, const list<Card> &pc3, const list<Card> &pc4);

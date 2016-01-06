@@ -96,8 +96,6 @@ class CircularCollectionViewLayout: UICollectionViewLayout {
     
     func rotate() {
         self.angleOffset += self.anglePerItem/2
-//        self.collectionView!.contentOffset.x = offset/2.0 * CGFloat(collectionViewContentSize().width - CGRectGetWidth(self.collectionView!.bounds))
-//        self.angle
     }
 
     func rotateBack() {

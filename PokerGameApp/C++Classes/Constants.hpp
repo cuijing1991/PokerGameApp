@@ -19,6 +19,7 @@ extern const string suitNames[];
 extern const string rankNames[];
 
 extern const int doubleDeckSize;
+extern const int tableCardSize;
 extern const int suitSize;
 extern const int rankMin;
 extern const int rankMax;
