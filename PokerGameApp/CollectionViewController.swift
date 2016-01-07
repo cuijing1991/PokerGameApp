@@ -96,6 +96,15 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     override func viewDidLoad() {
         layout = CircularCollectionViewLayout()
+        
+        if self.appDelegate.mpcManager.connectedSessionCount > 0 {
+            for index in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
+                print("connected peer count")
+                print(self.appDelegate.mpcManager.sessions[index].connectedPeers.count)
+            }
+        }
+        
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.setCollectionViewLayout(self.layout, animated: false)
@@ -377,12 +386,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                     }
                     self.updateTable((fromplayer - self.playerID + 4) % 4,cards: cards)
                     self.playCount++
+                    print("receive broadcast")
                  })
                 
             }
             // Check if there's an entry with the "_play_cards_" key.
             if message as! String == "_play_cards_" {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    print("server: receive _play_cards_")
                     let flag = dataDictionary["flag"] as! Bool
                     let cards = dataDictionary["cards"] as! [Card_CPPWrapper]
                     let fromplayer = dataDictionary["fromplayer"] as! Int
@@ -591,6 +602,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     @IBAction func playCards(sender: AnyObject) {
         
+        print("play button clicked")
         if(self.myTurn) {
             var selectedCards = [Card_CPPWrapper]()
             for i in 0...myCards.count-1 {
@@ -888,6 +900,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         self.playCardCount += cards.count
         print(cards.count)
+        print("server: broadcast cards")
         return true
     }
     
@@ -1155,6 +1168,16 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     //*************************************************************************************************//
     
+    @IBAction func endGame(sender: AnyObject) {
+        self.myTurn = false
+        self.myTable = false
+        self.myInquireSuit = false
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NSOperationQueue.mainQueue().cancelAllOperations()
+        self.performSegueWithIdentifier("endGame", sender: self)
+        //self.dismissViewControllerAnimated(true, completion: { self.performSegueWithIdentifier("endGame", sender: self)})
+        
+    }
 }
 
 

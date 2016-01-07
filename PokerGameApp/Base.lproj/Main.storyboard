@@ -159,7 +159,23 @@
                     <view key="view" contentMode="scaleToFill" id="tgK-Cr-HHR">
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IgY-IW-h5B">
+                                <rect key="frame" x="56" y="28" width="103" height="61"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="ERB-XW-09j"/>
+                                    <constraint firstAttribute="width" secondItem="IgY-IW-h5B" secondAttribute="height" multiplier="103:61" id="VjU-1L-mJB"/>
+                                </constraints>
+                                <state key="normal" image="ArrowFireButtonInverse"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" modalTransitionStyle="flipHorizontal" id="EpP-Yt-w3i"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IgY-IW-h5B" firstAttribute="width" secondItem="IgY-IW-h5B" secondAttribute="height" multiplier="103:61" id="ebo-im-Cj0"/>
+                        </constraints>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -169,7 +185,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3jr-aN-Cqd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1223.5" y="349.5"/>
+            <point key="canvasLocation" x="1221.5" y="349.5"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="knw-Zr-1x6">
@@ -747,7 +763,8 @@
                                 </constraints>
                                 <state key="normal" image="ArrowFireButtonInverse"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="presentation" modalTransitionStyle="flipHorizontal" id="lqw-Sr-h4z"/>
+                                    <action selector="endGame:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="g5u-3M-rEn"/>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="endGame" modalTransitionStyle="flipHorizontal" id="lqw-Sr-h4z"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="11.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="4Wr-D8-dlp">
@@ -917,8 +934,8 @@
         <image name="spadesButton2.png" width="164" height="164"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lqw-Sr-h4z"/>
-        <segue reference="B25-kx-EnI"/>
+        <segue reference="EpP-Yt-w3i"/>
+        <segue reference="TGj-L5-TYC"/>
         <segue reference="Oii-oW-Qoz"/>
     </inferredMetricsTieBreakers>
 </document>

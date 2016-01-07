@@ -13,14 +13,15 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        self.appDelegate.mpcManager.server = false
-        self.appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
-        self.appDelegate.mpcManager.browser.startBrowsingForPeers()
         if self.appDelegate.mpcManager.connectedSessionCount > 0 {
             for index in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
                 self.appDelegate.mpcManager.sessions[index].disconnect()
             }
         }
+        self.appDelegate.mpcManager = MPCManager()
+        self.appDelegate.mpcManager.server = false
+        self.appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
+        self.appDelegate.mpcManager.browser.startBrowsingForPeers()
         self.appDelegate.mpcManager.connectedSessionCount = 0
     }
 

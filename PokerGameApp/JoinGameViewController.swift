@@ -24,10 +24,10 @@ class JoinGameViewController: UIViewController, MPCManagerDelegate2 {
         let alert = UIAlertController(title: "", message: "\(fromPeer) wants to chat with you.", preferredStyle: UIAlertControllerStyle.Alert)
         
         let acceptAction: UIAlertAction = UIAlertAction(title: "Accept", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
-            self.appDelegate.mpcManager.invitationHandler!(true, self.appDelegate.mpcManager.sessions[0])
-            self.appDelegate.mpcManager.connectedSessionCount += 1
-            self.appDelegate.mpcManager.server = false
             NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+                self.appDelegate.mpcManager.invitationHandler!(true, self.appDelegate.mpcManager.sessions[0])
+                self.appDelegate.mpcManager.connectedSessionCount += 1
+                self.appDelegate.mpcManager.server = false
                 self.performSegueWithIdentifier("openPlayboard", sender: self)
             }
         }
