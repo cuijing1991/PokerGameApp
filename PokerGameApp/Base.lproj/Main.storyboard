@@ -746,6 +746,9 @@
                                     <constraint firstAttribute="width" secondItem="yGM-ho-rc6" secondAttribute="height" multiplier="103:61" id="Uut-Uq-trM"/>
                                 </constraints>
                                 <state key="normal" image="ArrowFireButtonInverse"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" modalTransitionStyle="flipHorizontal" id="lqw-Sr-h4z"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="11.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="4Wr-D8-dlp">
                                 <rect key="frame" x="340" y="76" width="61" height="61"/>
@@ -914,7 +917,8 @@
         <image name="spadesButton2.png" width="164" height="164"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Oii-oW-Qoz"/>
+        <segue reference="lqw-Sr-h4z"/>
         <segue reference="B25-kx-EnI"/>
+        <segue reference="Oii-oW-Qoz"/>
     </inferredMetricsTieBreakers>
 </document>

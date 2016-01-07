@@ -152,9 +152,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         top.dataSource = self
         bottom.delegate = self
         bottom.dataSource = self
-        
+        ////////////////////////////////////////////
+        leftCards = [Card_CPPWrapper]()
+        rightCards = [Card_CPPWrapper]()
+        topCards = [Card_CPPWrapper]()
+        bottomCards = [Card_CPPWrapper]()
        
-        
+        playCount = 0
+        ////////////////////////////////////////////
         let screenHeight = UIScreen.mainScreen().bounds.height
         let height = Int(screenHeight * CGFloat(playCardsRatio))
         let width = Int(height * 233 / 338)
@@ -191,6 +196,11 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             gameprocedure = GameProcedure_CPPWrapper()
             gameprocedure.GameProcedure_CPPWrapper()
             gameprocedure.ShuffleCards(lists[0], pca2: lists[1], pca3: lists[2], pca4: lists[3], tb: lists[4])
+            
+            self.assignPlayerID(1)
+            self.assignPlayerID(2)
+            self.assignPlayerID(3)
+            
             assignCard_to_all(0)
         }
         /**************************************************************************************/
@@ -235,9 +245,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.jokerButton.enabled = false;
                 self.highjokerButton.enabled = false;
                 
-                self.assignPlayerID(1)
-                self.assignPlayerID(2)
-                self.assignPlayerID(3)
+                
                 self.serverDeclareGameInfo()
                 
                 self.assignTableCards(self.lord)
@@ -322,6 +330,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         self.playButton.setBackgroundImage(imageRed, forState: UIControlState.Normal)
         self.playButton.enabled = true
         self.myTable = true
+        self.sorted = false
         self.collectionView.reloadData()
         self.layout.rotateBack()
         self.layout.invalidateLayout()
@@ -366,7 +375,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                         let format = dataDictionary["cards"] as! [Card_CPPWrapper]
                         self.manager.setFormat(format)
                     }
-                    self.updateTable((fromplayer - self.playerID + 4)%4,cards: cards)
+                    self.updateTable((fromplayer - self.playerID + 4) % 4,cards: cards)
                     self.playCount++
                  })
                 
@@ -520,6 +529,8 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     func updateButton(){
         self.layout.invalidateLayout()
         var selectedCards = [Card_CPPWrapper]()
+        print("debug----updateButton():myCards.count = ")
+        print(myCards.count)
         for i in 0...myCards.count-1 {
             if (self.layout.selected[i]) {
                 selectedCards.append(myCards[i])
@@ -530,12 +541,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             if (self.enableTest) {
                 if (manager.testCards(selectedCards)) {
                     playButton.enabled = true
-                    playButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
                     self.playButton.setBackgroundImage(imageOn, forState: UIControlState.Normal)
                     print ("cheer")
                 }
                 else {
-                    playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
                     self.playButton.setBackgroundImage(imageOn, forState: UIControlState.Normal)
                     playButton.enabled = false
                     print ("bad")
@@ -545,33 +554,36 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 if (selectedCards.count > 0 && (manager.isUniform(selectedCards) != -1)) {
                     if (manager.isUniform(selectedCards) == keysuit && manager.structureSize(selectedCards) != 1) {
                         playButton.enabled = false
-                        playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
                         self.playButton.setBackgroundImage(imageOn, forState: UIControlState.Normal)
                     }
                     else {
                         playButton.enabled = true
-                        playButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
                         self.playButton.setBackgroundImage(imageOn, forState: UIControlState.Normal)
                     }
                 }
                 else {
                     playButton.enabled = false
-                    playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
                     self.playButton.setBackgroundImage(imageOn, forState: UIControlState.Normal)
                 }
             }
         }
-        if (self.myTable) {
-            if(selectedCards.count == 8) {
+        else if (self.myTable) {
+            if (!self.sorted) {
                 playButton.enabled = true
                 self.playButton.setBackgroundImage(imageRed, forState: UIControlState.Normal)
             }
             else {
-                playButton.enabled = false
-                self.playButton.setBackgroundImage(imageRed, forState: UIControlState.Normal)
+                if(selectedCards.count == 8) {
+                    playButton.enabled = true
+                    self.playButton.setBackgroundImage(imageRed, forState: UIControlState.Normal)
+                }
+                else {
+                    playButton.enabled = false
+                    self.playButton.setBackgroundImage(imageRed, forState: UIControlState.Normal)
+                }
             }
         }
-        if (self.myInquireSuit) {
+        else if (self.myInquireSuit) {
             playButton.enabled = true
             self.playButton.setBackgroundImage(imageRed, forState: UIControlState.Normal)
         }
@@ -642,11 +654,12 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             playButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
             playButton.setBackgroundImage(imageOff, forState: UIControlState.Normal)
             playButton.enabled = false
+            self.layout.rotateBack()
             self.layout.invalidateLayout()
             self.collectionView.reloadData()
             self.myTurn = false
         }
-        if(self.myTable) {
+        else if(self.myTable) {
             if(!self.sorted) {
                 self.myCards.sortInPlace(self.forwards)
                 self.playButton.enabled = false
@@ -662,7 +675,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.myTable = false
             }
         }
-        if(self.myInquireSuit) {
+        else if(self.myInquireSuit) {
             self.skip()
             self.playButton.setBackgroundImage(imageOff, forState: UIControlState.Normal)
             self.playButton.enabled = false
@@ -707,7 +720,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             let messageDictionary: [String: AnyObject] = ["message": message, "cards": selectedCards, "fromplayer": self.playerID]
             let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
             do {
-                try appDelegate.mpcManager.sessions[playerID-1].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[playerID-1].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+                try appDelegate.mpcManager.sessions[0].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[0].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
             }
             catch let error as NSError {
                 print(error.localizedDescription)
@@ -929,48 +942,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         return true
     }
     
-//    func updateSuitButton(card: Card_CPPWrapper) {
-//        var n : NSInteger
-//        if (card.rank == keyrank && myCards.count <= 25) {
-//            n = ++keyCardsCount[card.suit]
-//            if ((n==1 && !single) || (n==2 && card.suit > keysuit) || (n==2 && !double)){
-//                print("change suit button state")
-//                switch (card.suit) {
-//                case 0:
-//                    self.spadeButton.enabled = true
-//                    break
-//                case 1:
-//                    self.heartButton.enabled = true
-//                    break
-//                case 2:
-//                    self.clubButton.enabled = true
-//                    break
-//                case 3:
-//                    self.diamondButton.enabled = true
-//                    break
-//                default:
-//                    break
-//                }
-//            }
-//            
-//        }
-//        if (card.suit == 4 && myCards.count <= 25) {
-//            n = ++keyCardsCount[card.rank + 4]
-//            if (n==2) {
-//                switch (card.rank) {
-//                case 0:
-//                    self.jokerButton.enabled = true
-//                    break
-//                case 1:
-//                    self.highjokerButton.enabled = true
-//                    break
-//                default:
-//                    break
-//                }
-//            }
-//        }
-//    }
-    
     
     func updateSuitButton() {
         
@@ -1014,53 +985,22 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     func changeKeysuit(buttonID: Int, state: Int, fromplayer: Int) {
         self.keySuitCaller = fromplayer
-        if (buttonID < 5) {
+        if (buttonID < 4) {
             keysuit = buttonID
             GameInfo_CPPWrapper.updateKeySuit(keysuit)
         }
         else {
             keysuit = 4
-            GameInfo_CPPWrapper.updateKeySuit(4)
+            GameInfo_CPPWrapper.updateKeySuit(keysuit)
             joker = true
         }
+
         self.myCards.sortInPlace(self.forwards)
         self.collectionView.reloadData()
         self.layout.invalidateLayout()
         if (state == 1){ single = true }
         if (state == 2){ double = true}
         updateSuitButton()
-//        for index in 0...5 {
-//            if (keyCardsCount[index] == 1 || (keyCardsCount[index] == state && index <= buttonID)) {
-//                switch (index) {
-//                case 0:
-//                    self.spadeButton.enabled = false
-//                    self.spadeButton.setTitleColor(color, forState: UIControlState.Normal)
-//                    break
-//                case 1:
-//                    self.heartButton.enabled = false
-//                    self.heartButton.setTitleColor(color, forState: UIControlState.Normal)
-//                    break
-//                case 2:
-//                    self.clubButton.enabled = false
-//                    self.clubButton.setTitleColor(color, forState: UIControlState.Normal)
-//                    break
-//                case 3:
-//                    self.diamondButton.enabled = false
-//                    self.diamondButton.setTitleColor(color, forState: UIControlState.Normal)
-//                    break
-//                case 4:
-//                    self.jokerButton.enabled = false
-//                    self.jokerButton.setTitleColor(color, forState: UIControlState.Normal)
-//                    break
-//                case 5:
-//                    self.highjokerButton.enabled = false
-//                    self.highjokerButton.setTitleColor(color, forState: UIControlState.Normal)
-//                    break
-//                default:
-//                    break
-//                }
-//            }
-//        }
     }
     
     func serverNext() {
@@ -1109,6 +1049,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 return false
             }
         }
+        self.myInquireSuit = false
         return true;
     }
     
@@ -1191,6 +1132,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 else if collectionView == self.bottom {
                     cell.imageName = "Images/PNG-cards-All/" + bottomCards[indexPath.row].toString() + ".png"
                 }
+                
+                collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(indexPath)!.zIndex = indexPath.row // ******************************************** //
+                
                 return cell
             }
             
