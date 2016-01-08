@@ -46,6 +46,34 @@ CardManager::CardManager(const list<Card> &cards) {
     }
 }
 
+void CardManager::append(list<Card>& l) {
+    for (Card card: l) {
+        
+        if (card.isKey()) {
+            keys.push_back(card);
+        }
+        
+        else {
+            switch(static_cast<Suits>(card.getSuit())) {
+                case Spade:
+                    spades.push_back(card);
+                    break;
+                case Heart:
+                    hearts.push_back(card);
+                    break;
+                case Club:
+                    clubs.push_back(card);
+                    break;
+                case Diamond:
+                    diamonds.push_back(card);
+                    break;
+                default:
+                    cout << "Error -- CardManager: CardManager()" << endl;
+                    break;
+            }
+        }
+    }
+}
 
 list<CardUnit> CardManager::getStructure(const list<Card> &cards) {
     list<CardUnit> cu_list;

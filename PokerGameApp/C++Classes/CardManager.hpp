@@ -35,7 +35,9 @@ public:
     /* Remove a certain card form list */
     bool remove(const Card card);
     bool remove(const Card card, list<Card>& l);
-    
+   
+    /* Append new cards */
+    void append(list<Card>& l);
     /**
      * Return a vector of bool.
      * Each bool indicates whether there could be a same cardUnit.

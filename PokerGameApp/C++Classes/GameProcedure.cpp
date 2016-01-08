@@ -56,10 +56,9 @@ void GameProcedure::ShuffleCards(list<Card> &pc1, list<Card> &pc2, list<Card> &p
     scores = 0;
 }
 
-
-
-
-
+void GameProcedure::appendTableCards(list<Card> &cards, int ID) {
+    manager[ID].append(cards);
+}
 int GameProcedure::Winner (int ID, const list<Card> &pc1, const list<Card> &pc2, const list<Card> &pc3, const list<Card> &pc4) {
     int suit1, suit2, suit3, suit4;
     int order1 = -1, order2 = -1, order3 = -1, order4 = -1;

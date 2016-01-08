@@ -43,5 +43,8 @@
     [encoder encodeInteger:self.rank forKey:@"rank"];
 }
 
+- (NSInteger) value {
+    return self.card->value;
+}
 
 @end

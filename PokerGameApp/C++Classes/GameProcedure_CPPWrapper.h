@@ -24,5 +24,6 @@
 - (NSInteger) Winner:(NSInteger)ID player0: (NSArray<Card_CPPWrapper*>*)l0 player1:(NSArray<Card_CPPWrapper*>*)l1 player2:(NSArray<Card_CPPWrapper*>*)l2 player3:(NSArray<Card_CPPWrapper*>*)l3;
 
 - (NSInteger) getScores;
+- (void) appendTableCards:(NSMutableArray*)cards playerID:(NSInteger)ID;
 @end
 #endif /* GameProcedure_CPPWrapper_h */

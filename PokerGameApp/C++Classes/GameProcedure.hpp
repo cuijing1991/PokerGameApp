@@ -44,6 +44,8 @@ public:
     /* Record Game Scores */
     int scores;
     
+    void appendTableCards(list<Card> &cards, int ID);
+    
 private:
     CardManager manager[4];
     
