@@ -105,7 +105,9 @@ class CircularCollectionViewLayout: UICollectionViewLayout {
             self.invalidateLayout()
         }
         else {
-            
+            self.angleOffset = 0
+            self.collectionView!.contentOffset.x = 0
+            self.invalidateLayout()
         }
     }
     

@@ -23,6 +23,7 @@ class MenuViewController: UIViewController {
         self.appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
         self.appDelegate.mpcManager.browser.startBrowsingForPeers()
         self.appDelegate.mpcManager.connectedSessionCount = 0
+        GameInfo_CPPWrapper.reset()
     }
 
     override func didReceiveMemoryWarning() {

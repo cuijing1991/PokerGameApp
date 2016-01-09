@@ -15,4 +15,4 @@ Ranks GameInfo::keyRank = Two;
 Suits GameInfo::keySuit = Joker;
 Suits GameInfo::currentSuit = Diamond;
 std::list<Card> GameInfo::format = std::list<Card>();
-int GameInfo::lordID = 1;
+int GameInfo::lordID = -1;

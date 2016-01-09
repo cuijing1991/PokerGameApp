@@ -22,9 +22,7 @@
 - (void) setFormat: (NSArray<Card_CPPWrapper*>*)format;
 - (NSInteger)  isUniform: (NSArray<Card_CPPWrapper*>*) cards;
 - (NSInteger) structureSize: (NSArray<Card_CPPWrapper*>*) cards;
-
-//put it here is not good
-//- (void) updateKeySuit: (NSInteger)keysuit;
+- (NSInteger) getMultiplier: (NSArray<Card_CPPWrapper*>*) cards;
 
 @end
 

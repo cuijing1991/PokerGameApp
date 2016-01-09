@@ -31,8 +31,56 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     // keysuit can keyrank should be updated while assigning cards
     var keysuit = GameInfo_CPPWrapper.getKeySuit()
-    var keyrank = GameInfo_CPPWrapper.getKeyRank()
-    var lord = 1
+    var keyrank = GameInfo_CPPWrapper.getKeyRank() {
+        didSet {
+            if(keyrank < 11 && keyrank > 1) {
+                keyrankLabel.text = String(keyrank)
+            }
+            else if(keyrank == 11) {
+                keyrankLabel.text = "J"
+            }
+            else if(keyrank == 12) {
+                keyrankLabel.text = "Q"
+            }
+            else if(keyrank == 13) {
+                keyrankLabel.text = "K"
+            }
+            else if(keyrank == 14) {
+                keyrankLabel.text = "A"
+            }
+            else {
+                keyrankLabel.text = ""
+            }
+        }
+    }
+    var lordID = -1 {
+        didSet {
+            print("L")
+            print(lordID)
+            if (lordID >= 0) {
+                switch((lordID - playerID + 4) % 4) {
+                case 0:
+                    bottomImage.image = imageSetLord[playerID]
+                    break
+                case 1:
+                    rightImage.image = imageSetLord[(playerID+1) % 4]
+                    break
+                case 2:
+                    topImage.image = imageSetLord[(playerID+2) % 4]
+                    break
+                case 3:
+                    leftImage.image = imageSetLord[(playerID+3) % 4]
+                    break
+                default:
+                    break
+                }
+                if(playerID == 0) {
+                    self.serverDeclareGameInfo()
+                }
+            }
+        }
+    }
+    
     var images = [String]()
     var layout: CircularCollectionViewLayout!
     var myCards = [Card_CPPWrapper]()
@@ -43,7 +91,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     var single = false
     var double = false
     var joker = false
-    var imageSet = [UIImage]()
+    var imageSet : [UIImage] = [UIImage(named:"4.jpg")!, UIImage(named:"8.jpg")!, UIImage(named:"11.jpg")!, UIImage(named:"6.jpg")! ]
+    var imageSetLord : [UIImage] = [UIImage(named:"4x.jpg")!, UIImage(named:"8x.jpg")!, UIImage(named:"11x.jpg")!, UIImage(named:"6x.jpg")! ]
+    
     var sorted = false
     var starting = true
     var keySuitCaller = -1
@@ -109,6 +159,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             }
         }
         
+        keyrank = GameInfo_CPPWrapper.getKeyRank()
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -130,11 +181,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         jokerButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         highjokerButton.enabled = false
         highjokerButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-
-        imageSet.append(UIImage(named:"4.jpg")!)
-        imageSet.append(UIImage(named:"8.jpg")!)
-        imageSet.append(UIImage(named:"11.jpg")!)
-        imageSet.append(UIImage(named:"6.jpg")!)
         
         leftImage.image = nil
         topImage.image = nil
@@ -149,21 +195,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         topImage.clipsToBounds = true
         bottomImage.clipsToBounds = true
         scores.text = "0"
-        if(keyrank < 11) {
-            keyrankLabel.text = String(keyrank)
-        }
-        else if(keyrank == 11) {
-            keyrankLabel.text = "J"
-        }
-        else if(keyrank == 12) {
-            keyrankLabel.text = "Q"
-        }
-        else if(keyrank == 13) {
-            keyrankLabel.text = "K"
-        }
-        else if(keyrank == 14) {
-            keyrankLabel.text = "A"
-        }
+        
         nextGameButton.enabled = false
         
         left.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: Identifier)
@@ -216,11 +248,16 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             gameprocedure = GameProcedure_CPPWrapper()
             gameprocedure.GameProcedure_CPPWrapper()
             gameprocedure.ShuffleCards(lists[0], pca2: lists[1], pca3: lists[2], pca4: lists[3], tb: lists[4])
-            self.serverDeclareGameInfo()
+            
+            
             self.bottomImage.image = self.imageSet[self.playerID]
             self.rightImage.image = self.imageSet[(self.playerID+1)%4]
             self.topImage.image = self.imageSet[(self.playerID+2)%4]
             self.leftImage.image = self.imageSet[(self.playerID+3)%4]
+            lordID = GameInfo_CPPWrapper.getLordID()
+            self.serverDeclareGameInfo()
+            print("lordID")
+            print(lordID)
 
             self.assignPlayerID(1)
             self.assignPlayerID(2)
@@ -241,7 +278,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func assignCard_to_all(index: Int) {
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC))
+        let time = dispatch_time(DISPATCH_TIME_NOW, 1 * Int64(NSEC_PER_SEC))
         dispatch_after(time, dispatch_get_main_queue(), {
 
             self.assignCard(index, playerID: 0, listID: 0)
@@ -268,11 +305,11 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 
                 self.collectionView.allowsSelection = true
                 
-                self.assignPlayerID(1)
-                self.assignPlayerID(2)
-                self.assignPlayerID(3)
+                self.stopAssigningCards(1)
+                self.stopAssigningCards(2)
+                self.stopAssigningCards(3)
                
-                self.assignInquireSuit(self.lord)
+                self.assignInquireSuit(self.lordID)
                 
             }
         })
@@ -346,17 +383,19 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func appendTableCards(cards: NSMutableArray!) {
-        for i in 0...7 {
-            self.myCards.append(cards[i] as! Card_CPPWrapper);
-        }
-        self.playButton.setBackgroundImage(imageRed, forState: UIControlState.Normal)
-        self.playButton.enabled = true
-        self.flag = Flag.TableCards
-        self.sorted = false
-        self.collectionView.reloadData()
-        self.layout.rotateBack()
-        self.layout.invalidateLayout()
-        self.manager.CardManager_CPPWrapper(self.myCards)
+        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            for i in 0...7 {
+                self.myCards.append(cards[i] as! Card_CPPWrapper);
+            }
+            self.playButton.setBackgroundImage(imageRed, forState: UIControlState.Normal)
+            self.playButton.enabled = true
+            self.flag = Flag.TableCards
+            self.sorted = false
+            self.collectionView.reloadData()
+            self.layout.rotateBack()
+            self.layout.invalidateLayout()
+            self.manager.CardManager_CPPWrapper(self.myCards)
+       })
     }
     
     func handleMPCReceivedDataWithNotification(notification: NSNotification) {
@@ -465,6 +504,18 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                     self.highjokerButton.enabled = false;
                 })
             }
+            // Check if there's an entry with the "_stop_assigning_cards_" key.
+            if message as! String == "_stop_assigning_cards_" {
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.spadeButton.enabled = false;
+                    self.heartButton.enabled = false;
+                    self.clubButton.enabled = false;
+                    self.diamondButton.enabled = false;
+                    self.jokerButton.enabled = false;
+                    self.highjokerButton.enabled = false;
+                })
+            }
+            
             // Check if there's an entry with the "_change_keysuit_" key.
             if message as! String == "_change_keysuit_" {
                 let buttonID = dataDictionary["buttonID"] as! Int
@@ -506,7 +557,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             if message as! String == "_declare_gameinfo_" {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     let keyRank = dataDictionary["keyRank"] as! Int
+                    let lordID = dataDictionary["lordID"] as! Int
                     self.keyrank = keyRank
+                    self.lordID = lordID
                     GameInfo_CPPWrapper.updateKeyRank(keyRank)
                 })
             }
@@ -550,7 +603,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                     }
                     else {
                         self.starting = false
-                        self.assignTableCards(self.lord)
+                        self.assignTableCards(self.lordID)
                     }
                 })
             }
@@ -782,12 +835,20 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     func skip() {
         if (playerID == 0) {
-            self.skippedNum++
-            if(skippedNum < 3) {
-                self.assignInquireSuit(1)
+            
+            if (!self.starting) {
+                self.skippedNum++
+                print(self.skippedNum)
+                if (self.skippedNum < 3) {
+                    self.assignInquireSuit(1)
+                }
+                else {
+                    self.assignNext(false, player: self.currentPlayer)
+                }
             }
             else {
-                self.assignNext(false, player: self.currentPlayer)
+                self.starting = false
+                self.assignTableCards(self.lordID)
             }
         }
         else {
@@ -902,6 +963,21 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         return true
     }
     
+    func stopAssigningCards(player: Int) -> Bool {
+        let message = "_stop_assigning_cards_"
+        let messageDictionary: [String: AnyObject] = ["message": message]
+        let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
+        do {
+            try appDelegate.mpcManager.sessions[player-1].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[player-1].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+        }
+        catch let error as NSError {
+            print(error.localizedDescription)
+            print("Can not send data")
+            return false
+        }
+        return true
+    }
+    
     
     func serverUpdateScores(scores: Int) -> Bool {
         self.scores.text = String(scores)
@@ -981,6 +1057,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func serverChangeKeysuitBroadcast(buttonID: Int, state: Int, fromplayer: Int) -> Bool {
+
         let message = "_change_keysuit_"
         let messageDictionary: [String: AnyObject] = ["message": message, "buttonID": buttonID, "state": state, "fromplayer": fromplayer]
         let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
@@ -1042,6 +1119,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func changeKeysuit(buttonID: Int, state: Int, fromplayer: Int) {
+        if (self.lordID == -1) {
+            self.lordID = fromplayer
+            GameInfo_CPPWrapper.updateLordID(fromplayer)
+        }
         self.keySuitCaller = fromplayer
         if (buttonID < 4) {
             keysuit = buttonID
@@ -1143,8 +1224,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         else {
             let winner = self.gameprocedure.Winner((self.currentPlayer + 1) % 4, player0: self.playList[0] as! [Card_CPPWrapper], player1:self.playList[1] as! [Card_CPPWrapper], player2: self.playList[2] as! [Card_CPPWrapper], player3: self.playList[3] as! [Card_CPPWrapper])
-            print("winner = ")
-            print(winner)
+
             self.serverUpdateScores(self.gameprocedure.getScores())
             self.currentPlayer = (self.currentPlayer + 1 + winner) % 4
             if (!self.gameEnd) {
@@ -1152,7 +1232,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             }
             else {
                 print("Game End")
-                self.broadcastFinalResult(winner, multiplier: 2)
+                let multiplier = manager.getMultiplier(self.playList[0] as! [Card_CPPWrapper])
+                print("Mutliplier = ")
+                print(multiplier)
+                self.serverBroadcastFinalResult(winner, multiplier: multiplier)
             }
         }
     }
@@ -1189,7 +1272,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     func serverDeclareGameInfo() -> Bool {
         let message = "_declare_gameinfo_"
-        let messageDictionary: [String: AnyObject] = ["message": message, "keyRank": GameInfo_CPPWrapper.getKeyRank()]
+        let messageDictionary: [String: AnyObject] = ["message": message, "keyRank": GameInfo_CPPWrapper.getKeyRank(), "lordID": self.lordID]
         let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
         if (self.appDelegate.mpcManager.connectedSessionCount > 0) {
             for sessionID in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
@@ -1206,14 +1289,20 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         return true
     }
     
-    func broadcastFinalResult(winner: Int, multiplier: Int) -> Bool {
+    func serverBroadcastFinalResult(winner: Int, multiplier: Int) -> Bool {
         var finalScores = self.gameprocedure.getScores()
-        if (winner % 2 != self.lord % 2) {
+        if (winner % 2 != self.lordID % 2) {
             for index in 0...7 {
-                finalScores = finalScores + lists[4][index].value() * multiplier
+                finalScores = finalScores + lists[4][index].value() * multiplier * 2
             }
         }
-        self.appendTableCards(lists[4])
+        for i in 0...7 {
+            self.myCards.append(lists[4][i] as! Card_CPPWrapper);
+        }
+        self.collectionView.reloadData()
+        self.layout.rotateBack()
+        self.layout.invalidateLayout()
+
         self.scores.text = String(finalScores)
 
         let message = "_final_result_"
