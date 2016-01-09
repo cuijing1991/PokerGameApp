@@ -63,10 +63,8 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     var playCardCount = 0 {
         didSet {
             if (playCardCount == endNum * 4) {
-                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                    self.gameEnd = true;
-                    self.nextGameButton.enabled = true;
-                })
+                self.gameEnd = true
+                self.nextGameButton.enabled = true
             }
         }
     }
@@ -82,7 +80,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var bottom: UICollectionView!
     
     @IBOutlet weak var playButton: UIButton!
-    @IBOutlet weak var tableButton: UIButton!
     
     @IBOutlet weak var spadeButton: UIButton!
     @IBOutlet weak var heartButton: UIButton!
@@ -99,6 +96,8 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var scores: UILabel!
     @IBOutlet weak var nextGameButton: UIButton!
     
+    @IBOutlet weak var keysuitImage: UIImageView!
+    @IBOutlet weak var keyrankLabel: UILabel!
     
     override func viewDidLoad() {
         layout = CircularCollectionViewLayout()
@@ -115,11 +114,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         collectionView.dataSource = self
         collectionView.setCollectionViewLayout(self.layout, animated: false)
         collectionView.registerNib(UINib(nibName: "CircularCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.allowsSelection = false
         collectionView.allowsMultipleSelection = true
-        //view.addSubview(collectionView)
         view.sendSubviewToBack(collectionView)
         playButton.enabled = false
-        tableButton.enabled = false
         spadeButton.enabled = false
         spadeButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         heartButton.enabled = false
@@ -151,7 +149,21 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         topImage.clipsToBounds = true
         bottomImage.clipsToBounds = true
         scores.text = "0"
-        
+        if(keyrank < 11) {
+            keyrankLabel.text = String(keyrank)
+        }
+        else if(keyrank == 11) {
+            keyrankLabel.text = "J"
+        }
+        else if(keyrank == 12) {
+            keyrankLabel.text = "Q"
+        }
+        else if(keyrank == 13) {
+            keyrankLabel.text = "K"
+        }
+        else if(keyrank == 14) {
+            keyrankLabel.text = "A"
+        }
         nextGameButton.enabled = false
         
         left.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: Identifier)
@@ -204,7 +216,12 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             gameprocedure = GameProcedure_CPPWrapper()
             gameprocedure.GameProcedure_CPPWrapper()
             gameprocedure.ShuffleCards(lists[0], pca2: lists[1], pca3: lists[2], pca4: lists[3], tb: lists[4])
-            
+            self.serverDeclareGameInfo()
+            self.bottomImage.image = self.imageSet[self.playerID]
+            self.rightImage.image = self.imageSet[(self.playerID+1)%4]
+            self.topImage.image = self.imageSet[(self.playerID+2)%4]
+            self.leftImage.image = self.imageSet[(self.playerID+3)%4]
+
             self.assignPlayerID(1)
             self.assignPlayerID(2)
             self.assignPlayerID(3)
@@ -241,11 +258,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             else if(index == endNum-1) {
                 
                 self.manager.CardManager_CPPWrapper(self.myCards)
-                self.bottomImage.image = self.imageSet[self.playerID]
-                self.rightImage.image = self.imageSet[(self.playerID+1)%4]
-                self.topImage.image = self.imageSet[(self.playerID+2)%4]
-                self.leftImage.image = self.imageSet[(self.playerID+3)%4]
-
+             
                 self.spadeButton.enabled = false;
                 self.heartButton.enabled = false;
                 self.clubButton.enabled = false;
@@ -253,7 +266,8 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.jokerButton.enabled = false;
                 self.highjokerButton.enabled = false;
                 
-                self.serverDeclareGameInfo()
+                self.collectionView.allowsSelection = true
+                
                 self.assignPlayerID(1)
                 self.assignPlayerID(2)
                 self.assignPlayerID(3)
@@ -318,10 +332,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         if(self.myCards.count == endNum) {
             self.layout.rotateBack()
             self.manager.CardManager_CPPWrapper(self.myCards)
+            self.collectionView.allowsSelection = true
         }
         self.collectionView.reloadData()
         self.layout.invalidateLayout()
-        //self.updateSuitButton(card)
         if (card.rank == keyrank) {
             keyCardsCount[card.suit]++
         }
@@ -686,8 +700,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             playButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
             playButton.setBackgroundImage(imageOff, forState: UIControlState.Normal)
             playButton.enabled = false
-            self.layout.invalidateLayout()
             self.collectionView.reloadData()
+            self.layout.rotateBack()
+            self.layout.invalidateLayout()
             self.flag = Flag.None
         }
         else if(self.flag == Flag.TableCards) {
@@ -695,6 +710,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.myCards.sortInPlace(self.forwards)
                 self.playButton.enabled = false
                 self.collectionView.reloadData()
+                self.layout.rotateBack()
                 self.layout.invalidateLayout()
                 self.layout.selected = [Bool](count: 100, repeatedValue: false)
                 self.sorted = true
@@ -722,6 +738,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             }
         }
         self.collectionView.reloadData()
+        self.layout.rotateBack()
         self.layout.invalidateLayout()
         self.manager.CardManager_CPPWrapper(self.myCards)
     }
@@ -787,6 +804,12 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         self.flag = Flag.None
         self.updateButton()
+        self.spadeButton.enabled = false
+        self.heartButton.enabled = false
+        self.clubButton.enabled = false
+        self.diamondButton.enabled = false
+        self.jokerButton.enabled = false
+        self.highjokerButton.enabled = false
     }
     
     func assignInquireSuit(playerID: Int) {
@@ -833,8 +856,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 }
             }
         }
-        self.layout.invalidateLayout()
         self.collectionView.reloadData()
+        self.layout.rotateBack()
+        self.layout.invalidateLayout()
+
     }
     
     func assignNext(flag: Bool, player: Int) -> Bool{
@@ -919,7 +944,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             self.manager.setFormat(cards)
         }
         self.playCardCount += cards.count
-        print(cards.count)
+        print(self.playCardCount)
         print("server: broadcast cards")
         return true
     }
@@ -1028,6 +1053,77 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             joker = true
         }
 
+        self.bottomCards.removeAll()
+        self.topCards.removeAll()
+        self.leftCards.removeAll()
+        self.rightCards.removeAll()
+        
+        let spadeCards = Card_CPPWrapper()
+        spadeCards.Card_CPPWrapper(0, rank: self.keyrank)
+        let heartCards = Card_CPPWrapper()
+        heartCards.Card_CPPWrapper(1, rank: self.keyrank)
+        let clubCards = Card_CPPWrapper()
+        clubCards.Card_CPPWrapper(2, rank: self.keyrank)
+        let diamondCards = Card_CPPWrapper()
+        diamondCards.Card_CPPWrapper(3, rank: self.keyrank)
+        let jokerCards = Card_CPPWrapper()
+        jokerCards.Card_CPPWrapper(4, rank: 0)
+        let highjokerCards = Card_CPPWrapper()
+        highjokerCards.Card_CPPWrapper(4, rank: 1)
+        
+        var showCards = [Card_CPPWrapper]()
+        
+        for _ in 1...state {
+            switch(buttonID) {
+            case 0 :
+                showCards.append(spadeCards)
+                self.keysuitImage.image = UIImage(named: "spadesButton2")
+                break
+            case 1 :
+                showCards.append(heartCards)
+                self.keysuitImage.image = UIImage(named: "heartsButton")
+                break
+            case 2 :
+                showCards.append(clubCards)
+                self.keysuitImage.image = UIImage(named: "clubsButton2")
+                break
+            case 3 :
+                showCards.append(diamondCards)
+                self.keysuitImage.image = UIImage(named: "diamondsButton")
+                break
+            case 4 :
+                showCards.append(jokerCards)
+                self.keysuitImage.image = UIImage(named: "jokerButton")
+                break
+            case 5 :
+                showCards.append(highjokerCards)
+                self.keysuitImage.image = UIImage(named: "jokerButton")
+            default:
+                break
+            }
+        }
+        switch((fromplayer - self.playerID + 4) % 4) {
+        case 0:
+            bottomCards = showCards
+            break
+        case 1:
+            rightCards = showCards
+            break
+        case 2:
+            topCards = showCards
+            break
+        case 3:
+            leftCards = showCards
+            break
+        default:
+            break
+        }
+        
+        bottom.reloadData()
+        right.reloadData()
+        top.reloadData()
+        left.reloadData()
+
         self.myCards.sortInPlace(self.forwards)
         self.collectionView.reloadData()
         self.layout.invalidateLayout()
@@ -1054,9 +1150,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             if (!self.gameEnd) {
                 self.assignNext(false, player: self.currentPlayer)
             }
-        }
-        if (self.gameEnd) {
-            self.broadCastFinalResult()
+            else {
+                print("Game End")
+                self.broadcastFinalResult(winner, multiplier: 2)
+            }
         }
     }
     
@@ -1109,13 +1206,15 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         return true
     }
     
-    func broadCastFinalResult() -> Bool {
-        var finalScores = 0
-        for index in 0...7 {
-            finalScores = finalScores + lists[4][index].value()
+    func broadcastFinalResult(winner: Int, multiplier: Int) -> Bool {
+        var finalScores = self.gameprocedure.getScores()
+        if (winner % 2 != self.lord % 2) {
+            for index in 0...7 {
+                finalScores = finalScores + lists[4][index].value() * multiplier
+            }
         }
-        
         self.appendTableCards(lists[4])
+        self.scores.text = String(finalScores)
 
         let message = "_final_result_"
         let messageDictionary: [String: AnyObject] = ["message": message, "scores": finalScores, "tableCards": self.lists[4]]

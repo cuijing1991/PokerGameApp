@@ -99,8 +99,14 @@ class CircularCollectionViewLayout: UICollectionViewLayout {
     }
 
     func rotateBack() {
-        self.angleOffset = 0
-        self.collectionView!.contentOffset.x = 0.5 * CGFloat(collectionViewContentSize().width - CGRectGetWidth(self.collectionView!.bounds))
+        if (collectionView!.numberOfItemsInSection(0) > 12) {
+            self.angleOffset = 0
+            self.collectionView!.contentOffset.x = 0.5 * CGFloat(collectionViewContentSize().width - CGRectGetWidth(self.collectionView!.bounds))
+            self.invalidateLayout()
+        }
+        else {
+            
+        }
     }
     
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {

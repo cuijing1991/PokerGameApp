@@ -78,42 +78,6 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
         }
         return cell
     }
- 
-// ***************************************************************************//
-// ************ Below is the original version *****************//
-// ******   DO NOT DELETE for now ***************//
-// **********************************//
-// **********************//
-// ************//
-// ***//
-    
-    
-    
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        if(connectedFriends < 3) {
-//            let cell = self.friendsTable.cellForRowAtIndexPath(indexPath) as! AddFriendsTableViewCell
-//            cell.cellselected = !cell.cellselected
-//            if cell.cellselected {
-//                cell.pokerImage.image = UIImage(named: images[avilable[0]])!
-//                self.connectedFriends += 1
-//                let selectedPeer = appDelegate.mpcManager.foundPeers[indexPath.row] as MCPeerID
-//                cell.sessionIndex = avilable[0] - 1
-//                appDelegate.mpcManager.browser.invitePeer(selectedPeer, toSession: appDelegate.mpcManager.sessions[avilable[0]-1], withContext: nil, timeout: 200)
-//                appDelegate.mpcManager.connectedSessionCount += 1
-//                avilable.removeAtIndex(0)
-//
-//            }
-//            else {
-//                cell.pokerImage.image = nil
-//                self.connectedFriends -= 1
-//                self.appDelegate.mpcManager.sessions[cell.sessionIndex].disconnect()
-//                avilable.append(cell.sessionIndex+1)
-//                avilable.sortInPlace()
-//                appDelegate.mpcManager.connectedSessionCount -= 1
-//            }
-//            friendsTable.reloadData()
-//        }
-//    }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = self.friendsTable.cellForRowAtIndexPath(indexPath) as! AddFriendsTableViewCell
