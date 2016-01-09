@@ -53,7 +53,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             }
         }
     }
-    var lordID = -1 {
+    var lordID = GameInfo_CPPWrapper.getLordID() {
         didSet {
             print("L")
             print(lordID)
@@ -254,16 +254,16 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             self.rightImage.image = self.imageSet[(self.playerID+1)%4]
             self.topImage.image = self.imageSet[(self.playerID+2)%4]
             self.leftImage.image = self.imageSet[(self.playerID+3)%4]
-            lordID = GameInfo_CPPWrapper.getLordID()
-            self.serverDeclareGameInfo()
-            print("lordID")
-            print(lordID)
-
-            self.assignPlayerID(1)
-            self.assignPlayerID(2)
-            self.assignPlayerID(3)
             
-            assignCard_to_all(0)
+            
+            let delaytime = dispatch_time(DISPATCH_TIME_NOW, 3 * Int64(NSEC_PER_SEC))
+            dispatch_after(delaytime, dispatch_get_main_queue(), {
+                self.serverDeclareGameInfo()
+                self.assignPlayerID(1)
+                self.assignPlayerID(2)
+                self.assignPlayerID(3)
+                self.assignCard_to_all(0)
+            })
         }
         /**************************************************************************************/
         
@@ -278,7 +278,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func assignCard_to_all(index: Int) {
-        let time = dispatch_time(DISPATCH_TIME_NOW, 1 * Int64(NSEC_PER_SEC))
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC))
         dispatch_after(time, dispatch_get_main_queue(), {
 
             self.assignCard(index, playerID: 0, listID: 0)
@@ -308,7 +308,8 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.stopAssigningCards(1)
                 self.stopAssigningCards(2)
                 self.stopAssigningCards(3)
-               
+                
+                self.nextGameButton.enabled = true ///************** remove **************//
                 self.assignInquireSuit(self.lordID)
                 
             }
@@ -620,6 +621,13 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                     self.layout.rotateBack()
                     self.layout.invalidateLayout()
 
+                })
+            }
+            // Check if there's an entry with the "_new_game_" key.
+            if message as! String == "_new_game_" {
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    NSNotificationCenter.defaultCenter().removeObserver(self)
+                    self.performSegueWithIdentifier("nextGame", sender: self)
                 })
             }
         }
@@ -1121,7 +1129,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     func changeKeysuit(buttonID: Int, state: Int, fromplayer: Int) {
         if (self.lordID == -1) {
             self.lordID = fromplayer
-            GameInfo_CPPWrapper.updateLordID(fromplayer)
+            if(self.appDelegate.mpcManager.server) {
+                GameInfo_CPPWrapper.updateLordID(fromplayer)
+            }
         }
         self.keySuitCaller = fromplayer
         if (buttonID < 4) {
@@ -1315,12 +1325,37 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 }
                 catch let error as NSError {
                     print(error.localizedDescription)
-                    print("Can not send data")
+                    print("Can not send data: serverBroadcastFinalResult")
                     return false
                 }
             }
         }
         return true
+    }
+    
+    
+    func serverNewGameNotification() -> Bool {
+        let message = "_new_game_"
+        let messageDictionary: [String: AnyObject] = ["message": message]
+        let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
+        if (self.appDelegate.mpcManager.connectedSessionCount > 0) {
+            for sessionID in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
+                do {
+                    try appDelegate.mpcManager.sessions[sessionID].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[sessionID].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+                }
+                catch let error as NSError {
+                    print(error.localizedDescription)
+                    print("Can not send data: serverNewGameNotification")
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
+    @IBAction func nextGame(sender: AnyObject) {
+        self.serverNewGameNotification()
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     @IBAction func spadesButton(sender: AnyObject) {
@@ -1407,10 +1442,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     //*************************************************************************************************//
     
     @IBAction func endGame(sender: AnyObject) {
-        self.flag = Flag.None
         NSNotificationCenter.defaultCenter().removeObserver(self)
         NSOperationQueue.mainQueue().cancelAllOperations()
-        self.performSegueWithIdentifier("endGame", sender: self)
+        //self.performSegueWithIdentifier("endGame", sender: self)
     }
 }
 

@@ -433,7 +433,7 @@
                                         </constraints>
                                         <state key="normal" backgroundImage="ArrowFireButton"/>
                                         <connections>
-                                            <segue destination="ZeC-zs-8nE" kind="presentation" modalTransitionStyle="flipHorizontal" id="B25-kx-EnI"/>
+                                            <segue destination="ZeC-zs-8nE" kind="presentation" identifier="startGame" modalTransitionStyle="flipHorizontal" id="B25-kx-EnI"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oac-KJ-20b">
@@ -781,7 +781,8 @@
                                 </constraints>
                                 <state key="normal" image="ArrowFireButton"/>
                                 <connections>
-                                    <segue destination="ZeC-zs-8nE" kind="presentation" modalTransitionStyle="flipHorizontal" id="lhi-jW-Opd"/>
+                                    <action selector="nextGame:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="6qt-ij-DJW"/>
+                                    <segue destination="ZeC-zs-8nE" kind="presentation" identifier="nextGame" modalTransitionStyle="flipHorizontal" id="lhi-jW-Opd"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BJE-EB-gZM">
@@ -915,7 +916,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hTk-lj-C5r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="65.5" y="2195.5"/>
+            <point key="canvasLocation" x="155.5" y="2184.5"/>
         </scene>
     </scenes>
     <resources>
@@ -941,8 +942,8 @@
         <image name="spadesButton2.png" width="164" height="164"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lqw-Sr-h4z"/>
-        <segue reference="TGj-L5-TYC"/>
         <segue reference="Oii-oW-Qoz"/>
+        <segue reference="B25-kx-EnI"/>
+        <segue reference="lqw-Sr-h4z"/>
     </inferredMetricsTieBreakers>
 </document>
