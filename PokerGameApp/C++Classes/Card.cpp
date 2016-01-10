@@ -46,7 +46,7 @@ const string Card::toString() const {
     return rankNames[m_rank] + "_of_" + suitNames[m_suit];
 }
 
-bool Card::operator==(const Card& rhs) {
+bool Card::operator==(const Card& rhs) const {
     return (m_suit == rhs.m_suit) && (m_rank == rhs.m_rank);
 }
 

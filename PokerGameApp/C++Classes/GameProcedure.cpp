@@ -48,17 +48,55 @@ void GameProcedure::ShuffleCards(list<Card> &pc1, list<Card> &pc2, list<Card> &p
         tb.push_back(doubleDeck[i]);
     }
     
-    manager[0] = CardManager(pc1);
-    manager[1] = CardManager(pc2);
-    manager[2] = CardManager(pc3);
-    manager[3] = CardManager(pc4);
+    lists[0] = pc1;
+    lists[1] = pc2;
+    lists[2] = pc3;
+    lists[3] = pc4;
+    
+//    manager[0] = CardManager(pc1);
+//    manager[1] = CardManager(pc2);
+//    manager[2] = CardManager(pc3);
+//    manager[3] = CardManager(pc4);
     
     scores = 0;
 }
 
+//void GameProcedure::appendTableCards(list<Card> &cards, int ID) {
+//    manager[ID].append(cards);
+//}
+
 void GameProcedure::appendTableCards(list<Card> &cards, int ID) {
-    manager[ID].append(cards);
+    std::cout << "Original Cards, count = " << cards.size() << std::endl;
+    lists[ID].insert(lists[ID].end(), cards.begin(), cards.end());
+    std::cout << "Append Table Cards, count = " << cards.size() << std::endl;
 }
+
+void GameProcedure::removeTableCards(list<Card> &cards, int ID) {
+    int count = 0;
+    std::list<Card>::const_iterator iterator;
+    for (Card card : cards) {
+        for (iterator = lists[ID].begin(); iterator != lists[ID].end(); ++iterator) {
+            if((*iterator) == card) {
+                lists[ID].erase(iterator);
+                count++;
+                break;
+            }
+        }
+    }
+    std::cout << "Remove Table Cards, count = " << count << std::endl;
+}
+
+void GameProcedure::constructManager() {
+    
+    for (int i = 0; i < 4; i ++) {
+        manager[i] = CardManager(lists[i]);
+        std::cout << "****************************" << std::endl;
+        for (Card c : lists[i]) {
+            std::cout << c.toString() << std::endl;
+        }
+    }
+}
+
 int GameProcedure::Winner (int ID, const list<Card> &pc1, const list<Card> &pc2, const list<Card> &pc3, const list<Card> &pc4) {
     int suit1, suit2, suit3, suit4;
     int order1 = -1, order2 = -1, order3 = -1, order4 = -1;

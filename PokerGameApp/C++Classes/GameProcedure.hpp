@@ -47,13 +47,20 @@ public:
     /* Record Game Scores */
     int scores;
     
-    /* Append new cards to one player */
+    /* Append table cards to one player in lists */
     void appendTableCards(list<Card> &cards, int ID);
+
+    /* Remove table cards to one player in lists */
+    void removeTableCards(list<Card> &cards, int ID);
+
+    /* Construct CardManager of each player */
+    void constructManager();
     
     /* Decide next lord based on scores */
     static void nextLordandRank(int scores);
     
 private:
+    list<Card> lists[4];
     CardManager manager[4];
     
 };

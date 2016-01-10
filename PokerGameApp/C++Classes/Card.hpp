@@ -20,7 +20,7 @@ public:
     Card(int suit, int rank);
     Card(Suits suit, Ranks rank);
     const string toString() const;
-    bool operator==(const Card& rhs);
+    bool operator==(const Card& rhs) const;
     int getSuit() const {return m_suit_int;};
     int getRank() const {return m_rank_int;};
     bool isKey() const;

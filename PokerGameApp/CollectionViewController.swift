@@ -119,6 +119,11 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     var topCards = [Card_CPPWrapper]()
     var bottomCards = [Card_CPPWrapper]()
 
+    let layoutx: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    let layouty: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    let layoutz: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    let layoutw: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    
     var playCount = 0
     
     // only used for server
@@ -231,20 +236,18 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         let width = Int(height * 233 / 338)
         let minimumInteritemSpacing = -CGFloat(width) / 1.5
         
-        let layoutx: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        
         layoutx.itemSize = CGSize(width: width, height: height)
         layoutx.minimumInteritemSpacing = minimumInteritemSpacing
 
-
-        let layouty: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        
         layouty.itemSize = CGSize(width: width, height: height)
         layouty.minimumInteritemSpacing = minimumInteritemSpacing
-
-        let layoutz: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        
+       
         layoutz.itemSize = CGSize(width: width, height: height)
         layoutz.minimumInteritemSpacing = minimumInteritemSpacing
 
-        let layoutw: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layoutw.itemSize = CGSize(width: width, height: height)
         layoutw.minimumInteritemSpacing = minimumInteritemSpacing
         
@@ -310,22 +313,30 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 
                 self.manager.CardManager_CPPWrapper(self.myCards)
              
-                self.spadeButton.enabled = false;
-                self.heartButton.enabled = false;
-                self.clubButton.enabled = false;
-                self.diamondButton.enabled = false;
-                self.jokerButton.enabled = false;
-                self.highjokerButton.enabled = false;
-                
-                self.collectionView.allowsSelection = true
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.spadeButton.enabled = false;
+                    self.heartButton.enabled = false;
+                    self.clubButton.enabled = false;
+                    self.diamondButton.enabled = false;
+                    self.jokerButton.enabled = false;
+                    self.highjokerButton.enabled = false;
+                    
+                    self.collectionView.allowsSelection = true
+                })
                 
                 self.stopAssigningCards(1)
                 self.stopAssigningCards(2)
                 self.stopAssigningCards(3)
                 
                 self.nextGameButton.enabled = true ///************** remove this line **************//
-                self.assignInquireSuit(self.lordID)
-                
+                if (self.lordID != -1) {
+                    self.assignInquireSuit(self.lordID)
+                }
+                else {
+                    self.lordID = 0
+                    self.assignInquireSuit(self.lordID)
+                    GameInfo_CPPWrapper.updateLordID(0)
+                }
             }
         })
     }
@@ -383,18 +394,19 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func appendTableCards(cards: NSMutableArray!) {
-        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+        self.flag = Flag.TableCards
+        self.sorted = false
+        let delaytime = dispatch_time(DISPATCH_TIME_NOW, 1 * Int64(NSEC_PER_SEC))
+        dispatch_after(delaytime, dispatch_get_main_queue(), {
             for i in 0...7 {
                 self.myCards.append(cards[i] as! Card_CPPWrapper);
             }
-            self.playButton.setBackgroundImage(imageRed, forState: UIControlState.Normal)
-            self.playButton.enabled = true
-            self.flag = Flag.TableCards
-            self.sorted = false
             self.collectionView.reloadData()
             self.layout.rotateBack()
             self.layout.invalidateLayout()
             self.manager.CardManager_CPPWrapper(self.myCards)
+            self.playButton.setBackgroundImage(imageRed, forState: UIControlState.Normal)
+            self.playButton.enabled = true
        })
     }
     
@@ -578,7 +590,8 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 for card in cards {
                     self.lists[4].addObject(card)
                 }
-                self.gameprocedure.remove(cards, n: fromplayer)
+                //self.gameprocedure.remove(cards, n: fromplayer)
+                self.gameprocedure.removeTableCards(cards, playerID: fromplayer)
                 self.assignInquireSuit((fromplayer+1)%4)
             }
             // Check if there's an entry with the "_inquire_suit_" key.
@@ -598,6 +611,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                             self.assignInquireSuit((fromplayer+1)%4)
                         }
                         else {
+                            self.gameprocedure.constructManager()
                             self.assignNext(false, player: self.currentPlayer)
                         }
                     }
@@ -807,7 +821,8 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 }
             }
             self.removeSelectedCards()
-            self.gameprocedure.remove(selectedCards, n: 0)
+            //self.gameprocedure.remove(selectedCards, n: 0)
+            self.gameprocedure.removeTableCards(selectedCards, playerID: 0)
             self.assignInquireSuit(1)
         }
         else {
@@ -836,6 +851,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                     self.assignInquireSuit(1)
                 }
                 else {
+                    self.gameprocedure.constructManager()
                     self.assignNext(false, player: self.currentPlayer)
                 }
             }
@@ -1140,6 +1156,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func serverNext() {
+        print("run server Next")
         self.playCount++
         if (self.playCount % 4 != 0) {
             self.currentPlayer = (self.currentPlayer + 1) % 4
@@ -1172,6 +1189,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         if(self.appDelegate.mpcManager.server) {
             self.serverChangeKeysuitBroadcast(buttonID, state: state, fromplayer: 0)
             if(self.flag == Flag.InquireSuit) {
+                self.starting = false;
                 self.skippedNum = 0;
                 assignTableCards(0)
             }
@@ -1183,7 +1201,8 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
             sendMessagetoServer(messageData)
         }
-        self.flag = Flag.None
+        
+        self.playButton.enabled = false
     }
     
     func serverDeclareGameInfo() {
@@ -1191,6 +1210,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         let messageDictionary: [String: AnyObject] = ["message": message, "keyRank": GameInfo_CPPWrapper.getKeyRank(), "lordID": self.lordID]
         let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
         self.sendMessagetoAll(messageData)
+        self.currentPlayer = self.lordID //************** Test **************//
     }
     
     func serverBroadcastFinalResult(winner: Int, multiplier: Int) {
@@ -1319,19 +1339,23 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             else {
                 let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierx, forIndexPath: indexPath) as! CardCell
                 if collectionView == self.left {
+                    self.layoutx.layoutAttributesForItemAtIndexPath(indexPath)!.zIndex = indexPath.row
                     cell.imageName = "Images/PNG-cards-All/" + leftCards[indexPath.row].toString() + ".png"
                 }
                 else if collectionView == self.right {
+                    self.layouty.layoutAttributesForItemAtIndexPath(indexPath)!.zIndex = indexPath.row
                     cell.imageName = "Images/PNG-cards-All/" + rightCards[indexPath.row].toString() + ".png"
                 }
                 else if collectionView == self.top {
+                    self.layoutz.layoutAttributesForItemAtIndexPath(indexPath)!.zIndex = indexPath.row
                     cell.imageName = "Images/PNG-cards-All/" + topCards[indexPath.row].toString() + ".png"
                 }
                 else if collectionView == self.bottom {
+                    self.layoutw.layoutAttributesForItemAtIndexPath(indexPath)!.zIndex = indexPath.row
                     cell.imageName = "Images/PNG-cards-All/" + bottomCards[indexPath.row].toString() + ".png"
                 }
                 
-                collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(indexPath)!.zIndex = indexPath.row // ******************************************** //
+                // ******************************************** //
                 
                 return cell
             }

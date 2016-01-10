@@ -122,22 +122,18 @@
     for(Card_CPPWrapper *c in cards) {
         tableCards_cpp.push_back(Card((int)c.suit, (int)c.rank));
     }
+    self.gameProcedure->appendTableCards(tableCards_cpp, (int)ID);
+}
 
-    switch (ID) {
-        case 0:
-            self.gameProcedure->appendTableCards(tableCards_cpp, (int)ID);
-            break;
-        case 1:
-            self.gameProcedure->appendTableCards(tableCards_cpp, (int)ID);
-            break;
-        case 2:
-            self.gameProcedure->appendTableCards(tableCards_cpp, (int)ID);
-            break;
-        case 3:
-            self.gameProcedure->appendTableCards(tableCards_cpp, (int)ID);
-            break;
-        default:
-            break;
+- (void) removeTableCards:(NSArray<Card_CPPWrapper*>*)cards playerID:(NSInteger)ID {
+    std::list<Card> tableCards_cpp;
+    for(Card_CPPWrapper *c in cards) {
+        tableCards_cpp.push_back(Card((int)c.suit, (int)c.rank));
     }
+    self.gameProcedure->removeTableCards(tableCards_cpp, (int)ID);
+}
+- (void) constructManager {
+    self.gameProcedure->constructManager();
 }
 @end
+
