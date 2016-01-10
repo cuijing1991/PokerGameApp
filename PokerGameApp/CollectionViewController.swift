@@ -10,12 +10,30 @@ import UIKit
 import MultipeerConnectivity
 
 let reuseIdentifier = "Cell"
-let Identifier = "Cellx"
+let reuseIdentifierx = "Cellx"
 let imageOn = UIImage(named: "Button_On") as UIImage!
 let imageOff = UIImage(named: "Button_Off") as UIImage!
 let imageRed = UIImage(named: "Button_Red") as UIImage!
+let _assign_card_ = "_assign_card_"
+let _assign_next_ = "_assign_next_ "
+let _broadcast_ = "_broadcast_"
+let _play_cards_ = "_play_cards_"
+let _play_cards_back_ = "_play_cards_back_"
+let _player_ID_ = "_player_ID_"
+let _stop_assigning_cards_ = "_stop_assigning_cards_"
+let _change_keysuit_ = "_change_keysuit_"
+let _change_keysuit_request_ = "_change_keysuit_request_"
+let _update_scores_ = "_update_scores_"
+let _declare_gameinfo_ = "_declare_gameinfo_"
+let _assign_table_cards_ = "_assign_table_cards_"
+let _remove_table_cards_ = "_remove_table_cards_"
+let _inquire_suit_ = "_inquire_suit_"
+let _skip_ = "_skip_"
+let _final_result_ = "_final_result_"
+let _new_game_ = "_new_game_"
 let endNum = 25
 let playCardsRatio = 0.15
+
 enum Flag {
     case None
     case PlayCards
@@ -55,8 +73,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     var lordID = GameInfo_CPPWrapper.getLordID() {
         didSet {
-            print("L")
-            print(lordID)
             if (lordID >= 0) {
                 switch((lordID - playerID + 4) % 4) {
                 case 0:
@@ -81,16 +97,15 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
     }
     
-    var images = [String]()
     var layout: CircularCollectionViewLayout!
     var myCards = [Card_CPPWrapper]()
     var gameprocedure: GameProcedure_CPPWrapper!
     var playerID = 0
     var enableTest = false
-    var keyCardsCount = [NSInteger](count:6, repeatedValue:0)
     var single = false
     var double = false
     var joker = false
+    var keyCardsCount = [NSInteger](count:6, repeatedValue:0)
     var imageSet : [UIImage] = [UIImage(named:"4.jpg")!, UIImage(named:"8.jpg")!, UIImage(named:"11.jpg")!, UIImage(named:"6.jpg")! ]
     var imageSetLord : [UIImage] = [UIImage(named:"4x.jpg")!, UIImage(named:"8x.jpg")!, UIImage(named:"11x.jpg")!, UIImage(named:"6x.jpg")! ]
     
@@ -159,7 +174,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             }
         }
         
-        keyrank = GameInfo_CPPWrapper.getKeyRank()
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -198,10 +212,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         
         nextGameButton.enabled = false
         
-        left.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: Identifier)
-        right.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: Identifier)
-        top.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: Identifier)
-        bottom.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: Identifier)
+        left.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifierx)
+        right.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifierx)
+        top.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifierx)
+        bottom.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifierx)
         
         left.delegate = self
         left.dataSource = self
@@ -250,14 +264,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             gameprocedure.ShuffleCards(lists[0], pca2: lists[1], pca3: lists[2], pca4: lists[3], tb: lists[4])
             
             
-            self.bottomImage.image = self.imageSet[self.playerID]
-            self.rightImage.image = self.imageSet[(self.playerID+1)%4]
-            self.topImage.image = self.imageSet[(self.playerID+2)%4]
-            self.leftImage.image = self.imageSet[(self.playerID+3)%4]
-            
-            
             let delaytime = dispatch_time(DISPATCH_TIME_NOW, 3 * Int64(NSEC_PER_SEC))
             dispatch_after(delaytime, dispatch_get_main_queue(), {
+                self.bottomImage.image = self.imageSet[self.playerID]
+                self.rightImage.image = self.imageSet[(self.playerID+1)%4]
+                self.topImage.image = self.imageSet[(self.playerID+2)%4]
+                self.leftImage.image = self.imageSet[(self.playerID+3)%4]
+                self.keyrank = GameInfo_CPPWrapper.getKeyRank()
+                self.keysuit = GameInfo_CPPWrapper.getKeySuit()
                 self.assignPlayerID(1)
                 self.assignPlayerID(2)
                 self.assignPlayerID(3)
@@ -316,7 +330,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         })
     }
     
-    func assignCard(index: Int, playerID: Int, listID: Int) -> Bool{
+    func assignCard(index: Int, playerID: Int, listID: Int){
         
         if (playerID==0) {
             
@@ -329,17 +343,8 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             let messageDictionary: [String: AnyObject] = ["message": message, "card": card]
         
             let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-        
-            do {
-            try appDelegate.mpcManager.sessions[playerID-1].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[playerID-1].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-            }
-            catch let error as NSError {
-                print(error.localizedDescription)
-                print("Can not send data : assignCard")
-                return false
-            }
+            self.sendMessagetoOne(messageData, toPlayer: playerID)
         }
-        return true
     }
     
     func assignTableCards(playerID: Int) {
@@ -350,13 +355,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             let message = "_assign_table_cards_"
             let messageDictionary: [String: AnyObject] = ["message": message, "cards": lists[4]]
             let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-            do {
-                try appDelegate.mpcManager.sessions[playerID-1].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[playerID-1].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-            }
-            catch let error as NSError {
-                print(error.localizedDescription)
-                print("Can not send data: assignTableCards")
-            }
+            sendMessagetoOne(messageData, toPlayer: playerID)
         }
         self.gameprocedure.appendTableCards(lists[4], playerID: playerID)
     }
@@ -412,14 +411,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         
         if let message = dataDictionary["message"] {
             // Check if there's an entry with the "_assign_card_" key.
-            if message as! String == "_assign_card_"{
+            if message as! String == _assign_card_{
                     NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     let card = dataDictionary["card"] as! Card_CPPWrapper
                     self.appendNewCard(card)
                 })
             }
             // Check if there's an entry with the "_assign_next_" key.
-            if message as! String == "_assign_next_" {
+            if message as! String == _assign_next_ {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     self.playButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
                     self.playButton.setBackgroundImage(imageOn, forState: UIControlState.Normal)
@@ -429,7 +428,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 })
             }
             // Check if there's an entry with the "_broadcast_" key.
-            if message as! String == "_broadcast_" {
+            if message as! String == _broadcast_ {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     let flag = dataDictionary["flag"] as! Bool
                     let fromplayer = dataDictionary["fromplayer"] as! Int
@@ -445,7 +444,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 
             }
             // Check if there's an entry with the "_play_cards_" key.
-            if message as! String == "_play_cards_" {
+            if message as! String == _play_cards_ {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     print("server: receive _play_cards_")
                     let flag = dataDictionary["flag"] as! Bool
@@ -483,14 +482,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 })
             }
             // Check if there's an entry with the "_play_cards_back_" key.
-            if message as! String == "_play_cards_back_" {
+            if message as! String == _play_cards_back_ {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 let cardsBack = dataDictionary["cardsback"] as! [Card_CPPWrapper]
                 self.removeCardsBack(cardsBack)
                 })
             }
             // Check if there's an entry with the "_player_ID" key.
-            if message as! String == "_player_ID_" {
+            if message as! String == _player_ID_ {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     self.playerID = dataDictionary["playerID"] as! Int
                     self.bottomImage.image = self.imageSet[self.playerID]
@@ -506,7 +505,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 })
             }
             // Check if there's an entry with the "_stop_assigning_cards_" key.
-            if message as! String == "_stop_assigning_cards_" {
+            if message as! String == _stop_assigning_cards_ {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     self.spadeButton.enabled = false;
                     self.heartButton.enabled = false;
@@ -518,7 +517,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             }
             
             // Check if there's an entry with the "_change_keysuit_" key.
-            if message as! String == "_change_keysuit_" {
+            if message as! String == _change_keysuit_ {
                 let buttonID = dataDictionary["buttonID"] as! Int
                 let state = dataDictionary["state"] as! Int
                 let fromplayer = dataDictionary["fromplayer"] as! Int
@@ -527,7 +526,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 })
             }
             // Check if there's an entry with the "_change_keysuit_request_" key.
-            if message as! String == "_change_keysuit_request_" {
+            if message as! String == _change_keysuit_request_ {
                 let buttonID = dataDictionary["buttonID"] as! Int
                 let state = dataDictionary["state"] as! Int
                 let fromplayer = dataDictionary["fromplayer"] as! Int
@@ -548,14 +547,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 }
             }
             // Check if there's an entry with the "_update_scores_" key.
-            if message as! String == "_update_scores_" {
+            if message as! String == _update_scores_ {
                 let scores = dataDictionary["scores"] as! Int
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     self.scores.text = String(scores)
                 })
             }
             // Check if there's an entry with the "_declare_gameinfo_" key.
-            if message as! String == "_declare_gameinfo_" {
+            if message as! String == _declare_gameinfo_ {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     let keyRank = dataDictionary["keyRank"] as! Int
                     let lordID = dataDictionary["lordID"] as! Int
@@ -565,14 +564,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 })
             }
             // Check if there's an entry with the "_assign_table_cards_" key.
-            if message as! String == "_assign_table_cards_" {
+            if message as! String == _assign_table_cards_ {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     let cards = dataDictionary["cards"] as! NSMutableArray
                     self.appendTableCards(cards)
                 })
             }
             // Check if there's an entry with the "_remove_table_cards_" key.
-            if message as! String == "_remove_table_cards_" {
+            if message as! String == _remove_table_cards_ {
                 let cards = dataDictionary["cards"] as! [Card_CPPWrapper]
                 let fromplayer = dataDictionary["fromplayer"] as! Int
                 self.lists[4].removeAllObjects()
@@ -583,13 +582,13 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.assignInquireSuit((fromplayer+1)%4)
             }
             // Check if there's an entry with the "_inquire_suit_" key.
-            if message as! String == "_inquire_suit_" {
+            if message as! String == _inquire_suit_ {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     self.inquireSuit()
                 })
             }
             // Check if there's an entry with the "_skip_" key.
-            if message as! String == "_skip_" {
+            if message as! String == _skip_ {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     if (!self.starting) {
                         let fromplayer = dataDictionary["fromplayer"] as! Int
@@ -609,7 +608,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 })
             }
             // Check if there's an entry with the "_final_result_" key.
-            if message as! String == "_final_result_" {
+            if message as! String == _final_result_ {
                 let scores = dataDictionary["scores"] as! Int
                 let tableCards = dataDictionary["tableCards"] as! NSMutableArray
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
@@ -624,7 +623,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 })
             }
             // Check if there's an entry with the "_new_game_" key.
-            if message as! String == "_new_game_" {
+            if message as! String == _new_game_ {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     NSNotificationCenter.defaultCenter().removeObserver(self)
                     self.performSegueWithIdentifier("nextGame", sender: self)
@@ -636,8 +635,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     func updateButton(){
         self.layout.invalidateLayout()
         var selectedCards = [Card_CPPWrapper]()
-        print("debug----updateButton():myCards.count = ")
-        print(myCards.count)
         for i in 0...myCards.count-1 {
             if (self.layout.selected[i]) {
                 selectedCards.append(myCards[i])
@@ -706,16 +703,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 }
             }
             if(!self.appDelegate.mpcManager.server) {
-                let message = "_play_cards_"
+                let message = _play_cards_
                 let messageDictionary: [String: AnyObject] = ["message": message, "flag": enableTest, "fromplayer": self.playerID, "cards": selectedCards]
                 let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-                do {
-                    try appDelegate.mpcManager.sessions[0].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[0].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-                }
-                catch let error as NSError {
-                    print(error.localizedDescription)
-                    print("Can not send data")
-                }
+                self.sendMessagetoServer(messageData)
                 if (enableTest) {
                     for var i = myCards.count-1; i >= 0; i-- {
                         if (self.layout.selected[i]) {
@@ -738,7 +729,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                             
                         }
                     }
-                    self.playList[self.playCount % 4] = selectedCards //************//
+                    self.playList[self.playCount % 4] = selectedCards
                     self.gameprocedure.remove(selectedCards, n: 0)
                 }
                 else {
@@ -826,16 +817,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                     selectedCards.append(myCards[i])
                 }
             }
-            let message = "_remove_table_cards_"
+            let message = _remove_table_cards_
             let messageDictionary: [String: AnyObject] = ["message": message, "cards": selectedCards, "fromplayer": self.playerID]
             let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-            do {
-                try appDelegate.mpcManager.sessions[0].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[0].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-            }
-            catch let error as NSError {
-                print(error.localizedDescription)
-                print("Can not send data: removeTableCards")
-            }
+            self.sendMessagetoServer(messageData)
             self.removeSelectedCards()
         }
         
@@ -860,16 +845,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             }
         }
         else {
-            let message = "_skip_"
+            let message = _skip_
             let messageDictionary: [String: AnyObject] = ["message": message, "fromplayer": playerID]
             let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-            do {
-                try appDelegate.mpcManager.sessions[0].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[0].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-            }
-            catch let error as NSError {
-                print(error.localizedDescription)
-                print("Can not send data: skip")
-            }
+            self.sendMessagetoServer(messageData)
         }
         self.flag = Flag.None
         self.updateButton()
@@ -888,16 +867,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             })
         }
         else {
-            let message = "_inquire_suit_"
+            let message = _inquire_suit_
             let messageDictionary: [String: AnyObject] = ["message": message]
             let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-            do {
-                try appDelegate.mpcManager.sessions[playerID-1].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[playerID-1].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-            }
-            catch let error as NSError {
-                print(error.localizedDescription)
-                print("Can not send data: skip")
-            }
+            self.sendMessagetoOne(messageData, toPlayer: playerID)
         }
     }
     
@@ -931,20 +904,12 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
 
     }
     
-    func assignNext(flag: Bool, player: Int) -> Bool{
+    func assignNext(flag: Bool, player: Int) {
         if (player != 0 ) {
-            let message = "_assign_next_"
+            let message = _assign_next_
             let messageDictionary: [String: AnyObject] = ["message": message, "flag": flag]
             let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-            do {
-                try appDelegate.mpcManager.sessions[player-1].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[player-1].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-            }
-            catch let error as NSError {
-                print(error.localizedDescription)
-                print("Can not send data")
-                return false
-            }
-            return true
+            sendMessagetoOne(messageData, toPlayer: player)
         }
         else {
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
@@ -952,85 +917,42 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.enableTest = flag
                 self.updateButton()
             })
-            return true
         }
     }
     
-    func assignPlayerID(player: Int) -> Bool {
-        let message = "_player_ID_"
+    func assignPlayerID(player: Int){
+        let message = _player_ID_
         let messageDictionary: [String: AnyObject] = ["message": message, "playerID": player]
         let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-        do {
-            try appDelegate.mpcManager.sessions[player-1].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[player-1].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-        }
-        catch let error as NSError {
-            print(error.localizedDescription)
-            print("Can not send data")
-            return false
-        }
-        return true
+        sendMessagetoOne(messageData, toPlayer: player)
     }
     
-    func stopAssigningCards(player: Int) -> Bool {
-        let message = "_stop_assigning_cards_"
+    func stopAssigningCards(player: Int) {
+        let message = _stop_assigning_cards_
         let messageDictionary: [String: AnyObject] = ["message": message]
         let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-        do {
-            try appDelegate.mpcManager.sessions[player-1].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[player-1].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-        }
-        catch let error as NSError {
-            print(error.localizedDescription)
-            print("Can not send data")
-            return false
-        }
-        return true
+        sendMessagetoOne(messageData, toPlayer: player)
     }
     
     
-    func serverUpdateScores(scores: Int) -> Bool {
+    func serverUpdateScores(scores: Int) {
         self.scores.text = String(scores)
-        let message = "_update_scores_"
+        let message = _update_scores_
         let messageDictionary: [String: AnyObject] = ["message": message, "scores": scores]
         let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-        if (self.appDelegate.mpcManager.connectedSessionCount > 0) {
-            for sessionID in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
-                do {
-                    try appDelegate.mpcManager.sessions[sessionID].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[sessionID].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-                }
-                catch let error as NSError {
-                    print(error.localizedDescription)
-                    print("Can not send data")
-                    return false
-                }
-            }
-        }
-        return true
+        sendMessagetoAll(messageData)
     }
     
-    func serverBroadcastCards(flag: Bool, fromplayer: Int, cards: [Card_CPPWrapper]) -> Bool {
+    func serverBroadcastCards(flag: Bool, fromplayer: Int, cards: [Card_CPPWrapper]) {
         self.updateTable(fromplayer, cards: cards)
-        let message = "_broadcast_"
+        let message = _broadcast_
         let messageDictionary: [String: AnyObject] = ["message": message, "flag": flag, "fromplayer": fromplayer, "cards": cards]
         let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-        if (self.appDelegate.mpcManager.connectedSessionCount > 0) {
-            for sessionID in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
-                do {
-                    try appDelegate.mpcManager.sessions[sessionID].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[sessionID].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-                }
-                catch let error as NSError {
-                    print(error.localizedDescription)
-                    print("Can not send data")
-                    return false
-                }
-            }
-        }
+        self.sendMessagetoAll(messageData)
         if(!flag) {
             self.manager.setFormat(cards)
         }
         self.playCardCount += cards.count
-        print(self.playCardCount)
-        print("server: broadcast cards")
-        return true
     }
     
     func updateTable(label: Int, cards: [Card_CPPWrapper]) {
@@ -1050,39 +972,32 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         case 0:
             bottomCards.appendContentsOf(cards)
             bottom.reloadData()
+            break
         case 1:
             rightCards.appendContentsOf(cards)
             right.reloadData()
+            break
         case 2:
             topCards.appendContentsOf(cards)
             top.reloadData()
+            break
         case 3:
             leftCards.appendContentsOf(cards)
             left.reloadData()
-        default: print ("Error in updateTable()")
+            break
+        default:
+            break
         }
         
     }
     
-    func serverChangeKeysuitBroadcast(buttonID: Int, state: Int, fromplayer: Int) -> Bool {
+    func serverChangeKeysuitBroadcast(buttonID: Int, state: Int, fromplayer: Int) {
 
-        let message = "_change_keysuit_"
+        let message = _change_keysuit_
         let messageDictionary: [String: AnyObject] = ["message": message, "buttonID": buttonID, "state": state, "fromplayer": fromplayer]
         let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-        if (self.appDelegate.mpcManager.connectedSessionCount > 0) {
-            for sessionID in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
-                do {
-                    try appDelegate.mpcManager.sessions[sessionID].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[sessionID].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-                }
-                catch let error as NSError {
-                    print(error.localizedDescription)
-                    print("Can not send data")
-                    return false
-                }
-            }
-        }
         self.changeKeysuit(buttonID, state:state, fromplayer: fromplayer)
-        return true
+        self.sendMessagetoAll(messageData)
     }
     
     
@@ -1250,7 +1165,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
     }
     
-    func changeKeysuitRequest(buttonID: Int) -> Bool {
+    func changeKeysuitRequest(buttonID: Int) {
         var state: Int
         if (single || buttonID > 3) { state = 2 }
         else { state = 1 }
@@ -1260,46 +1175,25 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.skippedNum = 0;
                 assignTableCards(0)
             }
-            return true;
         }
         else {
 
-            let message = "_change_keysuit_request_"
+            let message = _change_keysuit_request_
             let messageDictionary: [String: AnyObject] = ["message": message, "buttonID": buttonID, "state": state, "fromplayer": self.playerID, "inquireSuit": (self.flag == Flag.InquireSuit)]
             let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-            do {
-                try appDelegate.mpcManager.sessions[0].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[0].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-            }
-            catch let error as NSError {
-                print(error.localizedDescription)
-                print("Can not send data")
-                return false
-            }
+            sendMessagetoServer(messageData)
         }
         self.flag = Flag.None
-        return true;
     }
     
-    func serverDeclareGameInfo() -> Bool {
-        let message = "_declare_gameinfo_"
+    func serverDeclareGameInfo() {
+        let message = _declare_gameinfo_
         let messageDictionary: [String: AnyObject] = ["message": message, "keyRank": GameInfo_CPPWrapper.getKeyRank(), "lordID": self.lordID]
         let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-        if (self.appDelegate.mpcManager.connectedSessionCount > 0) {
-            for sessionID in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
-                do {
-                    try appDelegate.mpcManager.sessions[sessionID].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[sessionID].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-                }
-                catch let error as NSError {
-                    print(error.localizedDescription)
-                    print("Can not send data")
-                    return false
-                }
-            }
-        }
-        return true
+        self.sendMessagetoAll(messageData)
     }
     
-    func serverBroadcastFinalResult(winner: Int, multiplier: Int) -> Bool {
+    func serverBroadcastFinalResult(winner: Int, multiplier: Int) {
         var finalScores = self.gameprocedure.getScores()
         if (winner % 2 != self.lordID % 2) {
             for index in 0...7 {
@@ -1315,9 +1209,22 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
 
         self.scores.text = String(finalScores)
         GameInfo_CPPWrapper.nextLordandRank(finalScores)
-        let message = "_final_result_"
+        let message = _final_result_
         let messageDictionary: [String: AnyObject] = ["message": message, "scores": finalScores, "tableCards": self.lists[4]]
         let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
+        self.sendMessagetoAll(messageData)
+    }
+    
+    
+    func serverNewGameNotification() {
+        let message = _new_game_
+        let messageDictionary: [String: AnyObject] = ["message": message]
+        let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
+        self.sendMessagetoAll(messageData)
+    }
+    
+    
+    func sendMessagetoAll(messageData: NSData) -> Bool {
         if (self.appDelegate.mpcManager.connectedSessionCount > 0) {
             for sessionID in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
                 do {
@@ -1325,7 +1232,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 }
                 catch let error as NSError {
                     print(error.localizedDescription)
-                    print("Can not send data: serverBroadcastFinalResult")
+                    print("Can not send data")
                     return false
                 }
             }
@@ -1333,22 +1240,26 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         return true
     }
     
+    func sendMessagetoOne(messageData: NSData, toPlayer: Int) -> Bool {
+        do {
+            try appDelegate.mpcManager.sessions[toPlayer - 1].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[toPlayer - 1].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+        }
+        catch let error as NSError {
+            print(error.localizedDescription)
+            print("Can not send data")
+            return false
+        }
+        return true
+    }
     
-    func serverNewGameNotification() -> Bool {
-        let message = "_new_game_"
-        let messageDictionary: [String: AnyObject] = ["message": message]
-        let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-        if (self.appDelegate.mpcManager.connectedSessionCount > 0) {
-            for sessionID in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
-                do {
-                    try appDelegate.mpcManager.sessions[sessionID].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[sessionID].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
-                }
-                catch let error as NSError {
-                    print(error.localizedDescription)
-                    print("Can not send data: serverNewGameNotification")
-                    return false
-                }
-            }
+    func sendMessagetoServer(messageData: NSData) -> Bool {
+        do {
+            try appDelegate.mpcManager.sessions[0].sendData(messageData, toPeers: appDelegate.mpcManager.sessions[0].connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+        }
+        catch let error as NSError {
+            print(error.localizedDescription)
+            print("Can not send data")
+            return false
         }
         return true
     }
@@ -1406,7 +1317,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 return cell
             }
             else {
-                let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Identifier, forIndexPath: indexPath) as! CardCell
+                let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierx, forIndexPath: indexPath) as! CardCell
                 if collectionView == self.left {
                     cell.imageName = "Images/PNG-cards-All/" + leftCards[indexPath.row].toString() + ".png"
                 }
