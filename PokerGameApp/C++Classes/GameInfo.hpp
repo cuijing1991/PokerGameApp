@@ -19,6 +19,13 @@ public:
     static Suits currentSuit;
     static std::list<Card> format;
     static int lordID;
+    static bool noSkip2;
+    static bool noSkip51013;
+    static int even_odd_Rank[];
+    static bool done2[];
+    static bool done5[];
+    static bool done10[];
+    static bool done13[];
 };
 
 

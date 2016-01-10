@@ -223,3 +223,56 @@ bool GameProcedure::remove(const list<Card> removeList, int n) {
     return true;
 }
 
+void GameProcedure::nextLordandRank(int scores) {
+    if (scores > 80 ) {
+        GameInfo::even_odd_Rank[GameInfo::lordID % 2] = static_cast<int>(GameInfo::keyRank);
+        switch(GameInfo::keyRank) {
+            case 2: GameInfo::done2[GameInfo::lordID % 2] = true; break;
+            case 5: GameInfo::done5[GameInfo::lordID % 2] = true; break;
+            case 10: GameInfo::done10[GameInfo::lordID % 2] = true; break;
+            case 13: GameInfo::done13[GameInfo::lordID % 2] = true; break;
+            default: break;
+        }
+
+        GameInfo::lordID = (GameInfo::lordID + 3) % 4;
+        int level = GameInfo::even_odd_Rank[GameInfo::lordID % 2];
+        while(scores >= 120) {
+            if(   (level == 2 && GameInfo::noSkip2 && !GameInfo::done2[GameInfo::lordID % 2])
+               || (level == 5 && GameInfo::noSkip51013 && !GameInfo::done5[GameInfo::lordID % 2])
+               || (level == 10 && GameInfo::noSkip51013 && !GameInfo::done10[GameInfo::lordID % 2])
+               || (level == 13 && GameInfo::noSkip51013 && !GameInfo::done13[GameInfo::lordID % 2])) { break; }
+                
+            level = ((level - 2 + 1) % 13 + 2);
+            if(level == 2) {
+                GameInfo::done2[GameInfo::lordID % 2] = false;
+                GameInfo::done5[GameInfo::lordID % 2] = false;
+                GameInfo::done10[GameInfo::lordID % 2] = false;
+                GameInfo::done13[GameInfo::lordID % 2] = false;
+            }
+            scores -= 40;
+        }
+        GameInfo::keyRank = static_cast<Ranks>(level);
+    }
+    else {
+        GameInfo::lordID = (GameInfo::lordID + 2) % 4;
+        int level = (static_cast<int>(GameInfo::keyRank) - 2 + 1) % 13 + 2;
+        while(scores < 40) {
+            if(   (level == 2 && GameInfo::noSkip2 && !GameInfo::done2[GameInfo::lordID % 2])
+               || (level == 5 && GameInfo::noSkip51013 && !GameInfo::done5[GameInfo::lordID % 2])
+               || (level == 10 && GameInfo::noSkip51013 && !GameInfo::done10[GameInfo::lordID % 2])
+               || (level == 13 && GameInfo::noSkip51013 && !GameInfo::done13[GameInfo::lordID % 2])) { break; }
+            
+            level = ((level - 2 + 1) % 13 + 2);
+            if(level == 2) {
+                GameInfo::done2[GameInfo::lordID % 2] = false;
+                GameInfo::done5[GameInfo::lordID % 2] = false;
+                GameInfo::done10[GameInfo::lordID % 2] = false;
+                GameInfo::done13[GameInfo::lordID % 2] = false;
+            }
+            scores += 40;
+        }
+        GameInfo::keyRank = static_cast<Ranks>(level);
+        std::cout << "Next Game: keyrank = " << GameInfo::keyRank << " lord = " << GameInfo::lordID << std::endl;
+    }
+}
+

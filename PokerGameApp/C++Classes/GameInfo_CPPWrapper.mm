@@ -11,6 +11,7 @@
 #import "GameInfo_CPPWrapper.h"
 #include "GameInfo.hpp"
 #include "Constants.hpp"
+#include "GameProcedure.hpp"
 #include <list>
 
 @implementation GameInfo_CPPWrapper
@@ -38,5 +39,8 @@
     GameInfo::currentSuit = Diamond;
     GameInfo::format = std::list<Card>();
     GameInfo::lordID = -1;
+}
++ (void) nextLordandRank: (NSInteger)scores {
+    GameProcedure::nextLordandRank((int)scores);
 }
 @end

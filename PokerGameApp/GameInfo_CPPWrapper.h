@@ -16,5 +16,6 @@
 + (NSInteger) getKeySuit;
 + (NSInteger) getLordID;
 + (void) reset;
++ (void) nextLordandRank: (NSInteger)scores;
 @end
 #endif /* GameInfo_CPPWrapper_h */

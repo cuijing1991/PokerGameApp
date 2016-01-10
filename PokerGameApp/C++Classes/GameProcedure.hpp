@@ -31,12 +31,15 @@ public:
     /* Find the winner from 4 players */
     int Winner (int ID, const list<Card> &pc1, const list<Card> &pc2, const list<Card> &pc3, const list<Card> &pc4);
     
+    
     /* Test whether the starter's cards (cu) are legal
      * If legal return the -1
      * Otherwise return index of CardUnit (cu) to play
      */
-    list<Card> testStarter (const list<Card> cards, Suits suit, int n);
     int testStarter (const list<CardUnit> cu, const list<Card> cards);
+    /* Return list of cards to play */
+    list<Card> testStarter (const list<Card> cards, Suits suit, int n);
+    
     
     /*  Remove Cards from manager */
     bool remove(const list<Card> removeList, int n);
@@ -44,7 +47,11 @@ public:
     /* Record Game Scores */
     int scores;
     
+    /* Append new cards to one player */
     void appendTableCards(list<Card> &cards, int ID);
+    
+    /* Decide next lord based on scores */
+    static void nextLordandRank(int scores);
     
 private:
     CardManager manager[4];

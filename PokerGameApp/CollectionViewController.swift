@@ -74,7 +74,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 default:
                     break
                 }
-                if(playerID == 0) {
+                if(appDelegate.mpcManager.server) {
                     self.serverDeclareGameInfo()
                 }
             }
@@ -258,10 +258,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             
             let delaytime = dispatch_time(DISPATCH_TIME_NOW, 3 * Int64(NSEC_PER_SEC))
             dispatch_after(delaytime, dispatch_get_main_queue(), {
-                self.serverDeclareGameInfo()
                 self.assignPlayerID(1)
                 self.assignPlayerID(2)
                 self.assignPlayerID(3)
+                self.serverDeclareGameInfo()
                 self.assignCard_to_all(0)
             })
         }
@@ -309,7 +309,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.stopAssigningCards(2)
                 self.stopAssigningCards(3)
                 
-                self.nextGameButton.enabled = true ///************** remove **************//
+                self.nextGameButton.enabled = true ///************** remove this line **************//
                 self.assignInquireSuit(self.lordID)
                 
             }
@@ -1245,7 +1245,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 let multiplier = manager.getMultiplier(self.playList[0] as! [Card_CPPWrapper])
                 print("Mutliplier = ")
                 print(multiplier)
-                self.serverBroadcastFinalResult(winner, multiplier: multiplier)
+                self.serverBroadcastFinalResult(self.currentPlayer, multiplier: multiplier)
             }
         }
     }
@@ -1314,7 +1314,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         self.layout.invalidateLayout()
 
         self.scores.text = String(finalScores)
-
+        GameInfo_CPPWrapper.nextLordandRank(finalScores)
         let message = "_final_result_"
         let messageDictionary: [String: AnyObject] = ["message": message, "scores": finalScores, "tableCards": self.lists[4]]
         let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
@@ -1355,6 +1355,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     @IBAction func nextGame(sender: AnyObject) {
         self.serverNewGameNotification()
+        
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
@@ -1444,7 +1445,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBAction func endGame(sender: AnyObject) {
         NSNotificationCenter.defaultCenter().removeObserver(self)
         NSOperationQueue.mainQueue().cancelAllOperations()
-        //self.performSegueWithIdentifier("endGame", sender: self)
     }
 }
 
