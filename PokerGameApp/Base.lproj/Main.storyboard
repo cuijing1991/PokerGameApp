@@ -284,22 +284,7 @@
                                             <segue destination="BYZ-38-t0r" kind="presentation" modalTransitionStyle="flipHorizontal" id="Osy-BW-cfB"/>
                                         </connections>
                                     </button>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PM8-3e-hEw">
-                                        <rect key="frame" x="173" y="258" width="51" height="31"/>
-                                        <color key="onTintColor" red="1" green="0.69354002250000002" blue="0.103785909" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="thumbTintColor" red="0.46639230847358704" green="0.21065489947795868" blue="0.11332836002111435" alpha="1" colorSpace="calibratedRGB"/>
-                                    </switch>
-                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="扣底" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BR6-KH-IyK">
-                                        <rect key="frame" x="52" y="259" width="122" height="30"/>
-                                        <accessibility key="accessibilityConfiguration">
-                                            <accessibilityTraits key="traits" notEnabled="YES"/>
-                                            <bool key="isElement" value="NO"/>
-                                        </accessibility>
-                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="5,10,K 必打" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SIx-aQ-ApK">
+                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="抄底" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SIx-aQ-ApK">
                                         <rect key="frame" x="52" y="196" width="122" height="30"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" notEnabled="YES"/>
@@ -309,7 +294,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="2 必打" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vv9-Q3-nZN">
+                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="5,10,K 必打" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vv9-Q3-nZN">
                                         <rect key="frame" x="52" y="132" width="122" height="30"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" notEnabled="YES"/>
@@ -319,7 +304,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="2 是常主" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="82H-aZ-coO">
+                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="2 必打" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="82H-aZ-coO">
                                         <rect key="frame" x="52" y="74" width="122" height="30"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" notEnabled="YES"/>
@@ -329,10 +314,13 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bhW-Xx-nKM">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bhW-Xx-nKM">
                                         <rect key="frame" x="173" y="73" width="51" height="31"/>
                                         <color key="onTintColor" red="0.99170845750000003" green="0.58130258319999994" blue="0.033975746479999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="thumbTintColor" red="0.46639230847358704" green="0.21065489947795868" blue="0.11332836002111435" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="noSkip2Changed:" destination="E7g-IV-pVd" eventType="valueChanged" id="vFc-BK-NrD"/>
+                                        </connections>
                                     </switch>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bMj-lD-sXy">
                                         <rect key="frame" x="173" y="195" width="51" height="31"/>
@@ -343,23 +331,22 @@
                                         <rect key="frame" x="173" y="132" width="51" height="31"/>
                                         <color key="onTintColor" red="0.99170845746994019" green="0.58130258321762085" blue="0.033975746482610703" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="thumbTintColor" red="0.46639230847358704" green="0.21065489947795868" blue="0.11332836002111435" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="noSkip51013Changed:" destination="E7g-IV-pVd" eventType="valueChanged" id="K2a-L8-4p9"/>
+                                        </connections>
                                     </switch>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="PM8-3e-hEw" firstAttribute="height" secondItem="82H-aZ-coO" secondAttribute="height" id="144-hB-g3g"/>
                                     <constraint firstItem="Vv9-Q3-nZN" firstAttribute="centerX" secondItem="h44-sK-pHN" secondAttribute="centerX" id="7bV-cS-dDP"/>
                                     <constraint firstItem="TOH-fR-Z08" firstAttribute="leading" secondItem="Vv9-Q3-nZN" secondAttribute="trailing" constant="-1" id="CC8-by-XEk"/>
                                     <constraint firstItem="82H-aZ-coO" firstAttribute="leading" secondItem="b5I-F1-QLF" secondAttribute="leading" id="EM6-5B-S4v"/>
                                     <constraint firstItem="b5I-F1-QLF" firstAttribute="top" secondItem="h44-sK-pHN" secondAttribute="top" constant="20" id="FYp-JD-iaw"/>
-                                    <constraint firstItem="PM8-3e-hEw" firstAttribute="leading" secondItem="BR6-KH-IyK" secondAttribute="trailing" constant="-1" id="JA2-E5-pkT"/>
-                                    <constraint firstItem="PM8-3e-hEw" firstAttribute="width" secondItem="bhW-Xx-nKM" secondAttribute="width" id="JJG-x1-VTl"/>
                                     <constraint firstAttribute="trailing" secondItem="Vv9-Q3-nZN" secondAttribute="trailing" constant="48.5" id="LQn-L0-fCa"/>
                                     <constraint firstItem="82H-aZ-coO" firstAttribute="centerX" secondItem="h44-sK-pHN" secondAttribute="centerX" id="NI8-Iv-fVG"/>
                                     <constraint firstItem="SIx-aQ-ApK" firstAttribute="width" secondItem="82H-aZ-coO" secondAttribute="width" id="Npm-0k-54q"/>
                                     <constraint firstItem="Vv9-Q3-nZN" firstAttribute="height" secondItem="82H-aZ-coO" secondAttribute="height" id="OvY-y4-4Oo"/>
                                     <constraint firstItem="TOH-fR-Z08" firstAttribute="width" secondItem="bhW-Xx-nKM" secondAttribute="width" id="PsQ-3e-IHr"/>
-                                    <constraint firstItem="BR6-KH-IyK" firstAttribute="height" secondItem="82H-aZ-coO" secondAttribute="height" id="Suq-VN-7jo"/>
                                     <constraint firstItem="82H-aZ-coO" firstAttribute="top" secondItem="h44-sK-pHN" secondAttribute="top" constant="75" id="U4f-ip-Kau"/>
                                     <constraint firstAttribute="trailing" secondItem="82H-aZ-coO" secondAttribute="trailing" constant="48.5" id="VgR-RF-ngX"/>
                                     <constraint firstItem="SIx-aQ-ApK" firstAttribute="height" secondItem="82H-aZ-coO" secondAttribute="height" id="Y2J-iK-JQx"/>
@@ -368,13 +355,10 @@
                                     <constraint firstItem="bMj-lD-sXy" firstAttribute="height" secondItem="82H-aZ-coO" secondAttribute="height" id="b1G-uZ-uJi"/>
                                     <constraint firstItem="bMj-lD-sXy" firstAttribute="leading" secondItem="SIx-aQ-ApK" secondAttribute="trailing" constant="-1" id="bPK-8y-voC"/>
                                     <constraint firstItem="bMj-lD-sXy" firstAttribute="width" secondItem="bhW-Xx-nKM" secondAttribute="width" id="bYF-jc-Onc"/>
-                                    <constraint firstItem="BR6-KH-IyK" firstAttribute="width" secondItem="82H-aZ-coO" secondAttribute="width" id="dEv-ha-b66"/>
                                     <constraint firstItem="bhW-Xx-nKM" firstAttribute="leading" secondItem="82H-aZ-coO" secondAttribute="trailing" constant="-1" id="gkt-KO-ipD"/>
                                     <constraint firstItem="SIx-aQ-ApK" firstAttribute="centerX" secondItem="h44-sK-pHN" secondAttribute="centerX" id="iUy-h9-avd"/>
-                                    <constraint firstAttribute="trailing" secondItem="BR6-KH-IyK" secondAttribute="trailing" constant="48.5" id="iY7-a4-u61"/>
                                     <constraint firstAttribute="trailing" secondItem="SIx-aQ-ApK" secondAttribute="trailing" constant="48.5" id="nB0-3G-5V2"/>
                                     <constraint firstItem="bhW-Xx-nKM" firstAttribute="height" secondItem="82H-aZ-coO" secondAttribute="height" id="tvL-Mh-2hZ"/>
-                                    <constraint firstItem="BR6-KH-IyK" firstAttribute="centerX" secondItem="h44-sK-pHN" secondAttribute="centerX" id="uyK-vz-F8i"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -397,6 +381,9 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="NoSkip2Switch" destination="bhW-Xx-nKM" id="SnV-N9-UQw"/>
+                        <outlet property="NoSkip51013Switch" destination="TOH-fR-Z08" id="TIb-lO-zap"/>
+                        <outlet property="TableCardsSwitch" destination="bMj-lD-sXy" id="Cvt-qF-UfZ"/>
                         <outlet property="pickerView" destination="NOy-3J-DIe" id="mrR-BS-oQE"/>
                     </connections>
                 </viewController>
@@ -942,8 +929,8 @@
         <image name="spadesButton2.png" width="164" height="164"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Osy-BW-cfB"/>
         <segue reference="Oii-oW-Qoz"/>
         <segue reference="B25-kx-EnI"/>
-        <segue reference="lqw-Sr-h4z"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -12,6 +12,9 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
     
     @IBOutlet weak var pickerView: UIPickerView!
     
+    @IBOutlet weak var NoSkip2Switch: UISwitch!
+    @IBOutlet weak var NoSkip51013Switch: UISwitch!
+    @IBOutlet weak var TableCardsSwitch: UISwitch!
     var pickerDataSource = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
     
     override func viewDidLoad() {
@@ -53,5 +56,12 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         print(row)
         
     }
-
+    @IBAction func noSkip2Changed(sender: UISwitch) {
+        print(sender.on)
+        GameInfo_CPPWrapper.updateNoSkip2(sender.on)
+    }
+    
+    @IBAction func noSkip51013Changed(sender: UISwitch) {
+        GameInfo_CPPWrapper.updateNoSkip51013(sender.on)
+    }
 }

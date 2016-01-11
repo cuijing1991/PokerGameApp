@@ -18,6 +18,7 @@ std::list<Card> GameInfo::format = std::list<Card>();
 int GameInfo::lordID = -1;
 bool GameInfo::noSkip2 = true;
 bool GameInfo::noSkip51013 = true;
+bool GameInfo::tableCards = true;
 int GameInfo::even_odd_Rank[] = {2,2};
 bool GameInfo::done2[] = {false, false};
 bool GameInfo::done5[] = {false, false};

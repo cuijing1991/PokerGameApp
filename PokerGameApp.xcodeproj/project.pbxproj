@@ -13,7 +13,6 @@
 		3F1183841C0EAF6D006781C3 /* CircularCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1183801C0EAF6D006781C3 /* CircularCollectionViewLayout.swift */; };
 		3F1183851C0EAF6D006781C3 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1183811C0EAF6D006781C3 /* CollectionViewController.swift */; };
 		3F1183871C0F400A006781C3 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 3F1183861C0F400A006781C3 /* Images */; };
-		3F3C9BAA1C1348BA00F59A6D /* PlayCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3C9BA91C1348BA00F59A6D /* PlayCardViewController.swift */; };
 		3F3C9BAC1C134BB900F59A6D /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3C9BAB1C134BB900F59A6D /* CardCell.swift */; };
 		3F3C9BAE1C13BCDA00F59A6D /* MPCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3C9BAD1C13BCDA00F59A6D /* MPCManager.swift */; };
 		3F3C9BB01C13C83C00F59A6D /* JoinGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3C9BAF1C13C83C00F59A6D /* JoinGameViewController.swift */; };
@@ -27,6 +26,7 @@
 		3F6F081A1C05071000ABDA89 /* PokerGameAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F08191C05071000ABDA89 /* PokerGameAppTests.swift */; };
 		3F6F082B1C05602200ABDA89 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F082A1C05602200ABDA89 /* SettingsViewController.swift */; };
 		3F6F082D1C06560B00ABDA89 /* AddFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6F082C1C06560B00ABDA89 /* AddFriendsViewController.swift */; };
+		3F862CCE1C434C6A003445CF /* CardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F862CCD1C434C6A003445CF /* CardLayout.swift */; };
 		3F8A079A1C13DC6800A53711 /* Card_CPPWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A07931C13DC6800A53711 /* Card_CPPWrapper.mm */; };
 		3F8A079B1C13DC6800A53711 /* Card.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A07941C13DC6800A53711 /* Card.cpp */; };
 		3F8A079C1C13DC6800A53711 /* GameProcedure_CPPWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A07971C13DC6800A53711 /* GameProcedure_CPPWrapper.mm */; };
@@ -55,7 +55,6 @@
 		3F1183801C0EAF6D006781C3 /* CircularCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularCollectionViewLayout.swift; sourceTree = "<group>"; };
 		3F1183811C0EAF6D006781C3 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		3F1183861C0F400A006781C3 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
-		3F3C9BA91C1348BA00F59A6D /* PlayCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayCardViewController.swift; sourceTree = "<group>"; };
 		3F3C9BAB1C134BB900F59A6D /* CardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
 		3F3C9BAD1C13BCDA00F59A6D /* MPCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCManager.swift; sourceTree = "<group>"; };
 		3F3C9BAF1C13C83C00F59A6D /* JoinGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinGameViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +74,7 @@
 		3F6F081B1C05071000ABDA89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F6F082A1C05602200ABDA89 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3F6F082C1C06560B00ABDA89 /* AddFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendsViewController.swift; sourceTree = "<group>"; };
+		3F862CCD1C434C6A003445CF /* CardLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardLayout.swift; sourceTree = "<group>"; };
 		3F8A07921C13DC6800A53711 /* Card_CPPWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Card_CPPWrapper.h; path = "C++Classes/Card_CPPWrapper.h"; sourceTree = "<group>"; };
 		3F8A07931C13DC6800A53711 /* Card_CPPWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Card_CPPWrapper.mm; path = "C++Classes/Card_CPPWrapper.mm"; sourceTree = "<group>"; };
 		3F8A07941C13DC6800A53711 /* Card.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Card.cpp; path = "C++Classes/Card.cpp"; sourceTree = "<group>"; };
@@ -171,11 +171,11 @@
 				3F3C9BAF1C13C83C00F59A6D /* JoinGameViewController.swift */,
 				3F3C9BAB1C134BB900F59A6D /* CardCell.swift */,
 				3F5D09711C34AD3F001149BC /* CardCell.xib */,
-				3F3C9BA91C1348BA00F59A6D /* PlayCardViewController.swift */,
 				3F11837E1C0EAF6D006781C3 /* CircularCollectionViewCell.swift */,
 				3F11837F1C0EAF6D006781C3 /* CircularCollectionViewCell.xib */,
 				3F1183801C0EAF6D006781C3 /* CircularCollectionViewLayout.swift */,
 				3F1183811C0EAF6D006781C3 /* CollectionViewController.swift */,
+				3F862CCD1C434C6A003445CF /* CardLayout.swift */,
 				3F6F082C1C06560B00ABDA89 /* AddFriendsViewController.swift */,
 				3F11837C1C0E8FC8006781C3 /* AddFriendsTableViewCell.swift */,
 				3F6F080D1C05071000ABDA89 /* LaunchScreen.storyboard */,
@@ -306,6 +306,7 @@
 				3F6F08071C05071000ABDA89 /* MenuViewController.swift in Sources */,
 				3F1183821C0EAF6D006781C3 /* CircularCollectionViewCell.swift in Sources */,
 				3F3C9BB01C13C83C00F59A6D /* JoinGameViewController.swift in Sources */,
+				3F862CCE1C434C6A003445CF /* CardLayout.swift in Sources */,
 				3F8A079D1C13DC6800A53711 /* GameProcedure.cpp in Sources */,
 				3F6F08051C05071000ABDA89 /* AppDelegate.swift in Sources */,
 				3FC153B31C38B20800E22FDD /* GameInfo_CPPWrapper.mm in Sources */,
@@ -320,7 +321,6 @@
 				3F8A079A1C13DC6800A53711 /* Card_CPPWrapper.mm in Sources */,
 				3FD90C3E1C2DAAB9005A0C43 /* CardUnit.cpp in Sources */,
 				3F6F082B1C05602200ABDA89 /* SettingsViewController.swift in Sources */,
-				3F3C9BAA1C1348BA00F59A6D /* PlayCardViewController.swift in Sources */,
 				3F11837D1C0E8FC8006781C3 /* AddFriendsTableViewCell.swift in Sources */,
 				3F8A079B1C13DC6800A53711 /* Card.cpp in Sources */,
 			);

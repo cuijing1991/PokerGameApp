@@ -43,4 +43,11 @@
 + (void) nextLordandRank: (NSInteger)scores {
     GameProcedure::nextLordandRank((int)scores);
 }
++ (void) updateNoSkip2: (bool)noSkip {
+    GameInfo::noSkip2 = noSkip;
+}
++ (void) updateNoSkip51013: (bool)noSkip {
+    GameInfo::noSkip51013 = noSkip;
+}
+
 @end

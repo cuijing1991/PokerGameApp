@@ -119,10 +119,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     var topCards = [Card_CPPWrapper]()
     var bottomCards = [Card_CPPWrapper]()
 
-    let layoutx: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    let layouty: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    let layoutz: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    let layoutw: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    let layoutx: UICollectionViewFlowLayout = CardLayout()
+    let layouty: UICollectionViewFlowLayout = CardLayout()
+    let layoutz: UICollectionViewFlowLayout = CardLayout()
+    let layoutw: UICollectionViewFlowLayout = CardLayout()
     
     var playCount = 0
     
@@ -231,25 +231,29 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         bottom.delegate = self
         bottom.dataSource = self
 
-        let screenHeight = UIScreen.mainScreen().bounds.height
-        let height = Int(screenHeight * CGFloat(playCardsRatio))
-        let width = Int(height * 233 / 338)
-        let minimumInteritemSpacing = -CGFloat(width) / 1.5
-        
-        
-        layoutx.itemSize = CGSize(width: width, height: height)
-        layoutx.minimumInteritemSpacing = minimumInteritemSpacing
-
-        
-        layouty.itemSize = CGSize(width: width, height: height)
-        layouty.minimumInteritemSpacing = minimumInteritemSpacing
-        
-       
-        layoutz.itemSize = CGSize(width: width, height: height)
-        layoutz.minimumInteritemSpacing = minimumInteritemSpacing
-
-        layoutw.itemSize = CGSize(width: width, height: height)
-        layoutw.minimumInteritemSpacing = minimumInteritemSpacing
+//        let screenHeight = UIScreen.mainScreen().bounds.height
+//        let height = Int(screenHeight * CGFloat(playCardsRatio))
+//        let width = Int(height * 233 / 338)
+//        let minimumInteritemSpacing = -CGFloat(width) / 1.5
+//        
+//        
+//        layoutx.itemSize = CGSize(width: width, height: height)
+//        layoutx.minimumInteritemSpacing = minimumInteritemSpacing
+//
+//        let spadeCards = Card_CPPWrapper()
+//        spadeCards.Card_CPPWrapper(0, rank: self.keyrank)
+//        leftCards.append(spadeCards)
+//        leftCards.append(spadeCards)
+//        
+//        layouty.itemSize = CGSize(width: width, height: height)
+//        layouty.minimumInteritemSpacing = minimumInteritemSpacing
+//        
+//       
+//        layoutz.itemSize = CGSize(width: width, height: height)
+//        layoutz.minimumInteritemSpacing = minimumInteritemSpacing
+//
+//        layoutw.itemSize = CGSize(width: width, height: height)
+//        layoutw.minimumInteritemSpacing = minimumInteritemSpacing
         
         left.setCollectionViewLayout(layoutx, animated: false)
         right.setCollectionViewLayout(layouty, animated: false)
@@ -275,6 +279,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.leftImage.image = self.imageSet[(self.playerID+3)%4]
                 self.keyrank = GameInfo_CPPWrapper.getKeyRank()
                 self.keysuit = GameInfo_CPPWrapper.getKeySuit()
+                self.lordID = GameInfo_CPPWrapper.getLordID()
                 self.assignPlayerID(1)
                 self.assignPlayerID(2)
                 self.assignPlayerID(3)
@@ -1339,23 +1344,17 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             else {
                 let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierx, forIndexPath: indexPath) as! CardCell
                 if collectionView == self.left {
-                    self.layoutx.layoutAttributesForItemAtIndexPath(indexPath)!.zIndex = indexPath.row
                     cell.imageName = "Images/PNG-cards-All/" + leftCards[indexPath.row].toString() + ".png"
                 }
                 else if collectionView == self.right {
-                    self.layouty.layoutAttributesForItemAtIndexPath(indexPath)!.zIndex = indexPath.row
                     cell.imageName = "Images/PNG-cards-All/" + rightCards[indexPath.row].toString() + ".png"
                 }
                 else if collectionView == self.top {
-                    self.layoutz.layoutAttributesForItemAtIndexPath(indexPath)!.zIndex = indexPath.row
                     cell.imageName = "Images/PNG-cards-All/" + topCards[indexPath.row].toString() + ".png"
                 }
                 else if collectionView == self.bottom {
-                    self.layoutw.layoutAttributesForItemAtIndexPath(indexPath)!.zIndex = indexPath.row
                     cell.imageName = "Images/PNG-cards-All/" + bottomCards[indexPath.row].toString() + ".png"
                 }
-                
-                // ******************************************** //
                 
                 return cell
             }

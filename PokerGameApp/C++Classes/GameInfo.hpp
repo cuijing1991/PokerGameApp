@@ -21,6 +21,7 @@ public:
     static int lordID;
     static bool noSkip2;
     static bool noSkip51013;
+    static bool tableCards;
     static int even_odd_Rank[];
     static bool done2[];
     static bool done5[];

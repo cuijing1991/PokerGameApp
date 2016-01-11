@@ -17,5 +17,7 @@
 + (NSInteger) getLordID;
 + (void) reset;
 + (void) nextLordandRank: (NSInteger)scores;
++ (void) updateNoSkip2: (bool)noSkip;
++ (void) updateNoSkip51013: (bool)noSkip;
 @end
 #endif /* GameInfo_CPPWrapper_h */
