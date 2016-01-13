@@ -230,30 +230,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         top.dataSource = self
         bottom.delegate = self
         bottom.dataSource = self
-
-//        let screenHeight = UIScreen.mainScreen().bounds.height
-//        let height = Int(screenHeight * CGFloat(playCardsRatio))
-//        let width = Int(height * 233 / 338)
-//        let minimumInteritemSpacing = -CGFloat(width) / 1.5
-//        
-//        
-//        layoutx.itemSize = CGSize(width: width, height: height)
-//        layoutx.minimumInteritemSpacing = minimumInteritemSpacing
-//
-//        let spadeCards = Card_CPPWrapper()
-//        spadeCards.Card_CPPWrapper(0, rank: self.keyrank)
-//        leftCards.append(spadeCards)
-//        leftCards.append(spadeCards)
-//        
-//        layouty.itemSize = CGSize(width: width, height: height)
-//        layouty.minimumInteritemSpacing = minimumInteritemSpacing
-//        
-//       
-//        layoutz.itemSize = CGSize(width: width, height: height)
-//        layoutz.minimumInteritemSpacing = minimumInteritemSpacing
-//
-//        layoutw.itemSize = CGSize(width: width, height: height)
-//        layoutw.minimumInteritemSpacing = minimumInteritemSpacing
         
         left.setCollectionViewLayout(layoutx, animated: false)
         right.setCollectionViewLayout(layouty, animated: false)
