@@ -19,5 +19,8 @@
 + (void) nextLordandRank: (NSInteger)scores;
 + (void) updateNoSkip2: (bool)noSkip;
 + (void) updateNoSkip51013: (bool)noSkip;
++ (void) updateChangeTableCards: (bool)changeTableCards;
++ (bool) getChangeTableCards;
++ (void) updateInitialRank: (NSInteger)rank;
 @end
 #endif /* GameInfo_CPPWrapper_h */

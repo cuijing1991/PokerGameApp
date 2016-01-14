@@ -278,12 +278,11 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="OS4-mj-8xg" secondAttribute="trailing" constant="-2" id="7Uh-rL-zsg"/>
-                                    <constraint firstItem="NOy-3J-DIe" firstAttribute="top" secondItem="SZz-6Z-17D" secondAttribute="bottom" constant="2" id="Bt5-RQ-Gk3"/>
+                                    <constraint firstAttribute="trailing" secondItem="OS4-mj-8xg" secondAttribute="trailing" id="7Uh-rL-zsg"/>
                                     <constraint firstItem="NOy-3J-DIe" firstAttribute="centerY" secondItem="yBs-eT-tjU" secondAttribute="centerY" multiplier="1.25" id="MqK-bn-27L"/>
                                     <constraint firstItem="SZz-6Z-17D" firstAttribute="centerX" secondItem="yBs-eT-tjU" secondAttribute="centerX" id="NGB-Gz-FhY"/>
                                     <constraint firstItem="NOy-3J-DIe" firstAttribute="centerX" secondItem="yBs-eT-tjU" secondAttribute="centerX" id="Nc9-tg-wK3"/>
-                                    <constraint firstItem="OS4-mj-8xg" firstAttribute="leading" secondItem="yBs-eT-tjU" secondAttribute="leading" constant="-3" id="OLa-PX-zft"/>
+                                    <constraint firstItem="OS4-mj-8xg" firstAttribute="leading" secondItem="yBs-eT-tjU" secondAttribute="leading" id="OLa-PX-zft"/>
                                     <constraint firstItem="NOy-3J-DIe" firstAttribute="top" secondItem="SZz-6Z-17D" secondAttribute="bottom" id="hiF-U3-YyT"/>
                                 </constraints>
                             </view>
@@ -343,6 +342,9 @@
                                         <rect key="frame" x="173" y="211" width="51" height="31"/>
                                         <color key="onTintColor" red="1" green="0.69354002250000002" blue="0.103785909" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="thumbTintColor" red="0.46639230847358704" green="0.21065489947795868" blue="0.11332836002111435" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="tableCardsChanged:" destination="E7g-IV-pVd" eventType="valueChanged" id="cIA-83-RBT"/>
+                                        </connections>
                                     </switch>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" onImage="Button_On" offImage="Button_Off" translatesAutoresizingMaskIntoConstraints="NO" id="TOH-fR-Z08">
                                         <rect key="frame" x="173" y="148" width="51" height="31"/>

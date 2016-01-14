@@ -97,6 +97,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
     }
     
+    var changeTableCards = GameInfo_CPPWrapper.getChangeTableCards()
     var layout: CircularCollectionViewLayout!
     var myCards = [Card_CPPWrapper]()
     var gameprocedure: GameProcedure_CPPWrapper!
@@ -533,10 +534,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                         print(state)
                     })
                 }
-                if (inquireSuit) {
+                if (inquireSuit && self.changeTableCards) {
                     skippedNum = 0
                     assignTableCards(fromplayer)
                     starting = false
+                }
+                if (inquireSuit && !self.changeTableCards) {
+                    skippedNum = 0
+                    assignInquireSuit((fromplayer + 1) % 4)
                 }
             }
             // Check if there's an entry with the "_update_scores_" key.
@@ -571,9 +576,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 for card in cards {
                     self.lists[4].addObject(card)
                 }
-                //self.gameprocedure.remove(cards, n: fromplayer)
                 self.gameprocedure.removeTableCards(cards, playerID: fromplayer)
-                self.assignInquireSuit((fromplayer+1)%4)
+                if (self.changeTableCards) {
+                    self.assignInquireSuit((fromplayer+1)%4)
+                }
+                else {
+                    self.gameprocedure.constructManager()
+                    self.assignNext(false, player: self.currentPlayer)
+                }
             }
             // Check if there's an entry with the "_inquire_suit_" key.
             if message as! String == _inquire_suit_ {
@@ -584,21 +594,33 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             // Check if there's an entry with the "_skip_" key.
             if message as! String == _skip_ {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                    if (!self.starting) {
-                        let fromplayer = dataDictionary["fromplayer"] as! Int
-                        self.skippedNum++
-                        print(self.skippedNum)
-                        if (self.skippedNum < 3) {
-                            self.assignInquireSuit((fromplayer+1)%4)
+                    if (self.changeTableCards) {
+                        if (!self.starting) {
+                            let fromplayer = dataDictionary["fromplayer"] as! Int
+                            self.skippedNum++
+                            if (self.skippedNum < 3) {
+                                self.assignInquireSuit((fromplayer+1)%4)
+                            }
+                            else {
+                                self.gameprocedure.constructManager()
+                                self.assignNext(false, player: self.currentPlayer)
+                            }
                         }
                         else {
-                            self.gameprocedure.constructManager()
-                            self.assignNext(false, player: self.currentPlayer)
+                            self.starting = false
+                            self.assignTableCards(self.lordID)
                         }
                     }
                     else {
-                        self.starting = false
-                        self.assignTableCards(self.lordID)
+                        let fromplayer = dataDictionary["fromplayer"] as! Int
+                        self.skippedNum++
+                        if (self.skippedNum < 4) {
+                            self.assignInquireSuit( (fromplayer+1) % 4)
+                        }
+                        else {
+                            self.assignTableCards(self.lordID)
+                        }
+
                     }
                 })
             }
@@ -802,9 +824,16 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 }
             }
             self.removeSelectedCards()
-            //self.gameprocedure.remove(selectedCards, n: 0)
             self.gameprocedure.removeTableCards(selectedCards, playerID: 0)
-            self.assignInquireSuit(1)
+            
+            if (self.changeTableCards) {
+                self.assignInquireSuit(1)
+            }
+            else {
+                self.gameprocedure.constructManager()
+                self.assignNext(false, player: self.currentPlayer)
+            }
+            
         }
         else {
             var selectedCards = [Card_CPPWrapper]()
@@ -824,21 +853,31 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     func skip() {
         if (playerID == 0) {
-            
-            if (!self.starting) {
-                self.skippedNum++
-                print(self.skippedNum)
-                if (self.skippedNum < 3) {
-                    self.assignInquireSuit(1)
+            if (self.changeTableCards) {
+                if (!self.starting) {
+                    self.skippedNum++
+                    print(self.skippedNum)
+                    if (self.skippedNum < 3) {
+                        self.assignInquireSuit(1)
+                    }
+                    else {
+                        self.gameprocedure.constructManager()
+                        self.assignNext(false, player: self.currentPlayer)
+                    }
                 }
                 else {
-                    self.gameprocedure.constructManager()
-                    self.assignNext(false, player: self.currentPlayer)
+                    self.starting = false
+                    self.assignTableCards(self.lordID)
                 }
             }
             else {
-                self.starting = false
-                self.assignTableCards(self.lordID)
+                self.skippedNum++
+                if (self.skippedNum < 4) {
+                    self.assignInquireSuit(1)
+                }
+                else {
+                    self.assignTableCards(self.lordID)
+                }
             }
         }
         else {
@@ -1169,10 +1208,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         else { state = 1 }
         if(self.appDelegate.mpcManager.server) {
             self.serverChangeKeysuitBroadcast(buttonID, state: state, fromplayer: 0)
-            if(self.flag == Flag.InquireSuit) {
+            if(self.flag == Flag.InquireSuit && self.changeTableCards) {
                 self.starting = false;
                 self.skippedNum = 0;
                 assignTableCards(0)
+            }
+            if (self.flag == Flag.InquireSuit && !self.changeTableCards) {
+                skippedNum = 0
+                assignInquireSuit(1)
             }
         }
         else {
@@ -1184,6 +1227,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         
         self.playButton.enabled = false
+        self.playButton.setBackgroundImage(imageOff, forState: UIControlState.Normal)
     }
     
     func serverDeclareGameInfo() {

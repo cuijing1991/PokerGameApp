@@ -53,6 +53,7 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         GameInfo_CPPWrapper.updateKeyRank(row+2)
+        GameInfo_CPPWrapper.updateInitialRank(row+2)
         print(row)
         
     }
@@ -63,5 +64,9 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
     
     @IBAction func noSkip51013Changed(sender: UISwitch) {
         GameInfo_CPPWrapper.updateNoSkip51013(sender.on)
+    }
+    @IBAction func tableCardsChanged(sender: UISwitch) {
+        print(sender.on)
+        GameInfo_CPPWrapper.updateChangeTableCards(sender.on)
     }
 }
