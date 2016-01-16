@@ -33,6 +33,8 @@ let _final_result_ = "_final_result_"
 let _new_game_ = "_new_game_"
 let endNum = 25
 let playCardsRatio = 0.15
+let imageSet : [UIImage] = [UIImage(named:"4")!, UIImage(named:"8")!, UIImage(named:"11")!, UIImage(named:"6")! ]
+let imageSetLord : [UIImage] = [UIImage(named:"4x")!, UIImage(named:"8x")!, UIImage(named:"11x")!, UIImage(named:"6x")! ]
 
 enum Flag {
     case None
@@ -46,8 +48,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let manager = CardManager_CPPWrapper()
-    
-    // keysuit can keyrank should be updated while assigning cards
+
     var keysuit = GameInfo_CPPWrapper.getKeySuit()
     var keyrank = GameInfo_CPPWrapper.getKeyRank() {
         didSet {
@@ -97,23 +98,22 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
     }
     
-    var changeTableCards = GameInfo_CPPWrapper.getChangeTableCards()
-    var layout: CircularCollectionViewLayout!
+    let changeTableCards = GameInfo_CPPWrapper.getChangeTableCards()
+   
     var myCards = [Card_CPPWrapper]()
-    var gameprocedure: GameProcedure_CPPWrapper!
     var playerID = 0
     var enableTest = false
     var single = false
     var double = false
     var joker = false
     var keyCardsCount = [NSInteger](count:6, repeatedValue:0)
-    var imageSet : [UIImage] = [UIImage(named:"4.jpg")!, UIImage(named:"8.jpg")!, UIImage(named:"11.jpg")!, UIImage(named:"6.jpg")! ]
-    var imageSetLord : [UIImage] = [UIImage(named:"4x.jpg")!, UIImage(named:"8x.jpg")!, UIImage(named:"11x.jpg")!, UIImage(named:"6x.jpg")! ]
+    
     
     var sorted = false
     var starting = true
     var keySuitCaller = -1
     var flag = Flag.None
+    var playCount = 0
     
     var leftCards = [Card_CPPWrapper]()
     var rightCards = [Card_CPPWrapper]()
@@ -125,9 +125,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     let layoutz: UICollectionViewFlowLayout = CardLayout()
     let layoutw: UICollectionViewFlowLayout = CardLayout()
     
-    var playCount = 0
+    let layout: CircularCollectionViewLayout = CircularCollectionViewLayout()
     
     // only used for server
+    var gameprocedure: GameProcedure_CPPWrapper!
     var lists = [NSMutableArray!](count: 5, repeatedValue: nil)
     var playList = [NSArray!](count:4, repeatedValue: nil)
     var currentPlayer = 0
@@ -140,6 +141,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
     }
     var gameEnd = false;
+    var cancelled = false;
     var skippedNum = 0;
     
    
@@ -171,15 +173,33 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var keyrankLabel: UILabel!
     
     override func viewDidLoad() {
-        layout = CircularCollectionViewLayout()
         
-        if self.appDelegate.mpcManager.connectedSessionCount > 0 {
-            for index in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
-                print("connected peer count")
-                print(self.appDelegate.mpcManager.sessions[index].connectedPeers.count)
-            }
-        }
+        self.appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
+        self.appDelegate.mpcManager.browser.stopBrowsingForPeers()
         
+        myCards.removeAll()
+        leftCards.removeAll()
+        rightCards.removeAll()
+        topCards.removeAll()
+        bottomCards.removeAll()
+        top.reloadData()
+        bottom.reloadData()
+        right.reloadData()
+        left.reloadData()
+        collectionView.reloadData()
+        
+        enableTest = false
+        single = false
+        double = false
+        joker = false
+        keyCardsCount = [NSInteger](count:6, repeatedValue:0)
+        
+        sorted = false
+        starting = true
+        keySuitCaller = -1
+        flag = Flag.None
+        
+        playCount = 0
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -189,18 +209,13 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         collectionView.allowsMultipleSelection = true
         view.sendSubviewToBack(collectionView)
         playButton.enabled = false
+        playButton.setBackgroundImage(imageOff, forState: UIControlState.Normal)
         spadeButton.enabled = false
-        spadeButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         heartButton.enabled = false
-        heartButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         clubButton.enabled = false
-        clubButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         diamondButton.enabled = false
-        diamondButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         jokerButton.enabled = false
-        jokerButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         highjokerButton.enabled = false
-        highjokerButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         
         leftImage.image = nil
         topImage.image = nil
@@ -215,7 +230,8 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         topImage.clipsToBounds = true
         bottomImage.clipsToBounds = true
         scores.text = "0"
-        
+        keyrankLabel.text = ""
+        keysuitImage.image = nil
         nextGameButton.enabled = false
         
         left.registerNib(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifierx)
@@ -239,6 +255,15 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
 
         /************************************* Server Device  *********************************/
         if (self.appDelegate.mpcManager.server) {
+            
+            lists = [NSMutableArray!](count: 5, repeatedValue: nil)
+            playList = [NSArray!](count:4, repeatedValue: nil)
+            currentPlayer = 0
+            playCardCount = 0
+            gameEnd = false;
+            cancelled = false;
+            skippedNum = 0;
+            
             for index in 0...4 {
                 lists[index] = NSMutableArray()
             }
@@ -250,10 +275,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             
             let delaytime = dispatch_time(DISPATCH_TIME_NOW, 3 * Int64(NSEC_PER_SEC))
             dispatch_after(delaytime, dispatch_get_main_queue(), {
-                self.bottomImage.image = self.imageSet[self.playerID]
-                self.rightImage.image = self.imageSet[(self.playerID+1)%4]
-                self.topImage.image = self.imageSet[(self.playerID+2)%4]
-                self.leftImage.image = self.imageSet[(self.playerID+3)%4]
+                self.bottomImage.image = imageSet[self.playerID]
+                self.rightImage.image = imageSet[(self.playerID+1)%4]
+                self.topImage.image = imageSet[(self.playerID+2)%4]
+                self.leftImage.image = imageSet[(self.playerID+3)%4]
                 self.keyrank = GameInfo_CPPWrapper.getKeyRank()
                 self.keysuit = GameInfo_CPPWrapper.getKeySuit()
                 self.lordID = GameInfo_CPPWrapper.getLordID()
@@ -279,45 +304,46 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     func assignCard_to_all(index: Int) {
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC))
         dispatch_after(time, dispatch_get_main_queue(), {
-
-            self.assignCard(index, playerID: 0, listID: 0)
-            
-            if (self.appDelegate.mpcManager.connectedSessionCount > 0) {
-                for playerID in 1...self.appDelegate.mpcManager.connectedSessionCount {
-                    self.assignCard(index, playerID: playerID, listID: playerID)
-                }
-            }
-            
-            if(index < endNum-1) {
-                self.assignCard_to_all(index+1)
-            }
-            else if(index == endNum-1) {
+            if (!self.cancelled) {
+                self.assignCard(index, playerID: 0, listID: 0)
                 
-                self.manager.CardManager_CPPWrapper(self.myCards)
-             
-                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                    self.spadeButton.enabled = false;
-                    self.heartButton.enabled = false;
-                    self.clubButton.enabled = false;
-                    self.diamondButton.enabled = false;
-                    self.jokerButton.enabled = false;
-                    self.highjokerButton.enabled = false;
+                if (self.appDelegate.mpcManager.connectedSessionCount > 0) {
+                    for playerID in 1...self.appDelegate.mpcManager.connectedSessionCount {
+                        self.assignCard(index, playerID: playerID, listID: playerID)
+                    }
+                }
+                
+                if(index < endNum-1) {
+                    self.assignCard_to_all(index+1)
+                }
+                else if(index == endNum-1) {
                     
-                    self.collectionView.allowsSelection = true
-                })
-                
-                self.stopAssigningCards(1)
-                self.stopAssigningCards(2)
-                self.stopAssigningCards(3)
-                
-                self.nextGameButton.enabled = true ///************** remove this line **************//
-                if (self.lordID != -1) {
-                    self.assignInquireSuit(self.lordID)
-                }
-                else {
-                    self.lordID = 0
-                    self.assignInquireSuit(self.lordID)
-                    GameInfo_CPPWrapper.updateLordID(0)
+                    self.manager.CardManager_CPPWrapper(self.myCards)
+                    
+                    NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                        self.spadeButton.enabled = false;
+                        self.heartButton.enabled = false;
+                        self.clubButton.enabled = false;
+                        self.diamondButton.enabled = false;
+                        self.jokerButton.enabled = false;
+                        self.highjokerButton.enabled = false;
+                        
+                        self.collectionView.allowsSelection = true
+                    })
+                    
+                    self.stopAssigningCards(1)
+                    self.stopAssigningCards(2)
+                    self.stopAssigningCards(3)
+                    
+                    self.nextGameButton.enabled = true ///************** remove this line **************//
+                    if (self.lordID != -1) {
+                        self.assignInquireSuit(self.lordID)
+                    }
+                    else {
+                        self.lordID = 0
+                        self.assignInquireSuit(self.lordID)
+                        GameInfo_CPPWrapper.updateLordID(0)
+                    }
                 }
             }
         })
@@ -487,10 +513,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             if message as! String == _player_ID_ {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     self.playerID = dataDictionary["playerID"] as! Int
-                    self.bottomImage.image = self.imageSet[self.playerID]
-                    self.rightImage.image = self.imageSet[(self.playerID+1)%4]
-                    self.topImage.image = self.imageSet[(self.playerID+2)%4]
-                    self.leftImage.image = self.imageSet[(self.playerID+3)%4]
+                    self.bottomImage.image = imageSet[self.playerID]
+                    self.rightImage.image = imageSet[(self.playerID+1)%4]
+                    self.topImage.image = imageSet[(self.playerID+2)%4]
+                    self.leftImage.image = imageSet[(self.playerID+3)%4]
                     self.spadeButton.enabled = false;
                     self.heartButton.enabled = false;
                     self.clubButton.enabled = false;
@@ -644,7 +670,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             if message as! String == _new_game_ {
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     NSNotificationCenter.defaultCenter().removeObserver(self)
-                    self.performSegueWithIdentifier("nextGame", sender: self)
+                    self.viewDidLoad()
                 })
             }
         }
@@ -1316,8 +1342,8 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     @IBAction func nextGame(sender: AnyObject) {
         self.serverNewGameNotification()
-        
         NSNotificationCenter.defaultCenter().removeObserver(self)
+        self.viewDidLoad()
     }
     
     @IBAction func spadesButton(sender: AnyObject) {
@@ -1403,8 +1429,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     //*************************************************************************************************//
     
     @IBAction func endGame(sender: AnyObject) {
+        self.cancelled = true
         NSNotificationCenter.defaultCenter().removeObserver(self)
         NSOperationQueue.mainQueue().cancelAllOperations()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }
 

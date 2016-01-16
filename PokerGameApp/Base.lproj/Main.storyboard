@@ -781,7 +781,6 @@
                                 <state key="normal" image="ArrowFireButtonInverse"/>
                                 <connections>
                                     <action selector="endGame:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="g5u-3M-rEn"/>
-                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="endGame" modalTransitionStyle="flipHorizontal" id="lqw-Sr-h4z"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="11.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="4Wr-D8-dlp">
@@ -798,7 +797,6 @@
                                 <state key="normal" image="ArrowFireButton"/>
                                 <connections>
                                     <action selector="nextGame:" destination="ZeC-zs-8nE" eventType="touchUpInside" id="6qt-ij-DJW"/>
-                                    <segue destination="ZeC-zs-8nE" kind="presentation" identifier="nextGame" modalTransitionStyle="flipHorizontal" id="lhi-jW-Opd"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BJE-EB-gZM">

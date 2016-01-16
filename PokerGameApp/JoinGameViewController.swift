@@ -20,6 +20,12 @@ class JoinGameViewController: UIViewController, MPCManagerDelegate2 {
         super.didReceiveMemoryWarning()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.appDelegate.mpcManager.advertiser.startAdvertisingPeer()
+        self.appDelegate.mpcManager.browser.stopBrowsingForPeers()
+    }
+    
     func invitationWasReceived(fromPeer: String) {
         let alert = UIAlertController(title: "", message: "\(fromPeer) wants to chat with you.", preferredStyle: UIAlertControllerStyle.Alert)
         

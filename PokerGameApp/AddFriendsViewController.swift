@@ -37,11 +37,32 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         self.friendsTable.addSubview(refreshControl)
+        
         self.appDelegate.mpcManager.server = true
+        self.appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
+        self.appDelegate.mpcManager.browser.startBrowsingForPeers()
+        self.appDelegate.mpcManager.connectedSessionCount = 0
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if self.appDelegate.mpcManager.connectedSessionCount > 0 {
+            for index in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
+                self.appDelegate.mpcManager.sessions[index].disconnect()
+            }
+        }
+        
+        addFriendsButton.enabled = true
+        startGameButton.enabled = true
+        self.appDelegate.mpcManager.server = true
+        self.appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
+        self.appDelegate.mpcManager.browser.startBrowsingForPeers()
+        self.appDelegate.mpcManager.connectedSessionCount = 0
     }
     
     // MARK: UITableView related method implementation

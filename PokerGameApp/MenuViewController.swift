@@ -19,17 +19,9 @@ class MenuViewController: UIViewController {
         
         super.viewDidLoad()
 
-        
-        if self.appDelegate.mpcManager.connectedSessionCount > 0 {
-            for index in 0...self.appDelegate.mpcManager.connectedSessionCount-1 {
-                self.appDelegate.mpcManager.sessions[index].disconnect()
-            }
-        }
-        
-        self.appDelegate.mpcManager = MPCManager()
         self.appDelegate.mpcManager.server = false
         self.appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
-        self.appDelegate.mpcManager.browser.startBrowsingForPeers()
+        self.appDelegate.mpcManager.browser.stopBrowsingForPeers()
         self.appDelegate.mpcManager.connectedSessionCount = 0
         GameInfo_CPPWrapper.reset()
 
