@@ -45,4 +45,8 @@ class JoinGameViewController: UIViewController, MPCManagerDelegate2 {
         }
     }
 
+
+    @IBAction func backButtonTapped(sender: UIButton) {
+         self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

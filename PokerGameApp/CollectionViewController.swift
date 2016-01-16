@@ -1349,6 +1349,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     func collectionView(collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
+            
             if collectionView == self.collectionView { return myCards.count }
             else if collectionView == self.left {return leftCards.count}
             else if collectionView == self.right {return rightCards.count}

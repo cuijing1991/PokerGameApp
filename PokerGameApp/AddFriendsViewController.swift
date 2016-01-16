@@ -147,4 +147,7 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
         }
         self.addFriendsButton.enabled = false
     }
+    @IBAction func backButtonTapped(sender: UIButton) {
+         self.dismissViewControllerAnimated(true, completion: nil)
+    }
  }

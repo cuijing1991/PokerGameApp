@@ -69,4 +69,8 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         print(sender.on)
         GameInfo_CPPWrapper.updateChangeTableCards(sender.on)
     }
+    @IBAction func backButtonTapped(sender: AnyObject) {
+    
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

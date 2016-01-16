@@ -57,7 +57,7 @@
                                             <color key="titleShadowColor" red="0.46639230850000002" green="0.21065489949999999" blue="0.11332836" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xw1-ew-Y7X"/>
+                                            <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iVf-eH-o7O"/>
                                             <segue destination="daO-Hd-1ug" kind="presentation" modalTransitionStyle="flipHorizontal" id="kpH-Gc-dlf"/>
                                         </connections>
                                     </button>
@@ -84,7 +84,7 @@
                                             <color key="titleShadowColor" red="0.46639230850000002" green="0.21065489949999999" blue="0.11332836" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ogz-Y1-Bqu"/>
+                                            <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Yxw-AZ-u10"/>
                                             <segue destination="E7g-IV-pVd" kind="presentation" modalTransitionStyle="flipHorizontal" id="2lw-eF-HDJ"/>
                                         </connections>
                                     </button>
@@ -160,10 +160,14 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="joinGameButton" destination="X01-jL-MHB" id="4ww-KF-QTa"/>
+                        <outlet property="newGameButton" destination="UKH-bh-ccs" id="Ig7-0i-zzy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="253.5" y="253.5"/>
+            <point key="canvasLocation" x="115.5" y="245.5"/>
         </scene>
         <!--Join Game View Controller-->
         <scene sceneID="9S4-kT-PIg">
@@ -185,7 +189,7 @@
                                 </constraints>
                                 <state key="normal" image="ArrowFireButtonInverse"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="presentation" modalTransitionStyle="flipHorizontal" id="EpP-Yt-w3i"/>
+                                    <action selector="backButtonTapped:" destination="daO-Hd-1ug" eventType="touchUpInside" id="UoE-DV-PMK"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -207,7 +211,7 @@
         <!--Settings View Controller-->
         <scene sceneID="knw-Zr-1x6">
             <objects>
-                <viewController id="E7g-IV-pVd" customClass="SettingsViewController" customModule="PokerGameApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="settings" id="E7g-IV-pVd" customClass="SettingsViewController" customModule="PokerGameApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="a0q-kt-xZY"/>
                         <viewControllerLayoutGuide type="bottom" id="TrF-lE-XIQ"/>
@@ -297,7 +301,7 @@
                                         </constraints>
                                         <state key="normal" image="ArrowFireButtonInverse"/>
                                         <connections>
-                                            <segue destination="BYZ-38-t0r" kind="presentation" modalTransitionStyle="flipHorizontal" id="Osy-BW-cfB"/>
+                                            <action selector="backButtonTapped:" destination="E7g-IV-pVd" eventType="touchUpInside" id="3If-7W-5cL"/>
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="抄底" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SIx-aQ-ApK">
@@ -480,7 +484,7 @@
                                         </constraints>
                                         <state key="normal" image="ArrowFireButtonInverse"/>
                                         <connections>
-                                            <segue destination="E7g-IV-pVd" kind="presentation" modalTransitionStyle="flipHorizontal" id="Oii-oW-Qoz"/>
+                                            <action selector="backButtonTapped:" destination="F94-kI-BKT" eventType="touchUpInside" id="RNX-f8-Uj7"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -938,23 +942,21 @@
         <image name="8.jpg" width="200" height="200"/>
         <image name="ArrowFireButton" width="216" height="124"/>
         <image name="ArrowFireButtonInverse" width="216" height="124"/>
-        <image name="Button_Off" width="391" height="390"/>
-        <image name="Button_On" width="391" height="390"/>
-        <image name="Clubs" width="847" height="852"/>
-        <image name="Diamonds" width="781" height="781"/>
-        <image name="Hearts" width="855" height="855"/>
-        <image name="Spades" width="852" height="851"/>
+        <image name="Button_Off" width="100" height="100"/>
+        <image name="Button_On" width="100" height="100"/>
+        <image name="Clubs" width="400" height="402"/>
+        <image name="Diamonds" width="400" height="400"/>
+        <image name="Hearts" width="400" height="400"/>
+        <image name="Spades" width="400" height="400"/>
         <image name="clubsButton2.png" width="177" height="177"/>
         <image name="diamondsButton.png" width="167" height="167"/>
         <image name="fire1" width="147" height="201"/>
         <image name="heartsButton.png" width="160" height="160"/>
         <image name="jokerButton" width="400" height="400"/>
-        <image name="poker-fire" width="1200" height="1200"/>
+        <image name="poker-fire" width="400" height="400"/>
         <image name="spadesButton2.png" width="164" height="164"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Osy-BW-cfB"/>
-        <segue reference="Oii-oW-Qoz"/>
-        <segue reference="B25-kx-EnI"/>
+        <segue reference="TGj-L5-TYC"/>
     </inferredMetricsTieBreakers>
 </document>
