@@ -23,7 +23,7 @@
 - (NSInteger)  isUniform: (NSArray<Card_CPPWrapper*>*) cards;
 - (NSInteger) structureSize: (NSArray<Card_CPPWrapper*>*) cards;
 - (NSInteger) getMultiplier: (NSArray<Card_CPPWrapper*>*) cards;
-
+- (void) dealloc;
 @end
 
 

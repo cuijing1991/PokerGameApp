@@ -42,6 +42,14 @@ Card::Card(Suits suit, Ranks rank) {
     }
 }
 
+Card::Card(const Card& card) {
+    m_suit = card.m_suit;
+    m_rank = card.m_rank;
+    m_rank_int = card.m_rank_int;
+    m_suit_int = card.m_suit_int;
+    value = card.value;
+}
+
 const string Card::toString() const {
     return rankNames[m_rank] + "_of_" + suitNames[m_suit];
 }

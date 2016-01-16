@@ -19,6 +19,7 @@ class Card {
 public:
     Card(int suit, int rank);
     Card(Suits suit, Ranks rank);
+    Card(const Card& card);
     const string toString() const;
     bool operator==(const Card& rhs) const;
     int getSuit() const {return m_suit_int;};

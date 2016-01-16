@@ -53,17 +53,8 @@ void GameProcedure::ShuffleCards(list<Card> &pc1, list<Card> &pc2, list<Card> &p
     lists[2] = pc3;
     lists[3] = pc4;
     
-//    manager[0] = CardManager(pc1);
-//    manager[1] = CardManager(pc2);
-//    manager[2] = CardManager(pc3);
-//    manager[3] = CardManager(pc4);
-    
     scores = 0;
 }
-
-//void GameProcedure::appendTableCards(list<Card> &cards, int ID) {
-//    manager[ID].append(cards);
-//}
 
 void GameProcedure::appendTableCards(list<Card> &cards, int ID) {
     std::cout << "Original Cards, count = " << cards.size() << std::endl;
@@ -98,6 +89,7 @@ void GameProcedure::constructManager() {
 }
 
 int GameProcedure::Winner (int ID, const list<Card> &pc1, const list<Card> &pc2, const list<Card> &pc3, const list<Card> &pc4) {
+    std::cout << "run gameprocedure winner" << endl;
     int suit1, suit2, suit3, suit4;
     int order1 = -1, order2 = -1, order3 = -1, order4 = -1;
     int suit_max;
@@ -203,6 +195,7 @@ int GameProcedure::Winner (int ID, const list<Card> &pc1, const list<Card> &pc2,
         for (Card c : pc4) { scores += c.value; }
         
     }
+    std::cout << "end of gameprocedure winner" << endl;
     return winnerIndex;
 }
 
@@ -254,7 +247,7 @@ int GameProcedure::testStarter (const list<CardUnit> cu, const list<Card> cards)
 }
 
 bool GameProcedure::remove(const list<Card> removeList, int n) {
-    
+    std::cout << "run gameprocedure remove" << endl;
     for (Card c: removeList) {
         if(!manager[n].remove(c)) return false;
     }
@@ -262,7 +255,7 @@ bool GameProcedure::remove(const list<Card> removeList, int n) {
 }
 
 void GameProcedure::nextLordandRank(int scores) {
-    if (scores > 80 ) {
+    if (scores >= 80 ) {
         GameInfo::even_odd_Rank[GameInfo::lordID % 2] = static_cast<int>(GameInfo::keyRank);
         switch(GameInfo::keyRank) {
             case 2: GameInfo::done2[GameInfo::lordID % 2] = true; break;

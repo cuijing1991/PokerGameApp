@@ -164,7 +164,7 @@ list<CardUnit> CardManager::getStructure(const list<Card> &cards) {
             if ((cards.begin())->isKey()) {
                 if (GameInfo::keySuit != Joker && (order==13 || order==14))
                     cu_list.push_back(CardUnit(*iterator, 12));
-                else if (GameInfo::keySuit == Joker && (order==1 || order==2))
+                else if (GameInfo::keySuit == Joker && (order==1 || order==2 || order==3))
                     cu_list.push_back(CardUnit(*iterator, 0));
                 else
                     cu_list.push_back(CardUnit(*iterator, order));

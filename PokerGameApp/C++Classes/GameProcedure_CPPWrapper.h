@@ -27,5 +27,6 @@
 - (void) appendTableCards:(NSMutableArray*)cards playerID:(NSInteger)ID;
 - (void) removeTableCards:(NSArray<Card_CPPWrapper*>*)cards playerID:(NSInteger)ID;
 - (void) constructManager;
+- (void) dealloc;
 @end
 #endif /* GameProcedure_CPPWrapper_h */

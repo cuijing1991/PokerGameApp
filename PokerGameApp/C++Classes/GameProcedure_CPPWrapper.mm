@@ -135,5 +135,13 @@
 - (void) constructManager {
     self.gameProcedure->constructManager();
 }
+- (void) dealloc {
+    delete self.gameProcedure;
+    delete self.list1;
+    delete self.list2;
+    delete self.list3;
+    delete self.list4;
+    delete self.tb;
+}
 @end
 

@@ -439,6 +439,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             }
             // Check if there's an entry with the "_play_cards_" key.
             if message as! String == _play_cards_ {
+
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     print("server: receive _play_cards_")
                     let flag = dataDictionary["flag"] as! Bool
@@ -711,7 +712,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     @IBAction func playCards(sender: AnyObject) {
-        
+        print(self.flag)
         if(self.flag == Flag.PlayCards) {
             var selectedCards = [Card_CPPWrapper]()
             for i in 0...myCards.count-1 {
@@ -852,6 +853,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func skip() {
+        self.flag = Flag.None
+        self.updateButton()
+        self.spadeButton.enabled = false
+        self.heartButton.enabled = false
+        self.clubButton.enabled = false
+        self.diamondButton.enabled = false
+        self.jokerButton.enabled = false
+        self.highjokerButton.enabled = false
         if (playerID == 0) {
             if (self.changeTableCards) {
                 if (!self.starting) {
@@ -886,14 +895,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
             self.sendMessagetoServer(messageData)
         }
-        self.flag = Flag.None
-        self.updateButton()
-        self.spadeButton.enabled = false
-        self.heartButton.enabled = false
-        self.clubButton.enabled = false
-        self.diamondButton.enabled = false
-        self.jokerButton.enabled = false
-        self.highjokerButton.enabled = false
     }
     
     func assignInquireSuit(playerID: Int) {
@@ -972,6 +973,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     
     func serverUpdateScores(scores: Int) {
+        print("run server updatescores")
         self.scores.text = String(scores)
         let message = _update_scores_
         let messageDictionary: [String: AnyObject] = ["message": message, "scores": scores]
@@ -994,14 +996,15 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     func updateTable(label: Int, cards: [Card_CPPWrapper]) {
         
         if (self.playCount % 4 == 0) {
-            bottomCards.removeAll()
-            rightCards.removeAll()
-            topCards.removeAll()
-            leftCards.removeAll()
-            bottom.reloadData()
-            right.reloadData()
-            top.reloadData()
-            left.reloadData()
+            self.bottomCards.removeAll()
+            self.rightCards.removeAll()
+            self.topCards.removeAll()
+            self.leftCards.removeAll()            
+            
+            self.bottom.reloadData()
+            self.right.reloadData()
+            self.top.reloadData()
+            self.left.reloadData()
         }
         
         switch(label) {
@@ -1186,7 +1189,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         else {
             let winner = self.gameprocedure.Winner((self.currentPlayer + 1) % 4, player0: self.playList[0] as! [Card_CPPWrapper], player1:self.playList[1] as! [Card_CPPWrapper], player2: self.playList[2] as! [Card_CPPWrapper], player3: self.playList[3] as! [Card_CPPWrapper])
-
+            print("winner = ")
+            print(winner)
+            
             self.serverUpdateScores(self.gameprocedure.getScores())
             self.currentPlayer = (self.currentPlayer + 1 + winner) % 4
             if (!self.gameEnd) {

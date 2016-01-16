@@ -104,5 +104,9 @@
     }
     return self.manager->getStructure(cards_cpp).begin()->m_type;
 }
+- (void) dealloc {
+    delete self.manager;
+}
+
 @end
 

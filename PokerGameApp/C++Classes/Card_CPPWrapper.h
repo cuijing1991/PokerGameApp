@@ -15,11 +15,11 @@
 @interface Card_CPPWrapper : NSObject <NSCoding>
 @property NSInteger suit;
 @property NSInteger rank;
-- (instancetype)Card_CPPWrapper:(NSInteger)suit rank:(NSInteger)rank;
-- (NSString*)toString;
-- (bool)compare:(Card_CPPWrapper*)card1 to:(Card_CPPWrapper*)card2 suit:(NSInteger)suit rank:(NSInteger)rank;
+- (instancetype) Card_CPPWrapper:(NSInteger)suit rank:(NSInteger)rank;
+- (NSString*) toString;
+- (bool) compare:(Card_CPPWrapper*)card1 to:(Card_CPPWrapper*)card2 suit:(NSInteger)suit rank:(NSInteger)rank;
 - (NSInteger) value;
-
+- (void) dealloc;
 @end
 
 #endif /* Gard_CPPWrapper_h */
