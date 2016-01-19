@@ -542,8 +542,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 let buttonID = dataDictionary["buttonID"] as! Int
                 let state = dataDictionary["state"] as! Int
                 let fromplayer = dataDictionary["fromplayer"] as! Int
+                let inquireSuit = dataDictionary["inquireSuit"] as! Bool
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                    self.changeKeysuit(buttonID, state: state, fromplayer: fromplayer)
+                    self.changeKeysuit(buttonID, state: state, fromplayer: fromplayer, update: !inquireSuit)
                 })
             }
             // Check if there's an entry with the "_change_keysuit_request_" key.
@@ -554,7 +555,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 let inquireSuit = dataDictionary["inquireSuit"] as! Bool
                 if ((state == 1 && !single) || state == 2) {
                     NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                        self.serverChangeKeysuitBroadcast(buttonID, state: state, fromplayer: fromplayer)
+                        self.serverChangeKeysuitBroadcast(buttonID, state: state, fromplayer: fromplayer, inquireSuit: inquireSuit)
                         print("fromplayer : ")
                         print(fromplayer)
                         print(buttonID)
@@ -1056,12 +1057,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         
     }
     
-    func serverChangeKeysuitBroadcast(buttonID: Int, state: Int, fromplayer: Int) {
+    func serverChangeKeysuitBroadcast(buttonID: Int, state: Int, fromplayer: Int, inquireSuit: Bool) {
 
         let message = _change_keysuit_
-        let messageDictionary: [String: AnyObject] = ["message": message, "buttonID": buttonID, "state": state, "fromplayer": fromplayer]
+        let messageDictionary: [String: AnyObject] = ["message": message, "buttonID": buttonID, "state": state, "fromplayer": fromplayer, "inquireSuit": inquireSuit]
         let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
-        self.changeKeysuit(buttonID, state:state, fromplayer: fromplayer)
+        
+        self.changeKeysuit(buttonID, state:state, fromplayer: fromplayer, update: !inquireSuit)
+        
         self.sendMessagetoAll(messageData)
     }
     
@@ -1106,7 +1109,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         }
     }
     
-    func changeKeysuit(buttonID: Int, state: Int, fromplayer: Int) {
+    func changeKeysuit(buttonID: Int, state: Int, fromplayer: Int, update: Bool) {
         if (self.lordID == -1) {
             self.lordID = fromplayer
             if(self.appDelegate.mpcManager.server) {
@@ -1144,6 +1147,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         
         var showCards = [Card_CPPWrapper]()
         
+        
         for _ in 1...state {
             switch(buttonID) {
             case 0 :
@@ -1173,6 +1177,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 break
             }
         }
+        
         switch((fromplayer - self.playerID + 4) % 4) {
         case 0:
             bottomCards = showCards
@@ -1201,7 +1206,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         if (state == 1){ single = true }
         if (state == 2){ double = true}
         self.manager.CardManager_CPPWrapper(self.myCards)
-        updateSuitButton()
+        if (update) {
+            updateSuitButton()
+        }
     }
     
     func serverNext() {
@@ -1238,7 +1245,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         if (single || buttonID > 3) { state = 2 }
         else { state = 1 }
         if(self.appDelegate.mpcManager.server) {
-            self.serverChangeKeysuitBroadcast(buttonID, state: state, fromplayer: 0)
+            self.serverChangeKeysuitBroadcast(buttonID, state: state, fromplayer: 0, inquireSuit: self.flag == Flag.InquireSuit)
             if(self.flag == Flag.InquireSuit && self.changeTableCards) {
                 self.starting = false;
                 self.skippedNum = 0;

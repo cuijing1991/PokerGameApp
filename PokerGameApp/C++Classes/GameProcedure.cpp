@@ -102,18 +102,39 @@ int GameProcedure::Winner (int ID, const list<Card> &pc1, const list<Card> &pc2,
     suit4 = CardManager::isUniform(pc4);
     if (suit1 == -1) cout << "Error -- GameProceduce: Winner()" << endl;
     
-    vector<bool> test_result2 = CardManager::anaylsisStructure(CardManager::getStructure(pc1), CardManager::getStructure(pc2));
-    vector<bool> test_result3 = CardManager::anaylsisStructure(CardManager::getStructure(pc1), CardManager::getStructure(pc3));
-    vector<bool> test_result4 = CardManager::anaylsisStructure(CardManager::getStructure(pc1), CardManager::getStructure(pc4));
-    for (bool b : test_result2) {
-        if (!b) {suit2 = -1; break;}
+//    vector<bool> test_result2 = CardManager::anaylsisStructure(CardManager::getStructure(pc1), CardManager::getStructure(pc2));
+//    vector<bool> test_result3 = CardManager::anaylsisStructure(CardManager::getStructure(pc1), CardManager::getStructure(pc3));
+//    vector<bool> test_result4 = CardManager::anaylsisStructure(CardManager::getStructure(pc1), CardManager::getStructure(pc4));
+//    for (bool b : test_result2) {
+//        if (!b) {suit2 = -1; break;}
+//    }
+//    for (bool b : test_result3) {
+//        if (!b) {suit3 = -1; break;}
+//    }
+//    for (bool b : test_result4) {
+//        if (!b) {suit4 = -1; break;}
+//    }
+    
+    if (suit2 != -1) {
+        vector<bool> test_result2 = CardManager::anaylsisStructure(CardManager::getStructure(pc1), CardManager::getStructure(pc2));
+        for (bool b : test_result2) {
+            if (!b) {suit2 = -1; break;}
+        }
     }
-    for (bool b : test_result3) {
-        if (!b) {suit3 = -1; break;}
+    if (suit3 != -1) {
+        vector<bool> test_result3 = CardManager::anaylsisStructure(CardManager::getStructure(pc1), CardManager::getStructure(pc3));
+        for (bool b : test_result3) {
+            if (!b) {suit3 = -1; break;}
+        }
     }
-    for (bool b : test_result4) {
-        if (!b) {suit4 = -1; break;}
+    if (suit4 != -1) {
+        vector<bool> test_result4 = CardManager::anaylsisStructure(CardManager::getStructure(pc1), CardManager::getStructure(pc4));
+        for (bool b : test_result4) {
+            if (!b) {suit4 = -1; break;}
+        }
     }
+    
+    
     list<CardUnit> cu1 = CardManager::getStructure(pc1);
     list<CardUnit> cu2 = CardManager::getStructure(pc2);
     list<CardUnit> cu3 = CardManager::getStructure(pc3);
