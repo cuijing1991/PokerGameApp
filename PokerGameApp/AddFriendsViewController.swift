@@ -26,8 +26,8 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
         friendsTable.delegate = self
         friendsTable.dataSource = self
         
-        addFriendsButton.enabled = true
-        startGameButton.enabled = true
+        addFriendsButton.enabled = false
+        startGameButton.enabled = false
         appDelegate.mpcManager.delegate1 = self
         appDelegate.mpcManager.browser.startBrowsingForPeers()
         appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
@@ -57,8 +57,8 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
             }
         }
         
-        addFriendsButton.enabled = true
-        startGameButton.enabled = true
+        addFriendsButton.enabled = false
+        startGameButton.enabled = false
         self.appDelegate.mpcManager.server = true
         self.appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
         self.appDelegate.mpcManager.browser.startBrowsingForPeers()
@@ -112,13 +112,13 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
             cell.accessoryType = .Checkmark
             cell.cellselected = true
         }
-        //self.updateAddFriendsButtonState()
+        self.updateAddFriendsButtonState()
     }
     
     
     func reload() {
         friendsTable.reloadData()
-        //self.updateAddFriendsButtonState()
+        self.updateAddFriendsButtonState()
     }
     
     func updateAddFriendsButtonState() {

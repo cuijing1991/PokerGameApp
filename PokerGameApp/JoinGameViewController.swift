@@ -27,7 +27,7 @@ class JoinGameViewController: UIViewController, MPCManagerDelegate2 {
     }
     
     func invitationWasReceived(fromPeer: String) {
-        let alert = UIAlertController(title: "", message: "\(fromPeer) wants to chat with you.", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "", message: "\(fromPeer) invites you to game.", preferredStyle: UIAlertControllerStyle.Alert)
         
         let acceptAction: UIAlertAction = UIAlertAction(title: "Accept", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
             NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in

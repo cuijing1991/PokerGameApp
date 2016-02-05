@@ -167,7 +167,7 @@ int GameProcedure::Winner (int ID, const list<Card> &pc1, const list<Card> &pc2,
             suit_max = suit2;
             order_max = order2;
             index_max = 2;
-        }
+        }	
     }
     else {
         if ( suit2 == static_cast<int>(GameInfo::keySuit) && order2 > order_max) {

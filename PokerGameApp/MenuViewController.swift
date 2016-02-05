@@ -36,6 +36,12 @@ class MenuViewController: UIViewController {
         super.viewWillAppear(animated)
         newGameButton.selected = false
         joinGameButton.selected = false
+        
+        self.appDelegate.mpcManager.server = false
+        self.appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
+        self.appDelegate.mpcManager.browser.stopBrowsingForPeers()
+        self.appDelegate.mpcManager.connectedSessionCount = 0
+        GameInfo_CPPWrapper.reset()
     }
     
 

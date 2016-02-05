@@ -14,14 +14,39 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="IconRound" translatesAutoresizingMaskIntoConstraints="NO" id="byZ-Le-fLW">
+                                <rect key="frame" x="246" y="56" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="D9q-jZ-vGQ"/>
+                                    <constraint firstAttribute="height" constant="150" id="Ej4-wg-UJi"/>
+                                </constraints>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="JingPlusPlus" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="i7w-2D-n0d">
+                                <rect key="frame" x="259" y="321" width="142" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="i7w-2D-n0d" secondAttribute="bottom" constant="24" id="Kff-Ge-HGK"/>
+                            <constraint firstItem="byZ-Le-fLW" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="MJO-ds-DNq"/>
+                            <constraint firstItem="i7w-2D-n0d" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="jbn-pL-Vnd"/>
+                            <constraint firstItem="byZ-Le-fLW" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="lI8-gp-VXW"/>
+                        </constraints>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="236" y="362"/>
+            <point key="canvasLocation" x="235.5" y="361.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="IconRound" width="1280" height="1280"/>
+    </resources>
 </document>

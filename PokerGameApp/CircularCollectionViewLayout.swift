@@ -52,7 +52,7 @@ class CircularCollectionViewLayout: UICollectionViewLayout {
   
     var radius: CGFloat = UIScreen.mainScreen().bounds.width
   
-    var anglePerItem: CGFloat = scale * 233 / 3000  / 2.5 / scale
+    var anglePerItem: CGFloat = scale * 233 / 3000  / 2.1 / scale
     var attributesList = [CircularCollectionViewLayoutAttributes]()
 
   

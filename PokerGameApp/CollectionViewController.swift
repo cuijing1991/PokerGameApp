@@ -1209,6 +1209,11 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         if (update) {
             updateSuitButton()
         }
+        else {
+            if(self.keySuitCaller == self.playerID) {
+                updateSuitButton()
+            }
+        }
     }
     
     func serverNext() {
