@@ -23,8 +23,8 @@ class MenuViewController: UIViewController {
         self.appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
         self.appDelegate.mpcManager.browser.stopBrowsingForPeers()
         self.appDelegate.mpcManager.connectedSessionCount = 0
+        self.appDelegate.mpcManager.foundPeers.removeAll()
         GameInfo_CPPWrapper.reset()
-
 
         newGameButton.setTitleColor(UIColor(colorLiteralRed: 0.9, green: 0.5, blue: 0.5, alpha: 1), forState: UIControlState.Selected)
         newGameButton.setTitleColor(UIColor.lightGrayColor(), forState: UIControlState.Normal)
@@ -41,6 +41,7 @@ class MenuViewController: UIViewController {
         self.appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
         self.appDelegate.mpcManager.browser.stopBrowsingForPeers()
         self.appDelegate.mpcManager.connectedSessionCount = 0
+        self.appDelegate.mpcManager.foundPeers.removeAll()
         GameInfo_CPPWrapper.reset()
     }
     

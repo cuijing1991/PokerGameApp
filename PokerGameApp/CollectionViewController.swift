@@ -302,7 +302,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func assignCard_to_all(index: Int) {
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC))
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
         dispatch_after(time, dispatch_get_main_queue(), {
             if (!self.cancelled) {
                 self.assignCard(index, playerID: 0, listID: 0)
@@ -445,6 +445,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                     self.playButton.enabled = false
                     self.flag = Flag.PlayCards
                     self.enableTest = dataDictionary["flag"] as! Bool
+                    self.updateButton()
                 })
             }
             // Check if there's an entry with the "_broadcast_" key.
@@ -1072,28 +1073,28 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     func updateSuitButton() {
         
         if((keyCardsCount[0]==1 && !single && !joker) || (keyCardsCount[0]==2 && (!double || self.keysuit < 0) && (self.keySuitCaller != self.playerID || keysuit == 0))) {
-            spadeButton.enabled = true
+            diamondButton.enabled = true
         }
         else {
-            spadeButton.enabled = false
+            diamondButton.enabled = false
         }
         if((keyCardsCount[1]==1 && !single && !joker) || (keyCardsCount[1]==2 && (!double || keysuit < 1) && (keySuitCaller != self.playerID || keysuit == 1))) {
-            heartButton.enabled = true
-        }
-        else {
-            heartButton.enabled = false
-        }
-        if((keyCardsCount[2]==1 && !single && !joker) || (keyCardsCount[2]==2 && (!double || keysuit < 2) && (keySuitCaller != self.playerID || keysuit == 2))) {
             clubButton.enabled = true
         }
         else {
             clubButton.enabled = false
         }
-        if((keyCardsCount[3]==1 && !single && !joker) || (keyCardsCount[3]==2 && (!double || keysuit < 3) && (keySuitCaller != self.playerID || keysuit == 3))) {
-            diamondButton.enabled = true
+        if((keyCardsCount[2]==1 && !single && !joker) || (keyCardsCount[2]==2 && (!double || keysuit < 2) && (keySuitCaller != self.playerID || keysuit == 2))) {
+            heartButton.enabled = true
         }
         else {
-            diamondButton.enabled = false
+            heartButton.enabled = false
+        }
+        if((keyCardsCount[3]==1 && !single && !joker) || (keyCardsCount[3]==2 && (!double || keysuit < 3) && (keySuitCaller != self.playerID || keysuit == 3))) {
+            spadeButton.enabled = true
+        }
+        else {
+            spadeButton.enabled = false
         }
         if(keyCardsCount[4]==2 && !joker && keySuitCaller != self.playerID ) {
             jokerButton.enabled = true
@@ -1133,13 +1134,13 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         self.rightCards.removeAll()
         
         let spadeCards = Card_CPPWrapper()
-        spadeCards.Card_CPPWrapper(0, rank: self.keyrank)
+        spadeCards.Card_CPPWrapper(3, rank: self.keyrank)
         let heartCards = Card_CPPWrapper()
-        heartCards.Card_CPPWrapper(1, rank: self.keyrank)
+        heartCards.Card_CPPWrapper(2, rank: self.keyrank)
         let clubCards = Card_CPPWrapper()
-        clubCards.Card_CPPWrapper(2, rank: self.keyrank)
+        clubCards.Card_CPPWrapper(1, rank: self.keyrank)
         let diamondCards = Card_CPPWrapper()
-        diamondCards.Card_CPPWrapper(3, rank: self.keyrank)
+        diamondCards.Card_CPPWrapper(0, rank: self.keyrank)
         let jokerCards = Card_CPPWrapper()
         jokerCards.Card_CPPWrapper(4, rank: 0)
         let highjokerCards = Card_CPPWrapper()
@@ -1150,19 +1151,19 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         
         for _ in 1...state {
             switch(buttonID) {
-            case 0 :
+            case 3 :
                 showCards.append(spadeCards)
                 self.keysuitImage.image = UIImage(named: "spadesButton2")
                 break
-            case 1 :
+            case 2 :
                 showCards.append(heartCards)
                 self.keysuitImage.image = UIImage(named: "heartsButton")
                 break
-            case 2 :
+            case 1 :
                 showCards.append(clubCards)
                 self.keysuitImage.image = UIImage(named: "clubsButton2")
                 break
-            case 3 :
+            case 0 :
                 showCards.append(diamondCards)
                 self.keysuitImage.image = UIImage(named: "diamondsButton")
                 break
@@ -1359,19 +1360,19 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     @IBAction func spadesButton(sender: AnyObject) {
-        self.changeKeysuitRequest(0)
+        self.changeKeysuitRequest(3)
     }
     
     @IBAction func heartsButton(sender: AnyObject) {
-        self.changeKeysuitRequest(1)
-    }
-    
-    @IBAction func clubsButton(sender: AnyObject) {
         self.changeKeysuitRequest(2)
     }
     
+    @IBAction func clubsButton(sender: AnyObject) {
+        self.changeKeysuitRequest(1)
+    }
+    
     @IBAction func diamondsButton(sender: AnyObject) {
-        self.changeKeysuitRequest(3)
+        self.changeKeysuitRequest(0)
     }
     
     @IBAction func jokersButton(sender: AnyObject) {

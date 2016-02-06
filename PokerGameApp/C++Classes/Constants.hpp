@@ -14,7 +14,7 @@
 using std::string;
 
 enum Ranks { Low = 0, High = 1, Two = 2, Three = 3, Four = 4, Five = 5, Six = 6, Seven = 7, Eight = 8, Nine = 9, Ten = 10, Jack = 11, Queen = 12, King = 13, Ace = 14 };
-enum Suits { Spade = 0, Heart = 1, Club = 2, Diamond = 3, Joker = 4 };
+enum Suits { Spade = 3, Heart = 2, Club = 1, Diamond = 0, Joker = 4 };
 extern const string suitNames[];
 extern const string rankNames[];
 
