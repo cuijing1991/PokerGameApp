@@ -3,6 +3,7 @@ CFLAGS = -Wall -g
 INCLUDES = -I../C++Classes
 SRCS = test_driver.cpp \
 			 compare_function_test.cpp \
+	     isUniform_function_test.cpp \
 			 ../C++Classes/GameProcedure.cpp \
 			 ../C++Classes/Card.cpp \
 			 ../C++Classes/CardUnit.cpp \

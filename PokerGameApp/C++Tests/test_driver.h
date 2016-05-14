@@ -5,3 +5,4 @@
 
 
 int compare_function_test();
+int isUniform_function_test();
