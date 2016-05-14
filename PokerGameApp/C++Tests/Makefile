@@ -1,7 +1,8 @@
 CC = g++ -std=c++11
 CFLAGS = -Wall -g
 INCLUDES = -I../C++Classes
-SRCS = compare_function_test.cpp \
+SRCS = test_driver.cpp \
+			 compare_function_test.cpp \
 			 ../C++Classes/GameProcedure.cpp \
 			 ../C++Classes/Card.cpp \
 			 ../C++Classes/CardUnit.cpp \
@@ -10,7 +11,7 @@ SRCS = compare_function_test.cpp \
        ../C++Classes/GameInfo.cpp \
 
 OBJS = $(SRCS:.c=.o)
-MAIN = compare_function_test
+MAIN = test_driver
 
 all: $(MAIN)
 	@echo Compiled
