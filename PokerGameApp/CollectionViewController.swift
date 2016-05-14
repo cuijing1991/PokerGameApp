@@ -292,7 +292,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         /**************************************************************************************/
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "handleMPCReceivedDataWithNotification:",
+            selector: #selector(CollectionViewController.handleMPCReceivedDataWithNotification(_:)),
             name: "receivedMPCDataNotification", object: nil)
     }
     
@@ -393,10 +393,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         self.collectionView.reloadData()
         self.layout.invalidateLayout()
         if (card.rank == keyrank) {
-            keyCardsCount[card.suit]++
+            keyCardsCount[card.suit] += 1
         }
         if (card.suit == 4) {
-            keyCardsCount[card.rank + 4]++
+            keyCardsCount[card.rank + 4] += 1
         }
         self.updateSuitButton()
     }
@@ -459,7 +459,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                         self.manager.setFormat(format)
                     }
                     self.updateTable((fromplayer - self.playerID + 4) % 4,cards: cards)
-                    self.playCount++
+                    self.playCount += 1
                     print("receive broadcast")
                  })
                 
@@ -626,7 +626,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                     if (self.changeTableCards) {
                         if (!self.starting) {
                             let fromplayer = dataDictionary["fromplayer"] as! Int
-                            self.skippedNum++
+                            self.skippedNum += 1
                             if (self.skippedNum < 3) {
                                 self.assignInquireSuit((fromplayer+1)%4)
                             }
@@ -642,7 +642,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                     }
                     else {
                         let fromplayer = dataDictionary["fromplayer"] as! Int
-                        self.skippedNum++
+                        self.skippedNum += 1
                         if (self.skippedNum < 4) {
                             self.assignInquireSuit( (fromplayer+1) % 4)
                         }
@@ -754,7 +754,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 let messageData = NSKeyedArchiver.archivedDataWithRootObject(messageDictionary)
                 self.sendMessagetoServer(messageData)
                 if (enableTest) {
-                    for var i = myCards.count-1; i >= 0; i-- {
+                    for var i = myCards.count-1; i >= 0; i -= 1 {
                         if (self.layout.selected[i]) {
                             manager.remove(myCards[i])
                             myCards.removeAtIndex(i)
@@ -767,7 +767,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             else {
                 if (enableTest) {
                     self.serverBroadcastCards(true, fromplayer: 0, cards: selectedCards)
-                    for var i = myCards.count-1; i >= 0; i-- {
+                    for var i = myCards.count-1; i >= 0; i -= 1 {
                         if (self.layout.selected[i]) {
                             manager.remove(myCards[i])
                             myCards.removeAtIndex(i)
@@ -828,7 +828,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func removeSelectedCards() {
-        for var i = myCards.count-1; i >= 0; i-- {
+        for var i = myCards.count-1; i >= 0; i -= 1 {
             if (self.layout.selected[i]) {
                 manager.remove(myCards[i])
                 myCards.removeAtIndex(i)
@@ -892,7 +892,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         if (playerID == 0) {
             if (self.changeTableCards) {
                 if (!self.starting) {
-                    self.skippedNum++
+                    self.skippedNum += 1
                     print(self.skippedNum)
                     if (self.skippedNum < 3) {
                         self.assignInquireSuit(1)
@@ -908,7 +908,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
                 }
             }
             else {
-                self.skippedNum++
+                self.skippedNum += 1
                 if (self.skippedNum < 4) {
                     self.assignInquireSuit(1)
                 }
@@ -947,12 +947,12 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     func removeCardsBack(cardsBack:[Card_CPPWrapper]) {
         print(cardsBack.count)
-        for var j = 0; j < cardsBack.count; j++ {
+        for j in 0 ..< cardsBack.count {
             print("suit")
             print(cardsBack[j].suit)
             print("rank")
             print(cardsBack[j].rank)
-            for var i = 0; i < myCards.count; i++ {
+            for i in 0 ..< myCards.count {
                 if (cardsBack[j].suit == myCards[i].suit &&
                     cardsBack[j].rank == myCards[i].rank) {
                     manager.remove(myCards[i])
@@ -1219,7 +1219,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     func serverNext() {
         print("run server Next")
-        self.playCount++
+        self.playCount += 1
         if (self.playCount % 4 != 0) {
             self.currentPlayer = (self.currentPlayer + 1) % 4
             if (!self.gameEnd) {

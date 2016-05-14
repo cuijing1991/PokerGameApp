@@ -35,7 +35,7 @@ class AddFriendsViewController: UIViewController,  UITableViewDelegate, UITableV
         self.friendsTable.separatorStyle = UITableViewCellSeparatorStyle.None
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl.addTarget(self, action: #selector(AddFriendsViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         self.friendsTable.addSubview(refreshControl)
         
         self.appDelegate.mpcManager.server = true
