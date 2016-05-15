@@ -81,7 +81,7 @@ bool Card::isKey() const {
 }
 
 int Card::computeValue() const {
-    int val;
+    int val = -1;
     if (GameInfo::keySuit != Joker) {
         if (this->isKey()) {
             if (m_suit == Joker && m_rank == Low) val = 16;

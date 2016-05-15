@@ -13,7 +13,7 @@
 
 class CardUnit {
 public:
-    CardUnit(int type, int head): m_head(head), m_type(type) {};
+  CardUnit(int type, int head): m_type(type), m_head(head){};
     CardUnit(const CardUnit& cu);
     ~CardUnit() {};
     int m_type;
