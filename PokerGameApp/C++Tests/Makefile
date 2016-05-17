@@ -24,7 +24,7 @@ $(MAIN): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
 
 clean:
-	$(RM) *.o *~ $(MAIN)
+	$(RM) $(OBJS) $(MAIN)
 
 depend: $(SRCS)
 	makedepend $(INCLUDES) $^
