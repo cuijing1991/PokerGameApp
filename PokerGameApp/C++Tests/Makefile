@@ -11,7 +11,7 @@ SRCS = test_driver.cpp \
 		   ../C++Classes/Constants.cpp \
        ../C++Classes/GameInfo.cpp \
 
-OBJS = $(SRCS:.c=.o)
+OBJS = $(SRCS:.cpp=.o)
 MAIN = test_driver
 
 all: $(MAIN)
@@ -20,7 +20,7 @@ all: $(MAIN)
 $(MAIN): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
 
-.c.o:
+.cpp.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
 
 clean:
